@@ -61,8 +61,6 @@ def collect_daily_clones(entries):
                 daily[date] = daily.get(date, 0) + count
             except Exception as ex:
                 print(f"⚠️ Skipping bad entry: {c} ({ex})")
-                
-        print(f"DEBUG clones_data type: {type(clones_data)}")
         
     return daily
 
