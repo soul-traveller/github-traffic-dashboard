@@ -62,7 +62,7 @@ jobs:
             
             # safe totals (avoid null crash)
             clones_daily=$(echo "$clones_json" | jq -c '.clones // []')
-            views_daily=$(echo "$views_json" | jq -c '.clones // []')
+            views_daily=$(echo "$views_json" | jq -c '.views // []')
             clones_total=$(echo "$clones_json" | jq '[.clones[]?.count] | add // 0')
             views_total=$(echo "$views_json" | jq '[.views[]?.count] | add // 0')
 
