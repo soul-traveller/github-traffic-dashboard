@@ -32,10 +32,18 @@ def collect_daily_clones(entries):
 
     for e in entries:
         clones_data = e.get("clones", {})
-        clone_list = clones_data.get("clones", [])
+
+        # Handle both dict and list formats
+        if isinstance(clones_data, dict):
+            clone_list = clones_data.get("clones", [])
+        elif isinstance(clones_data, list):
+            clone_list = clones_data
+        else:
+            print(f"⚠️ Unknown clones format: {clones_data}")
+            continue
 
         if not isinstance(clone_list, list):
-            print(f"⚠️ Skipping invalid clones data: {clones_data}")
+            print(f"⚠️ Invalid clone list: {clone_list}")
             continue
 
         for c in clone_list:
@@ -45,7 +53,9 @@ def collect_daily_clones(entries):
                 daily[date] = daily.get(date, 0) + count
             except Exception as ex:
                 print(f"⚠️ Bad clone entry: {c} ({ex})")
-
+                
+        print(f"DEBUG clones_data type: {type(clones_data)}")
+        
     return daily
 
 def sum_period(daily, days):
