@@ -93,7 +93,7 @@ jobs:
         run: |
           if [ -f history.json ]; then
             jq -s '.[0] + .[1]' history.json traffic.json \
-              | jq 'sort_by(.repository, .timestamp) | unique_by(.repository, .timestamp)' > tmp.json
+              | jq 'sort_by(.repository, .timestamp) | unique_by(.repository, (.timestamp[:10]))' > tmp.json
             mv tmp.json history.json
           else
             cp traffic.json history.json
