@@ -7,11 +7,6 @@ import os
 with open("history.json") as f:
     data = json.load(f)
 
-import json
-from datetime import datetime, timedelta
-import matplotlib.pyplot as plt
-import os
-
 # Load data
 with open("history.json") as f:
     data = json.load(f)
@@ -41,8 +36,11 @@ def collect_daily_clones(entries):
         
         date = ts[:10]
         
-        daily[date] = daily.get(date, 0) + e.get("clones_total", 0)
-
+        clones = e.get("clones", [])
+        for c in clones:
+            date = c["timestamp"][:10]
+            daily[date] = daily.get(date, 0) + c["count"]
+    
     return daily
 
 def sum_period(daily, days):
