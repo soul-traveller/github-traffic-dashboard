@@ -1,0 +1,42 @@
+name: Collect GitHub Traffic
+
+on:
+  schedule:
+    - cron: "0 2 * * *"   # every day
+  workflow_dispatch:
+
+jobs:
+  traffic:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Get traffic data
+        uses: sangonzal/repository-traffic-action@v0.1.6
+        env:
+          TRAFFIC_ACTION_TOKEN: ${{ secrets.TRAFFIC_ACTION_TOKEN }}
+        with:
+          repositories: |
+            soul-traveller/Argyll_Printer_Profiler
+            soul-traveller/Toggle_Display_Profile
+            soul-traveller/rectarg
+          output_file: traffic.json
+
+      - name: Save history
+        run: |
+          if [ -f history.json ]; then
+            jq -s '.[0] + .[1]' history.json traffic.json > tmp.json
+            mv tmp.json history.json
+          else
+            cp traffic.json history.json
+          fi
+
+      - name: Commit data
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add history.json
+          git commit -m "Update traffic history" || echo "No changes"
+          git push
