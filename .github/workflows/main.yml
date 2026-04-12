@@ -6,17 +6,23 @@ on:
   workflow_dispatch:
 
 jobs:
+  # This workflow contains a single job called "traffic"
   traffic:
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Get traffic data
-        uses: sangonzal/repository-traffic-action@main
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        with:
+          ref: "traffic"
+        
+      - name: Repository Traffic
+        uses: sangonzal/repository-traffic@main
         env:
           TRAFFIC_ACTION_TOKEN: ${{ secrets.TRAFFIC_ACTION_TOKEN }}
+          REPOSITORY_NAME: "soul-traveller/github-traffic-dashboard"
         with:
           repositories: |
             soul-traveller/Argyll_Printer_Profiler
@@ -33,6 +39,7 @@ jobs:
             cp traffic.json history.json
           fi
 
+      # Commits files to repository
       - name: Commit data
         run: |
           git config user.name "github-actions"
