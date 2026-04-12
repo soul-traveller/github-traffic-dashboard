@@ -102,6 +102,8 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add history.json README.md graphs/
-          git commit -m "Update traffic dashboard" || echo "No changes"
-          git push
+          git diff --quiet && echo "No changes" || (
+            git add history.json README.md graphs/
+            git commit -m "Update traffic dashboard"
+            git push
+          )
