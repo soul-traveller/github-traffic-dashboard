@@ -66,6 +66,7 @@ jobs:
             clones_total=$(echo "$clones_json" | jq '[.clones[]?.count] | add // 0')
             views_total=$(echo "$views_json" | jq '[.views[]?.count] | add // 0')
 
+            # JSON validation
             echo "$clones_daily" | jq . >/dev/null || {
               echo "❌ Invalid clones structure for $repo"
               echo "$clones_daily"
@@ -76,14 +77,12 @@ jobs:
               echo "$views_daily"
               exit 1
             }
-            
-            # JSON validation
-            echo "$clones_json" | jq . >/dev/null || { echo "❌ bad clones JSON for $repo"; echo "$clones_json"; exit 1; }
-            echo "$views_json" | jq . >/dev/null || { echo "❌ bad views JSON for $repo"; echo "$views_json"; exit 1; }
             echo "$referrers_json" | jq . >/dev/null || { echo "❌ bad referrers JSON for $repo"; echo "$referrers_json"; exit 1; }
 
             jq --arg repo "$repo" \
                --arg date "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+               --argjson clones_daily "$clones_daily" \
+               --argjson views_daily "$views_daily" \
                --argjson clones_total "$clones_total" \
                --argjson views_total "$views_total" \
                --argjson ref "$referrers_json" \
@@ -91,8 +90,8 @@ jobs:
                   "repository": $repo,
                   "timestamp": $date,
                   "clones": $clones_daily,
-                  "clones_total": $clones_total,
                   "views": $views_daily,
+                  "clones_total": $clones_total,
                   "views_total": $views_total,
                   "referrers": $ref
                }]' \
