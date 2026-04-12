@@ -50,7 +50,7 @@ def sum_period(daily, days):
     total = 0
     for d, count in daily.items():
         try:
-            dt = datetime.fromisoformat(d)
+            dt = datetime.strptime(d, "%Y-%m-%d")
             if dt > cutoff:
                 total += count
         except:
@@ -81,7 +81,8 @@ for repo, entries in repos.items():
     # Create graph
     try:
         plt.figure()
-        plt.plot(dates, counts)
+        dates_dt = [datetime.strptime(d, "%Y-%m-%d") for d in dates]
+        plt.plot(dates_dt, counts)
         plt.xticks(rotation=45)
         plt.title(f"Clones over time: {repo}")
         plt.tight_layout()
