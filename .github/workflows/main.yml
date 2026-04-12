@@ -61,9 +61,22 @@ jobs:
               https://api.github.com/repos/$repo/traffic/popular/referrers)
             
             # safe totals (avoid null crash)
+            clones_daily=$(echo "$clones_json" | jq -c '.clones // []')
+            views_daily=$(echo "$views_json" | jq -c '.clones // []')
             clones_total=$(echo "$clones_json" | jq '[.clones[]?.count] | add // 0')
             views_total=$(echo "$views_json" | jq '[.views[]?.count] | add // 0')
 
+            echo "$clones_daily" | jq . >/dev/null || {
+              echo "❌ Invalid clones structure for $repo"
+              echo "$clones_daily"
+              exit 1
+            }
+            echo "$views_daily" | jq . >/dev/null || {
+              echo "❌ Invalid views structure for $repo"
+              echo "$views_daily"
+              exit 1
+            }
+            
             # JSON validation
             echo "$clones_json" | jq . >/dev/null || { echo "❌ bad clones JSON for $repo"; echo "$clones_json"; exit 1; }
             echo "$views_json" | jq . >/dev/null || { echo "❌ bad views JSON for $repo"; echo "$views_json"; exit 1; }
@@ -77,7 +90,9 @@ jobs:
                '. + [{
                   "repository": $repo,
                   "timestamp": $date,
+                  "clones": $clones_daily,
                   "clones_total": $clones_total,
+                  "views": $views_daily,
                   "views_total": $views_total,
                   "referrers": $ref
                }]' \
@@ -90,7 +105,7 @@ jobs:
         run: |
           if [ -f history.json ]; then
             jq -s '.[0] + .[1]' history.json traffic.json \
-              | jq 'sort_by(.repository, .timestamp) | unique_by(.repository, (.timestamp[:10]))' > tmp.json
+              | jq 'sort_by(.repository, .timestamp) | unique_by(.repository, .timestamp)' > tmp.json
             mv tmp.json history.json
           else
             cp traffic.json history.json
