@@ -19,11 +19,30 @@ for entry in data:
 os.makedirs("graphs", exist_ok=True)
 
 # ----------------------------
-# Helpers
+# HELPERS
 # ----------------------------
 
+def generate_date_range(start_date, end_date):
+    days = []
+    current = start_date
+    while current <= end_date:
+        days.append(current.strftime("%Y-%m-%d"))
+        current += timedelta(days=1)
+    return days
+
+
+def zero_fill_series(series, days_back=365):
+    today = datetime.utcnow().date()
+    start = today - timedelta(days=days_back)
+
+    filled = {}
+    for day in generate_date_range(start, today):
+        filled[day] = series.get(day, 0)
+
+    return filled
+
+
 def extract_series(entries, key):
-    """Convert API array into {date: count}"""
     series = {}
 
     for e in entries:
@@ -56,28 +75,29 @@ def rolling_sum(series, days):
 
 
 # ----------------------------
-# FILL MISSING DAYS (DAILY)
+# DAILY (ZERO-FILLED)
 # ----------------------------
 def fill_daily(series, days=30):
     today = datetime.utcnow().date()
-    filled_dates = []
-    filled_values = []
+
+    dates = []
+    values = []
 
     for i in range(days, -1, -1):
         d = (today - timedelta(days=i)).strftime("%Y-%m-%d")
-        filled_dates.append(d)
-        filled_values.append(series.get(d, 0))
+        dates.append(d)
+        values.append(series.get(d, 0))
 
-    return filled_dates, filled_values
+    return dates, values
 
 
 # ----------------------------
-# WEEKLY (7-day buckets with missing = 0)
+# WEEKLY (TRUE CALENDAR WEEKS + ZERO FILL)
 # ----------------------------
 def weekly_series(series, weeks=12):
     today = datetime.utcnow().date()
 
-    weekly = []
+    weeks_data = []
 
     for w in range(weeks, -1, -1):
         week_start = today - timedelta(days=w * 7)
@@ -87,40 +107,40 @@ def weekly_series(series, weeks=12):
             d = (week_start + timedelta(days=i)).strftime("%Y-%m-%d")
             total += series.get(d, 0)
 
-        weekly.append((week_start.strftime("%Y-%m-%d"), total))
+        weeks_data.append((week_start.strftime("%Y-%m-%d"), total))
 
-    return weekly
+    return weeks_data
 
 
 # ----------------------------
-# MONTHLY (30-day buckets approx, with gaps = 0)
+# MONTHLY (REAL CALENDAR MONTHS)
 # ----------------------------
 def monthly_series(series, months=12):
     today = datetime.utcnow().date()
 
-    monthly = []
+    months_data = {}
 
-    for m in range(months, -1, -1):
-        month_start = today - timedelta(days=m * 30)
+    for i in range(months * 31):
+        d = today - timedelta(days=i)
+        key = d.strftime("%Y-%m")
+        months_data[key] = months_data.get(key, 0) + series.get(d.strftime("%Y-%m-%d"), 0)
 
-        total = 0
-        for i in range(30):
-            d = (month_start + timedelta(days=i)).strftime("%Y-%m-%d")
-            total += series.get(d, 0)
-
-        monthly.append((month_start.strftime("%Y-%m"), total))
-
-    return monthly
+    return sorted(months_data.items())
 
 
 # ----------------------------
-# Build repo dataset
+# BUILD DATASET
 # ----------------------------
 repo_data = {}
 
 for repo, entries in repos.items():
-    clones = extract_series(entries, "clones")
-    views = extract_series(entries, "views")
+
+    clones_raw = extract_series(entries, "clones")
+    views_raw = extract_series(entries, "views")
+
+    # ZERO-FILL BOTH
+    clones = zero_fill_series(clones_raw, days_back=365)
+    views = zero_fill_series(views_raw, days_back=365)
 
     repo_data[repo] = {
         "clones": clones,
@@ -141,7 +161,7 @@ for repo, entries in repos.items():
 
 
 # ----------------------------
-# Generate markdown
+# MARKDOWN
 # ----------------------------
 md = "# 📊 GitHub Traffic Dashboard\n\n"
 
@@ -153,7 +173,7 @@ for repo, d in repo_data.items():
     views = d["views"]
 
     # ----------------------------
-    # DAILY (FULL 30 DAYS WITH ZEROS)
+    # DAILY GRAPH (30 DAYS ZERO FILLED)
     # ----------------------------
     dates, counts = fill_daily(clones, 30)
     dates_dt = [datetime.strptime(x, "%Y-%m-%d") for x in dates]
@@ -169,7 +189,7 @@ for repo, d in repo_data.items():
     plt.close()
 
     # ----------------------------
-    # WEEKLY (12 weeks WITH ZEROS)
+    # WEEKLY GRAPH
     # ----------------------------
     w_dates = [x[0] for x in d["weekly"]]
     w_vals = [x[1] for x in d["weekly"]]
@@ -187,7 +207,7 @@ for repo, d in repo_data.items():
     plt.close()
 
     # ----------------------------
-    # MONTHLY (12 months WITH ZEROS)
+    # MONTHLY GRAPH
     # ----------------------------
     m_dates = [x[0] for x in d["monthly"]]
     m_vals = [x[1] for x in d["monthly"]]
@@ -205,7 +225,7 @@ for repo, d in repo_data.items():
     plt.close()
 
     # ----------------------------
-    # MARKDOWN
+    # MARKDOWN OUTPUT
     # ----------------------------
     md += f"## {repo}\n\n"
 
