@@ -31,37 +31,9 @@ def collect_daily_clones(entries):
     daily = {}
 
     for e in entries:
-        clones_data = e.get("clones", {})
+        date = e["timestamp"][:10]
+        daily[date] = daily.get(date, 0) + e.get("clones_total", 0)
 
-        # Handle both dict and list formats
-        if isinstance(clones_data, dict):
-            clone_list = clones_data.get("clones", [])
-        elif isinstance(clones_data, list):
-            clone_list = clones_data
-        else:
-            print(f"⚠️ Unknown clones format: {clones_data}")
-            continue
-
-        if not isinstance(clone_list, list):
-            print(f"⚠️ Invalid clone list: {clone_list}")
-            continue
-
-        for c in clone_list:
-            if not isinstance(c, dict):
-                continue
-        
-            timestamp = c.get("timestamp")
-            count = c.get("count")
-        
-            if not timestamp or count is None:
-                continue
-        
-            try:
-                date = timestamp[:10]
-                daily[date] = daily.get(date, 0) + count
-            except Exception as ex:
-                print(f"⚠️ Skipping bad entry: {c} ({ex})")
-        
     return daily
 
 def sum_period(daily, days):
