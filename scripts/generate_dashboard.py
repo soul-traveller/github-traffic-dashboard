@@ -22,82 +22,166 @@ for entry in data:
 
 os.makedirs("graphs", exist_ok=True)
 
-def collect_daily_clones(entries):
-    daily = {}
+def extract_series(entries, key):
+    series = {}
 
     for e in entries:
-        if not isinstance(e, dict):
-            continue
-        
-        ts = e.get("timestamp")
-        if not ts:
-            print(f"⚠️ Missing timestamp in entry: {e}")
-            continue
-        
-        date = ts[:10]
-        
-        clones = e.get("clones", [])
-        for c in clones:
-            date = c["timestamp"][:10]
-            daily[date] = daily.get(date, 0) + c["count"]
-    
-    return daily
+        for item in e.get(key, []):
+            ts = item.get("timestamp")
+            count = item.get("count", 0)
+            if not ts:
+                continue
+            day = ts[:10]
+            series[day] = series.get(day, 0) + count
 
-def sum_period(daily, days):
+    return series
+
+def rolling_sum(series, days):
     cutoff = datetime.utcnow() - timedelta(days=days)
     total = 0
-    for d, count in daily.items():
+
+    for d, v in series.items():
         try:
             dt = datetime.strptime(d, "%Y-%m-%d")
-            if dt > cutoff:
-                total += count
+            if dt >= cutoff:
+                total += v
         except:
             continue
+
     return total
+
+def weekly_series(series):
+    sorted_days = sorted(series.keys())
+    weekly = []
+    buffer = 0
+    counter = 0
+    week_start = None
+
+    for d in sorted_days:
+        dt = datetime.strptime(d, "%Y-%m-%d")
+        if week_start is None:
+            week_start = dt
+
+        buffer += series[d]
+        counter += 1
+
+        if counter == 7:
+            weekly.append((week_start.strftime("%Y-%m-%d"), buffer))
+            buffer = 0
+            counter = 0
+            week_start = None
+
+    if counter > 0:
+        weekly.append((week_start.strftime("%Y-%m-%d"), buffer))
+
+    return weekly
+
+def monthly_series(series):
+    months = {}
+
+    for d, v in series.items():
+        month = d[:7]
+        months[month] = months.get(month, 0) + v
+
+    return sorted(months.items())
+    
+for repo, entries in repos.items():
+
+    clones = extract_series(entries, "clones")
+    views = extract_series(entries, "views")
+
+    repo_data[repo] = {
+        "clones": clones,
+        "views": views,
+
+        "clones_14": rolling_sum(clones, 14),
+        "views_14": rolling_sum(views, 14),
+
+        "clones_30": rolling_sum(clones, 30),
+        "views_30": rolling_sum(views, 30),
+
+        "clones_lifetime": sum(clones.values()),
+        "views_lifetime": sum(views.values()),
+
+        "weekly": weekly_series(clones),
+        "monthly": monthly_series(clones)
+    }
 
 # Generate markdown
 md = "# 📊 GitHub Traffic Dashboard\n\n"
 
-for repo, entries in repos.items():
+for repo, d in repo_data.items():
+
     print(f"Processing {repo}")
 
-    daily = collect_daily_clones(entries)
+    clones = d["clones"]
+    views = d["views"]
 
-    if not daily:
-        print(f"⚠️ No valid data for {repo}, skipping")
-        md += f"## {repo}\nNo data available yet.\n\n"
-        continue
+    # --- DAILY GRAPH (30 days implied from full series) ---
+    dates = sorted(clones.keys())
+    counts = [clones[x] for x in dates]
 
-    dates = sorted(daily.keys())
-    counts = [daily[d] for d in dates]
+    dates_dt = [datetime.strptime(d, "%Y-%m-%d") for d in dates]
 
-    # Stats
-    last_90 = sum_period(daily, 90)
-    last_365 = sum_period(daily, 365)
-    total = sum(daily.values())
+    filename_daily = f"graphs/{repo.replace('/', '_')}_daily.png"
 
-    # Create graph
-    try:
-        plt.figure()
-        dates_dt = [datetime.strptime(d, "%Y-%m-%d") for d in dates]
-        plt.plot(dates_dt, counts)
-        plt.xticks(rotation=45)
-        plt.title(f"Clones over time: {repo}")
-        plt.tight_layout()
+    plt.figure()
+    plt.plot(dates_dt, counts)
+    plt.xticks(rotation=45)
+    plt.title(f"Daily Clones: {repo}")
+    plt.tight_layout()
+    plt.savefig(filename_daily)
+    plt.close()
 
-        filename = f"graphs/{repo.replace('/', '_')}_clones.png"
-        plt.savefig(filename)
-        plt.close()
-    except Exception as ex:
-        print(f"⚠️ Failed to generate graph for {repo}: {ex}")
-        continue
+    # --- WEEKLY GRAPH ---
+    w_dates = [x[0] for x in d["weekly"]]
+    w_vals = [x[1] for x in d["weekly"]]
 
-    # Add to markdown
-    md += f"## {repo}\n"
-    md += f"- Last 3 months: **{last_90} clones**\n"
-    md += f"- Last 12 months: **{last_365} clones**\n"
-    md += f"- Total: **{total} clones**\n\n"
-    md += f"![Clones graph]({filename})\n\n"
+    w_dates_dt = [datetime.strptime(x, "%Y-%m-%d") for x in w_dates]
+
+    filename_weekly = f"graphs/{repo.replace('/', '_')}_weekly.png"
+
+    plt.figure()
+    plt.plot(w_dates_dt, w_vals)
+    plt.xticks(rotation=45)
+    plt.title(f"Weekly Clones (3 months): {repo}")
+    plt.tight_layout()
+    plt.savefig(filename_weekly)
+    plt.close()
+
+    # --- MONTHLY GRAPH ---
+    m_dates = [x[0] for x in d["monthly"]]
+    m_vals = [x[1] for x in d["monthly"]]
+
+    m_dates_dt = [datetime.strptime(x, "%Y-%m") for x in m_dates]
+
+    filename_monthly = f"graphs/{repo.replace('/', '_')}_monthly.png"
+
+    plt.figure()
+    plt.plot(m_dates_dt, m_vals)
+    plt.xticks(rotation=45)
+    plt.title(f"Monthly Clones (1 year): {repo}")
+    plt.tight_layout()
+    plt.savefig(filename_monthly)
+    plt.close()
+
+    # --- MARKDOWN ---
+    md += f"## {repo}\n\n"
+
+    md += f"### Clones\n"
+    md += f"- Last 14 days: **{d['clones_14']}**\n"
+    md += f"- Last 30 days: **{d['clones_30']}**\n"
+    md += f"- Lifetime: **{d['clones_lifetime']}**\n\n"
+
+    md += f"### Views\n"
+    md += f"- Last 14 days: **{d['views_14']}**\n"
+    md += f"- Last 30 days: **{d['views_30']}**\n"
+    md += f"- Lifetime: **{d['views_lifetime']}**\n\n"
+
+    md += f"### Graphs\n"
+    md += f"![Daily]({filename_daily})\n"
+    md += f"![Weekly]({filename_weekly})\n"
+    md += f"![Monthly]({filename_monthly})\n\n"
 
 # Write README
 with open("README.md", "w") as f:
