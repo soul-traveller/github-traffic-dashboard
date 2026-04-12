@@ -7,11 +7,22 @@ import os
 with open("history.json") as f:
     data = json.load(f)
 
+import json
+from datetime import datetime, timedelta
+import matplotlib.pyplot as plt
+import os
+
+# Load data
+with open("history.json") as f:
+    data = json.load(f)
+
 repos = {}
 
 # Organize per repo
 for entry in data:
-    repo = entry["repository"]
+    repo = entry.get("repository")
+    if not repo:
+        continue
     repos.setdefault(repo, []).append(entry)
 
 os.makedirs("graphs", exist_ok=True)
@@ -20,9 +31,20 @@ def collect_daily_clones(entries):
     daily = {}
 
     for e in entries:
-        for c in e["clones"]["clones"]:
-            date = c["timestamp"][:10]
-            daily[date] = daily.get(date, 0) + c["count"]
+        clones_data = e.get("clones", {})
+        clone_list = clones_data.get("clones", [])
+
+        if not isinstance(clone_list, list):
+            print(f"⚠️ Skipping invalid clones data: {clones_data}")
+            continue
+
+        for c in clone_list:
+            try:
+                date = c["timestamp"][:10]
+                count = c["count"]
+                daily[date] = daily.get(date, 0) + count
+            except Exception as ex:
+                print(f"⚠️ Bad clone entry: {c} ({ex})")
 
     return daily
 
@@ -30,18 +52,27 @@ def sum_period(daily, days):
     cutoff = datetime.utcnow() - timedelta(days=days)
     total = 0
     for d, count in daily.items():
-        dt = datetime.fromisoformat(d)
-        if dt > cutoff:
-            total += count
+        try:
+            dt = datetime.fromisoformat(d)
+            if dt > cutoff:
+                total += count
+        except:
+            continue
     return total
 
 # Generate markdown
 md = "# 📊 GitHub Traffic Dashboard\n\n"
 
 for repo, entries in repos.items():
+    print(f"Processing {repo}")
+
     daily = collect_daily_clones(entries)
 
-    # Sort dates
+    if not daily:
+        print(f"⚠️ No valid data for {repo}, skipping")
+        md += f"## {repo}\nNo data available yet.\n\n"
+        continue
+
     dates = sorted(daily.keys())
     counts = [daily[d] for d in dates]
 
@@ -51,15 +82,19 @@ for repo, entries in repos.items():
     total = sum(daily.values())
 
     # Create graph
-    plt.figure()
-    plt.plot(dates, counts)
-    plt.xticks(rotation=45)
-    plt.title(f"Clones over time: {repo}")
-    plt.tight_layout()
+    try:
+        plt.figure()
+        plt.plot(dates, counts)
+        plt.xticks(rotation=45)
+        plt.title(f"Clones over time: {repo}")
+        plt.tight_layout()
 
-    filename = f"graphs/{repo.replace('/', '_')}_clones.png"
-    plt.savefig(filename)
-    plt.close()
+        filename = f"graphs/{repo.replace('/', '_')}_clones.png"
+        plt.savefig(filename)
+        plt.close()
+    except Exception as ex:
+        print(f"⚠️ Failed to generate graph for {repo}: {ex}")
+        continue
 
     # Add to markdown
     md += f"## {repo}\n"
@@ -71,3 +106,5 @@ for repo, entries in repos.items():
 # Write README
 with open("README.md", "w") as f:
     f.write(md)
+
+print("✅ Dashboard generated")
