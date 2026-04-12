@@ -47,12 +47,20 @@ def collect_daily_clones(entries):
             continue
 
         for c in clone_list:
+            if not isinstance(c, dict):
+                continue
+        
+            timestamp = c.get("timestamp")
+            count = c.get("count")
+        
+            if not timestamp or count is None:
+                continue
+        
             try:
-                date = c["timestamp"][:10]
-                count = c["count"]
+                date = timestamp[:10]
                 daily[date] = daily.get(date, 0) + count
             except Exception as ex:
-                print(f"⚠️ Bad clone entry: {c} ({ex})")
+                print(f"⚠️ Skipping bad entry: {c} ({ex})")
                 
         print(f"DEBUG clones_data type: {type(clones_data)}")
         
