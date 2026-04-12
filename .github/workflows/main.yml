@@ -58,9 +58,9 @@ jobs:
               https://api.github.com/repos/$repo/traffic/popular/referrers)
 
             # JSON validation
-            echo "$clones" | jq . > /dev/null || echo "Invalid clones JSON"
-            echo "$views" | jq . > /dev/null || echo "Invalid views JSON"
-            echo "$referrers" | jq . > /dev/null || echo "Invalid referrers JSON"
+            echo "$clones" | jq . > /dev/null || { echo "❌ Invalid clones JSON for $repo"; echo "$clones"; exit 1; }
+            echo "$views" | jq . > /dev/null || { echo "❌ Invalid views JSON for $repo"; echo "$views"; exit 1; }
+            echo "$referrers" | jq . > /dev/null || { echo "❌ Invalid referrers JSON for $repo"; echo "$referrers"; exit 1; }
             jq --arg repo "$repo" \
                --arg date "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
                --argjson clones "$clones" \
@@ -92,6 +92,9 @@ jobs:
           echo "Traffic.json:"
           cat traffic.json | head -n 50
 
+      - name: Show history.json
+        run: cat history.json | head -n 100
+  
       - name: Prepare folders
         run: mkdir -p graphs
 
