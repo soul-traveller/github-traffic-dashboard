@@ -45,21 +45,18 @@ jobs:
             clones_json=$(curl -s \
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer ${{ secrets.TRAFFIC_ACTION_TOKEN }}" \
-              # version pin for the GitHub REST API behavior
               -H "X-GitHub-Api-Version: 2026-03-10" \
               https://api.github.com/repos/$repo/traffic/clones)
             
             views_json=$(curl -s \
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer ${{ secrets.TRAFFIC_ACTION_TOKEN }}" \
-              # version pin for the GitHub REST API behavior
               -H "X-GitHub-Api-Version: 2026-03-10" \
               https://api.github.com/repos/$repo/traffic/views)
             
             referrers_json=$(curl -s \
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer ${{ secrets.TRAFFIC_ACTION_TOKEN }}" \
-              # version pin for the GitHub REST API behavior
               -H "X-GitHub-Api-Version: 2026-03-10" \
               https://api.github.com/repos/$repo/traffic/popular/referrers)
             
