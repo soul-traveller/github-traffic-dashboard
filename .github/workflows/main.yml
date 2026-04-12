@@ -14,21 +14,32 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-        with:
-          ref: "traffic"
-        
-      - name: Repository Traffic
-        uses: sangonzal/repository-traffic@main
-        env:
-          TRAFFIC_ACTION_TOKEN: ${{ secrets.TRAFFIC_ACTION_TOKEN }}
-          REPOSITORY_NAME: "soul-traveller/github-traffic-dashboard"
-        with:
-          repositories: |
-            soul-traveller/Argyll_Printer_Profiler
-            soul-traveller/Toggle_Display_Profile
-            soul-traveller/rectarg
-          output_file: traffic.json
+      - uses: actions/checkout@v4
+
+      - name: Fetch traffic via API
+        run: |
+          repos=(
+            "soul-traveller/Argyll_Printer_Profiler"
+            "soul-traveller/Toggle_Display_Profile"
+            "soul-traveller/rectarg"
+          )
+
+          echo "[]" > traffic.json
+
+          for repo in "${repos[@]}"; do
+            echo "Fetching $repo"
+
+            data=$(curl -s \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer ${{ secrets.TRAFFIC_ACTION_TOKEN }}" \
+              https://api.github.com/repos/$repo/traffic/clones)
+
+            jq --arg repo "$repo" \
+              '. + [{"repository": $repo, "clones": .}]' \
+              traffic.json > tmp.json
+
+            mv tmp.json traffic.json
+          done
 
       - name: Save history
         run: |
@@ -39,7 +50,6 @@ jobs:
             cp traffic.json history.json
           fi
 
-      # Commits files to repository
       - name: Commit data
         run: |
           git config user.name "github-actions"
@@ -47,3 +57,4 @@ jobs:
           git add history.json
           git commit -m "Update traffic history" || echo "No changes"
           git push
+🚀 Next step (if you want)
