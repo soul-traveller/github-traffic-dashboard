@@ -34,16 +34,31 @@ jobs:
 
           for repo in "${repos[@]}"; do
             echo "Fetching $repo"
-
-            data=$(curl -s \
-              -H "Accept: application/vnd.github+json" \
+          
+            clones=$(curl -s \
               -H "Authorization: Bearer ${{ secrets.TRAFFIC_ACTION_TOKEN }}" \
               https://api.github.com/repos/$repo/traffic/clones)
-
+          
+            views=$(curl -s \
+              -H "Authorization: Bearer ${{ secrets.TRAFFIC_ACTION_TOKEN }}" \
+              https://api.github.com/repos/$repo/traffic/views)
+          
+            referrers=$(curl -s \
+              -H "Authorization: Bearer ${{ secrets.TRAFFIC_ACTION_TOKEN }}" \
+              https://api.github.com/repos/$repo/traffic/popular/referrers)
+          
             jq --arg repo "$repo" \
-              '. + [{"repository": $repo, "clones": .}]' \
-              traffic.json > tmp.json
-
+               --argjson clones "$clones" \
+               --argjson views "$views" \
+               --argjson ref "$referrers" \
+               '. + [{
+                  "repository": $repo,
+                  "clones": $clones,
+                  "views": $views,
+                  "referrers": $ref
+               }]' \
+               traffic.json > tmp.json
+          
             mv tmp.json traffic.json
           done
 
