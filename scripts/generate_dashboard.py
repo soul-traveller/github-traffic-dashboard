@@ -31,7 +31,16 @@ def collect_daily_clones(entries):
     daily = {}
 
     for e in entries:
-        date = e["timestamp"][:10]
+        if not isinstance(e, dict):
+            continue
+        
+        ts = e.get("timestamp")
+        if not ts:
+            print(f"⚠️ Missing timestamp in entry: {e}")
+            continue
+        
+        date = ts[:10]
+        
         daily[date] = daily.get(date, 0) + e.get("clones_total", 0)
 
     return daily
