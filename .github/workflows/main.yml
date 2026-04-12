@@ -42,46 +42,58 @@ jobs:
           for repo in "${repos[@]}"; do
             echo "Fetching $repo"
           
-            clones=$(curl -s \
+            clones_json=$(curl -s \
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer ${{ secrets.TRAFFIC_ACTION_TOKEN }}" \
+              # version pin for the GitHub REST API behavior
+              -H "X-GitHub-Api-Version: 2026-03-10" \
               https://api.github.com/repos/$repo/traffic/clones)
-          
-            views=$(curl -s \
+            
+            views_json=$(curl -s \
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer ${{ secrets.TRAFFIC_ACTION_TOKEN }}" \
+              # version pin for the GitHub REST API behavior
+              -H "X-GitHub-Api-Version: 2026-03-10" \
               https://api.github.com/repos/$repo/traffic/views)
-          
-            referrers=$(curl -s \
+            
+            referrers_json=$(curl -s \
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer ${{ secrets.TRAFFIC_ACTION_TOKEN }}" \
+              # version pin for the GitHub REST API behavior
+              -H "X-GitHub-Api-Version: 2026-03-10" \
               https://api.github.com/repos/$repo/traffic/popular/referrers)
+            
+            # safe totals (avoid null crash)
+            clones_total=$(echo "$clones_json" | jq '[.clones[]?.count] | add // 0')
+            views_total=$(echo "$views_json" | jq '[.views[]?.count] | add // 0')
 
             # JSON validation
-            echo "$clones" | jq . > /dev/null || { echo "❌ Invalid clones JSON for $repo"; echo "$clones"; exit 1; }
-            echo "$views" | jq . > /dev/null || { echo "❌ Invalid views JSON for $repo"; echo "$views"; exit 1; }
-            echo "$referrers" | jq . > /dev/null || { echo "❌ Invalid referrers JSON for $repo"; echo "$referrers"; exit 1; }
+            echo "$clones_json" | jq . >/dev/null || { echo "❌ bad clones JSON for $repo"; echo "$clones_json"; exit 1; }
+            echo "$views_json" | jq . >/dev/null || { echo "❌ bad views JSON for $repo"; echo "$views_json"; exit 1; }
+            echo "$referrers_json" | jq . >/dev/null || { echo "❌ bad referrers JSON for $repo"; echo "$referrers_json"; exit 1; }
+
             jq --arg repo "$repo" \
                --arg date "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
-               --argjson clones "$clones" \
-               --argjson views "$views" \
-               --argjson ref "$referrers" \
+               --argjson clones_total "$clones_total" \
+               --argjson views_total "$views_total" \
+               --argjson ref "$referrers_json" \
                '. + [{
                   "repository": $repo,
                   "timestamp": $date,
-                  "clones": $clones,
-                  "views": $views,
+                  "clones_total": $clones_total,
+                  "views_total": $views_total,
                   "referrers": $ref
                }]' \
                traffic.json > tmp.json
-          
+      
             mv tmp.json traffic.json
           done
 
       - name: Save history
         run: |
           if [ -f history.json ]; then
-            jq -s '.[0] + .[1]' history.json traffic.json > tmp.json
+            jq -s '.[0] + .[1]' history.json traffic.json \
+              | jq 'sort_by(.repository, .timestamp) | unique_by(.repository, .timestamp)' > tmp.json
             mv tmp.json history.json
           else
             cp traffic.json history.json
