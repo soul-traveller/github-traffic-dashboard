@@ -7,10 +7,6 @@ import os
 with open("history.json") as f:
     data = json.load(f)
 
-# Load data
-with open("history.json") as f:
-    data = json.load(f)
-
 repos = {}
 
 # Organize per repo
@@ -22,19 +18,27 @@ for entry in data:
 
 os.makedirs("graphs", exist_ok=True)
 
+# ----------------------------
+# Helpers
+# ----------------------------
+
 def extract_series(entries, key):
+    """Convert API array into {date: count}"""
     series = {}
 
     for e in entries:
         for item in e.get(key, []):
             ts = item.get("timestamp")
             count = item.get("count", 0)
+
             if not ts:
                 continue
+
             day = ts[:10]
             series[day] = series.get(day, 0) + count
 
     return series
+
 
 def rolling_sum(series, days):
     cutoff = datetime.utcnow() - timedelta(days=days)
@@ -50,43 +54,71 @@ def rolling_sum(series, days):
 
     return total
 
-def weekly_series(series):
-    sorted_days = sorted(series.keys())
+
+# ----------------------------
+# FILL MISSING DAYS (DAILY)
+# ----------------------------
+def fill_daily(series, days=30):
+    today = datetime.utcnow().date()
+    filled_dates = []
+    filled_values = []
+
+    for i in range(days, -1, -1):
+        d = (today - timedelta(days=i)).strftime("%Y-%m-%d")
+        filled_dates.append(d)
+        filled_values.append(series.get(d, 0))
+
+    return filled_dates, filled_values
+
+
+# ----------------------------
+# WEEKLY (7-day buckets with missing = 0)
+# ----------------------------
+def weekly_series(series, weeks=12):
+    today = datetime.utcnow().date()
+
     weekly = []
-    buffer = 0
-    counter = 0
-    week_start = None
 
-    for d in sorted_days:
-        dt = datetime.strptime(d, "%Y-%m-%d")
-        if week_start is None:
-            week_start = dt
+    for w in range(weeks, -1, -1):
+        week_start = today - timedelta(days=w * 7)
 
-        buffer += series[d]
-        counter += 1
+        total = 0
+        for i in range(7):
+            d = (week_start + timedelta(days=i)).strftime("%Y-%m-%d")
+            total += series.get(d, 0)
 
-        if counter == 7:
-            weekly.append((week_start.strftime("%Y-%m-%d"), buffer))
-            buffer = 0
-            counter = 0
-            week_start = None
-
-    if counter > 0:
-        weekly.append((week_start.strftime("%Y-%m-%d"), buffer))
+        weekly.append((week_start.strftime("%Y-%m-%d"), total))
 
     return weekly
 
-def monthly_series(series):
-    months = {}
 
-    for d, v in series.items():
-        month = d[:7]
-        months[month] = months.get(month, 0) + v
+# ----------------------------
+# MONTHLY (30-day buckets approx, with gaps = 0)
+# ----------------------------
+def monthly_series(series, months=12):
+    today = datetime.utcnow().date()
 
-    return sorted(months.items())
-    
+    monthly = []
+
+    for m in range(months, -1, -1):
+        month_start = today - timedelta(days=m * 30)
+
+        total = 0
+        for i in range(30):
+            d = (month_start + timedelta(days=i)).strftime("%Y-%m-%d")
+            total += series.get(d, 0)
+
+        monthly.append((month_start.strftime("%Y-%m"), total))
+
+    return monthly
+
+
+# ----------------------------
+# Build repo dataset
+# ----------------------------
+repo_data = {}
+
 for repo, entries in repos.items():
-
     clones = extract_series(entries, "clones")
     views = extract_series(entries, "views")
 
@@ -107,7 +139,10 @@ for repo, entries in repos.items():
         "monthly": monthly_series(clones)
     }
 
+
+# ----------------------------
 # Generate markdown
+# ----------------------------
 md = "# 📊 GitHub Traffic Dashboard\n\n"
 
 for repo, d in repo_data.items():
@@ -117,23 +152,25 @@ for repo, d in repo_data.items():
     clones = d["clones"]
     views = d["views"]
 
-    # --- DAILY GRAPH (30 days implied from full series) ---
-    dates = sorted(clones.keys())
-    counts = [clones[x] for x in dates]
-
-    dates_dt = [datetime.strptime(d, "%Y-%m-%d") for d in dates]
+    # ----------------------------
+    # DAILY (FULL 30 DAYS WITH ZEROS)
+    # ----------------------------
+    dates, counts = fill_daily(clones, 30)
+    dates_dt = [datetime.strptime(x, "%Y-%m-%d") for x in dates]
 
     filename_daily = f"graphs/{repo.replace('/', '_')}_daily.png"
 
     plt.figure()
     plt.plot(dates_dt, counts)
     plt.xticks(rotation=45)
-    plt.title(f"Daily Clones: {repo}")
+    plt.title(f"Daily Clones (30d): {repo}")
     plt.tight_layout()
     plt.savefig(filename_daily)
     plt.close()
 
-    # --- WEEKLY GRAPH ---
+    # ----------------------------
+    # WEEKLY (12 weeks WITH ZEROS)
+    # ----------------------------
     w_dates = [x[0] for x in d["weekly"]]
     w_vals = [x[1] for x in d["weekly"]]
 
@@ -149,7 +186,9 @@ for repo, d in repo_data.items():
     plt.savefig(filename_weekly)
     plt.close()
 
-    # --- MONTHLY GRAPH ---
+    # ----------------------------
+    # MONTHLY (12 months WITH ZEROS)
+    # ----------------------------
     m_dates = [x[0] for x in d["monthly"]]
     m_vals = [x[1] for x in d["monthly"]]
 
@@ -165,7 +204,9 @@ for repo, d in repo_data.items():
     plt.savefig(filename_monthly)
     plt.close()
 
-    # --- MARKDOWN ---
+    # ----------------------------
+    # MARKDOWN
+    # ----------------------------
     md += f"## {repo}\n\n"
 
     md += f"### Clones\n"
@@ -183,7 +224,10 @@ for repo, d in repo_data.items():
     md += f"![Weekly]({filename_weekly})\n"
     md += f"![Monthly]({filename_monthly})\n\n"
 
-# Write README
+
+# ----------------------------
+# WRITE README
+# ----------------------------
 with open("README.md", "w") as f:
     f.write(md)
 
