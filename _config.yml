@@ -1,0 +1,76 @@
+theme: jekyll-theme-cayman
+markdown: kramdown
+
+title: "Script solution to generate GitHub traffic dashboard with graphs and statistics."
+description: "Loads historical traffic data from history.json. Generates graphs for different time intervals (daily, weekly, bi-weekly, cumulative). Calculates statistics for 30 days, 90 days, and lifetime. Updates README.md with statistics and embedded graph images. Handles up to 14 consecutive days of server downtime with automatic recovery."
+author: "Knut Larsson"
+lang: en
+keywords:
+  - github traffic
+  - traffic statistics
+  - repository analytics
+  - clone statistics
+  - view statistics
+  - traffic dashboard
+  - data visualization
+  - automated reporting
+  - github actions
+  - ci cd automation
+  - python scripts
+  - matplotlib graphs
+  - pandas data processing
+  - json data storage
+  - historical data tracking
+  - zero fill data
+  - server downtime recovery
+  - calendar edge cases
+  - leap year handling
+  - utc timezone
+  - error handling
+  - error codes
+  - data integrity
+  - data validation
+  - merge history
+  - daily traffic
+  - weekly traffic
+  - biweekly traffic
+  - cumulative statistics
+  - lifetime statistics
+  - 30 day statistics
+  - 90 day statistics
+  - unique clones
+  - unique views
+  - total clones
+  - total views
+  - repository referrers
+  - github api
+  - rest api integration
+  - api rate limiting
+  - oauth token
+  - scheduled workflow
+  - cron job
+  - workflow dispatch
+  - automatic commits
+  - readme generation
+  - markdown dashboard
+  - graph generation
+  - png images
+  - time series analysis
+  - data aggregation
+  - statistical analysis
+  - production ready
+  - scalable solution
+  - modular design
+  - comprehensive documentation
+  - troubleshooting guide
+  - maintenance procedures
+  - open source
+  - jekyll site
+  - github pages
+  - static site generator
+
+plugins:
+  - jekyll-sitemap
+
+url: "https://soul-traveller.github.io"
+baseurl: "/github-traffic-dashboard"
