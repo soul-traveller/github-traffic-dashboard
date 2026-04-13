@@ -3,14 +3,14 @@
 ## soul-traveller/Argyll_Printer_Profiler
 
 ### Clones
-- Last 14 days: **2**
-- Last 30 days: **2**
-- Lifetime: **2**
+- Last 14 days: **4**
+- Last 30 days: **4**
+- Lifetime: **4**
 
 ### Views
-- Last 14 days: **29**
-- Last 30 days: **31**
-- Lifetime: **31**
+- Last 14 days: **52**
+- Last 30 days: **62**
+- Lifetime: **62**
 
 ### Graphs
 ![Daily](graphs/soul-traveller_Argyll_Printer_Profiler_daily.png)
@@ -20,14 +20,14 @@
 ## soul-traveller/Toggle_Display_Profile
 
 ### Clones
-- Last 14 days: **40**
-- Last 30 days: **98**
-- Lifetime: **98**
+- Last 14 days: **76**
+- Last 30 days: **196**
+- Lifetime: **196**
 
 ### Views
-- Last 14 days: **33**
-- Last 30 days: **75**
-- Lifetime: **75**
+- Last 14 days: **66**
+- Last 30 days: **150**
+- Lifetime: **150**
 
 ### Graphs
 ![Daily](graphs/soul-traveller_Toggle_Display_Profile_daily.png)
@@ -37,14 +37,14 @@
 ## soul-traveller/rectarg
 
 ### Clones
-- Last 14 days: **6**
-- Last 30 days: **8**
-- Lifetime: **8**
+- Last 14 days: **12**
+- Last 30 days: **16**
+- Lifetime: **16**
 
 ### Views
-- Last 14 days: **4**
-- Last 30 days: **4**
-- Lifetime: **4**
+- Last 14 days: **8**
+- Last 30 days: **8**
+- Lifetime: **8**
 
 ### Graphs
 ![Daily](graphs/soul-traveller_rectarg_daily.png)
