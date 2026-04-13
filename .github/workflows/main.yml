@@ -1,135 +1,399 @@
-name: Collect GitHub Traffic
+# GitHub Traffic Dashboard Workflow
+# This workflow runs daily to fetch traffic statistics from GitHub API,
+# merge with historical data, generate graphs, and update the dashboard.
 
+name: GitHub Traffic Dashboard
+
+# Trigger the workflow:
+# - Schedule: Run every day at 2 AM UTC (end of day in most timezones)
+# - Manual: Allow manual trigger via GitHub Actions UI
 on:
   schedule:
-    - cron: "0 2 * * *"   # every day
+    - cron: "0 2 * * *"   # every day at 2 AM UTC
   workflow_dispatch:
 
+# Permissions required for the workflow:
+# - contents: write: Needed to commit changes to the repository
 permissions:
   contents: write
 
+# Environment variables
 env:
+  # Force JavaScript actions to use Node.js 24
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-  
+
 jobs:
-  # This workflow contains a single job called "traffic"
+  # Main job: Fetch traffic data, merge, generate dashboard, commit changes
   traffic:
-    # The type of runner that the job will run on
+    # Run on the latest Ubuntu runner
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      # Step 1: Checkout the repository code
+      # This makes the repository files available to subsequent steps
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Install dependencies
+      # Step 2: Install Python dependencies
+      # Install matplotlib (for graphs), pandas (for data processing), and numpy
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install matplotlib
+          pip install matplotlib pandas numpy
 
-      - name: Fetch traffic via API
+      # Step 3: Check for missed runs (server downtime detection)
+      # This step checks if the workflow hasn't run recently, indicating potential server downtime
+      - name: Check for missed runs
+        id: check_missed_runs
         run: |
           set -e
           
+          echo "Checking for missed workflow runs..."
+          
+          # Get current date in UTC
+          current_date=$(date -u +%Y-%m-%d)
+          echo "Current date (UTC): $current_date"
+          
+          # Check if history.json exists
+          if [ ! -f history.json ]; then
+            echo "No history.json found - this appears to be the first run"
+            echo "MISSED_RUNS=0" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
+          # Extract last_updated timestamp from history.json
+          last_updated=$(jq -r '.metadata.last_updated // empty' history.json)
+          
+          if [ -z "$last_updated" ]; then
+            echo "No last_updated timestamp found in history.json"
+            echo "MISSED_RUNS=0" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
+          echo "Last successful run: $last_updated"
+          
+          # Convert dates to comparable format (YYYY-MM-DD)
+          last_run_date=$(echo "$last_updated" | cut -d'T' -f1)
+          
+          # Calculate days since last run
+          # Using date arithmetic (works on Linux)
+          last_run_epoch=$(date -u -d "$last_run_date" +%s 2>/dev/null || echo "0")
+          current_epoch=$(date -u -d "$current_date" +%s 2>/dev/null || echo "0")
+          
+          if [ "$last_run_epoch" -gt 0 ] && [ "$current_epoch" -gt 0 ]; then
+            days_since_run=$(( (current_epoch - last_run_epoch) / 86400 ))
+            echo "Days since last successful run: $days_since_run"
+            
+            # If more than 1 day has passed, we missed some runs
+            if [ "$days_since_run" -gt 1 ]; then
+              missed_runs=$((days_since_run - 1))
+              echo "WARNING: Detected $missed_runs missed run(s)"
+              echo "MISSED_RUNS=$missed_runs" >> $GITHUB_OUTPUT
+              
+              # GitHub API provides last 14 days of data, so we can recover missed data
+              if [ "$missed_runs" -le 14 ]; then
+                echo "INFO: GitHub API provides last 14 days of data, missed data will be recovered"
+              else
+                echo "WARNING: More than 14 days missed - some historical data may be permanently lost"
+              fi
+            else
+              echo "No missed runs detected"
+              echo "MISSED_RUNS=0" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "Could not calculate days since last run"
+            echo "MISSED_RUNS=0" >> $GITHUB_OUTPUT
+          fi
+
+      # Step 4: Fetch traffic data from GitHub API with comprehensive error handling
+      # This step fetches clones, views, and referrers data for all configured repositories
+      # The GitHub API returns data for the last 14 days, which allows recovery of missed runs
+      # Error codes: TF001-003 (Traffic Fetch), JV001-003 (JSON Validation)
+      - name: Fetch traffic data with error handling
+        id: fetch_traffic
+        run: |
+          set -e  # Exit immediately if any command fails
+          
+          # Define the list of repositories to track
+          # Add or remove repositories here as needed
           repos=(
             "soul-traveller/Argyll_Printer_Profiler"
             "soul-traveller/Toggle_Display_Profile"
             "soul-traveller/rectarg"
           )
 
-          echo "[]" > traffic.json
-
-          for repo in "${repos[@]}"; do
-            echo "Fetching $repo"
+          # Log if we're recovering from missed runs
+          missed_runs="${{ steps.check_missed_runs.outputs.MISSED_RUNS }}"
+          if [ "$missed_runs" -gt 0 ]; then
+            echo "RECOVERY MODE: Fetching data to recover $missed_runs missed run(s)"
+            echo "GitHub API will provide last 14 days of data including missed days"
+          fi
           
-            clones_json=$(curl -s \
+          echo "Starting traffic data fetch at $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          
+          # Initialize the output JSON structure
+          # This will contain all fetched traffic data
+          cat > traffic_data.json << 'EOF'
+          {
+            "metadata": {
+              "generated_at": "",
+              "repositories": []
+            },
+            "repositories": {}
+          }
+          EOF
+
+          # Set the generation timestamp in metadata
+          jq --arg date "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+             '.metadata.generated_at = $date' \
+             traffic_data.json > tmp.json && mv tmp.json traffic_data.json
+
+          # Loop through each repository and fetch its traffic data
+          for repo in "${repos[@]}"; do
+            echo "Fetching data for: $repo"
+            
+            # Fetch clones data from GitHub API
+            # Uses curl with HTTP status code extraction for error handling
+            clones_response=$(curl -s -w "\n%{http_code}" \
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer ${{ secrets.TRAFFIC_ACTION_TOKEN }}" \
-              -H "X-GitHub-Api-Version: 2026-03-10" \
-              https://api.github.com/repos/$repo/traffic/clones)
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "https://api.github.com/repos/$repo/traffic/clones" 2>&1)
             
-            views_json=$(curl -s \
+            # Extract HTTP status code and JSON body
+            clones_http_code=$(echo "$clones_response" | tail -n1)
+            clones_json=$(echo "$clones_response" | sed '$d')
+            
+            # Validate HTTP response code for clones
+            # ERROR_CODE: TF001 - Traffic Fetch error for clones
+            if [ "$clones_http_code" != "200" ]; then
+              echo "ERROR_CODE: TF001 - Failed to fetch clones for $repo (HTTP $clones_http_code)"
+              echo "Response: $clones_json"
+              exit 1
+            fi
+            
+            # Fetch views data from GitHub API
+            views_response=$(curl -s -w "\n%{http_code}" \
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer ${{ secrets.TRAFFIC_ACTION_TOKEN }}" \
-              -H "X-GitHub-Api-Version: 2026-03-10" \
-              https://api.github.com/repos/$repo/traffic/views)
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "https://api.github.com/repos/$repo/traffic/views" 2>&1)
             
-            referrers_json=$(curl -s \
+            # Extract HTTP status code and JSON body
+            views_http_code=$(echo "$views_response" | tail -n1)
+            views_json=$(echo "$views_response" | sed '$d')
+            
+            # Validate HTTP response code for views
+            # ERROR_CODE: TF002 - Traffic Fetch error for views
+            if [ "$views_http_code" != "200" ]; then
+              echo "ERROR_CODE: TF002 - Failed to fetch views for $repo (HTTP $views_http_code)"
+              echo "Response: $views_json"
+              exit 1
+            fi
+            
+            # Fetch referrers data from GitHub API
+            referrers_response=$(curl -s -w "\n%{http_code}" \
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer ${{ secrets.TRAFFIC_ACTION_TOKEN }}" \
-              -H "X-GitHub-Api-Version: 2026-03-10" \
-              https://api.github.com/repos/$repo/traffic/popular/referrers)
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "https://api.github.com/repos/$repo/traffic/popular/referrers" 2>&1)
             
-            # safe totals (avoid null crash)
+            # Extract HTTP status code and JSON body
+            referrers_http_code=$(echo "$referrers_response" | tail -n1)
+            referrers_json=$(echo "$referrers_response" | sed '$d')
+            
+            # Validate HTTP response code for referrers
+            # ERROR_CODE: TF003 - Traffic Fetch error for referrers
+            if [ "$referrers_http_code" != "200" ]; then
+              echo "ERROR_CODE: TF003 - Failed to fetch referrers for $repo (HTTP $referrers_http_code)"
+              echo "Response: $referrers_json"
+              exit 1
+            fi
+            
+            # Validate JSON structures using jq
+            # This ensures the API returned valid JSON before processing
+            # ERROR_CODE: JV001 - JSON Validation error for clones
+            echo "$clones_json" | jq . >/dev/null 2>&1 || {
+              echo "ERROR_CODE: JV001 - Invalid clones JSON structure for $repo"
+              echo "$clones_json"
+              exit 1
+            }
+            
+            # ERROR_CODE: JV002 - JSON Validation error for views
+            echo "$views_json" | jq . >/dev/null 2>&1 || {
+              echo "ERROR_CODE: JV002 - Invalid views JSON structure for $repo"
+              echo "$views_json"
+              exit 1
+            }
+            
+            # ERROR_CODE: JV003 - JSON Validation error for referrers
+            echo "$referrers_json" | jq . >/dev/null 2>&1 || {
+              echo "ERROR_CODE: JV003 - Invalid referrers JSON structure for $repo"
+              echo "$referrers_json"
+              exit 1
+            }
+            
+            # Extract daily data arrays with safe defaults (empty array if missing)
             clones_daily=$(echo "$clones_json" | jq -c '.clones // []')
             views_daily=$(echo "$views_json" | jq -c '.views // []')
+            
+            # Calculate totals safely using jq
+            # Uses optional chaining (?.) to handle missing fields gracefully
             clones_total=$(echo "$clones_json" | jq '[.clones[]?.count] | add // 0')
+            clones_unique_total=$(echo "$clones_json" | jq '[.clones[]?.uniques] | add // 0')
             views_total=$(echo "$views_json" | jq '[.views[]?.count] | add // 0')
-
-            # JSON validation
-            echo "$clones_daily" | jq . >/dev/null || {
-              echo "❌ Invalid clones structure for $repo"
-              echo "$clones_daily"
-              exit 1
-            }
-            echo "$views_daily" | jq . >/dev/null || {
-              echo "❌ Invalid views structure for $repo"
-              echo "$views_daily"
-              exit 1
-            }
-            echo "$referrers_json" | jq . >/dev/null || { echo "❌ bad referrers JSON for $repo"; echo "$referrers_json"; exit 1; }
-
+            views_unique_total=$(echo "$views_json" | jq '[.views[]?.uniques] | add // 0')
+            
+            # Add repository data to traffic_data.json using jq
+            # Merges clones and views by date, creates daily_data array
+            # Stores referrers and metadata with totals
             jq --arg repo "$repo" \
-               --arg date "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
-               --argjson clones_daily "$clones_daily" \
-               --argjson views_daily "$views_daily" \
+               --argjson clones "$clones_daily" \
+               --argjson views "$views_daily" \
+               --argjson referrers "$referrers_json" \
                --argjson clones_total "$clones_total" \
+               --argjson clones_unique_total "$clones_unique_total" \
                --argjson views_total "$views_total" \
-               --argjson ref "$referrers_json" \
-               '. + [{
-                  "repository": $repo,
-                  "timestamp": $date,
-                  "clones": $clones_daily,
-                  "views": $views_daily,
-                  "clones_total": $clones_total,
-                  "views_total": $views_total,
-                  "referrers": $ref
-               }]' \
-               traffic.json > tmp.json
-      
-            mv tmp.json traffic.json
+               --argjson views_unique_total "$views_unique_total" \
+               --arg fetch_date "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+               '.repositories[$repo] = {
+                 "daily_data": ($clones + $views | map(.timestamp |= .[:10]) | group_by(.timestamp) | map({
+                   date: .[0].timestamp,
+                   clones_total: (.[0].count // 0),
+                   clones_unique: (.[0].uniques // 0),
+                   views_total: (.[1].count // 0),
+                   views_unique: (.[1].uniques // 0)
+                 })),
+                 "referrers": $referrers,
+                 "metadata": {
+                   "last_fetched": $fetch_date,
+                   "clones_total": $clones_total,
+                   "clones_unique_total": $clones_unique_total,
+                   "views_total": $views_total,
+                   "views_unique_total": $views_unique_total
+                 }
+               } |
+               .metadata.repositories += [$repo]' \
+               traffic_data.json > tmp.json && mv tmp.json traffic_data.json
+            
+            echo "Successfully fetched data for: $repo"
           done
+          
+          echo "Traffic data fetch completed at $(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
-      - name: Save history
+      # Step 5: Merge new traffic data with existing history
+      # This step merges the newly fetched data with the historical data in history.json
+      # The merge_history.py script handles zero-filling and deduplication
+      # If recovering from missed runs, the API data (last 14 days) will fill in the gaps
+      # ERROR_CODE: HF001 (History File), MH001 (Merge History)
+      - name: Merge with history
         run: |
-          if [ -f history.json ]; then
-            jq -s '.[0] + .[1]' history.json traffic.json \
-              | jq 'sort_by(.repository, .timestamp) | unique_by(.repository, .timestamp)' > tmp.json
-            mv tmp.json history.json
-          else
-            cp traffic.json history.json
+          set -e  # Exit immediately if any command fails
+          
+          # Check if history.json exists
+          # ERROR_CODE: HF001 - History File not found
+          if [ ! -f history.json ]; then
+            echo "ERROR_CODE: HF001 - history.json not found"
+            exit 1
           fi
-      
-      - name: Debug output
-        run: |
-          echo "Traffic.json:"
-          cat traffic.json | head -n 50
+          
+          # Log if recovering from missed runs
+          missed_runs="${{ steps.check_missed_runs.outputs.MISSED_RUNS }}"
+          if [ "$missed_runs" -gt 0 ]; then
+            echo "RECOVERY MODE: Merging data to recover $missed_runs missed run(s)"
+            echo "API data (last 14 days) will fill in gaps for missed days"
+          fi
+          
+          echo "Merging new traffic data with history..."
+          
+          # Run the merge script
+          # This merges traffic_data.json with history.json
+          # Handles zero-filling, deduplication, and sorting
+          # New data takes precedence for overlapping dates
+          # ERROR_CODE: MH001 - Merge History failed
+          python scripts/merge_history.py traffic_data.json history.json merged_history.json || {
+            echo "ERROR_CODE: MH001 - Failed to merge history data"
+            exit 1
+          }
+          
+          # Replace old history.json with merged version
+          mv merged_history.json history.json
+          
+          echo "History merge completed successfully"
 
-      - name: Show history.json
-        run: cat history.json | head -n 100
-  
-      - name: Prepare folders
-        run: mkdir -p graphs
-
-      - name: Generate dashboard
-        run: python scripts/generate_dashboard.py
-        
-      - name: Commit data
+      # Step 6: Validate the merged history.json structure
+      # This ensures the merged file has the correct structure before proceeding
+      # ERROR_CODE: HV001-002 (History Validation)
+      - name: Validate history.json
         run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git diff --quiet && echo "No changes" || (
-            git add history.json README.md graphs/
-            git commit -m "Update traffic dashboard"
-            git push
-          )
+          set -e  # Exit immediately if any command fails
+          
+          echo "Validating history.json structure..."
+          
+          # Validate that history.json is valid JSON
+          # ERROR_CODE: HV001 - History Validation: Invalid JSON
+          jq . >/dev/null 2>&1 < history.json || {
+            echo "ERROR_CODE: HV001 - history.json is not valid JSON"
+            exit 1
+          }
+          
+          # Check that the required 'repositories' key exists
+          # ERROR_CODE: HV002 - History Validation: Missing key
+          jq 'has("repositories")' >/dev/null 2>&1 < history.json || {
+            echo "ERROR_CODE: HV002 - history.json missing 'repositories' key"
+            exit 1
+          }
+          
+          echo "history.json validation passed"
+
+      # Step 7: Generate graphs and update dashboard
+      # This step generates all required graphs and updates README.md
+      # ERROR_CODE: GD001 (Generate Dashboard)
+      - name: Generate graphs and dashboard
+        run: |
+          set -e  # Exit immediately if any command fails
+          
+          echo "Generating graphs and dashboard..."
+          
+          # Run the dashboard generation script
+          # This generates:
+          # - Daily graphs (30 days)
+          # - Weekly graphs (3 months)
+          # - Bi-weekly graphs (1 year)
+          # - Cumulative graphs (lifetime)
+          # - Updated README.md with statistics and embedded graphs
+          # ERROR_CODE: GD001 - Generate Dashboard failed
+          python scripts/generate_dashboard.py || {
+            echo "ERROR_CODE: GD001 - Failed to generate dashboard"
+            exit 1
+          }
+          
+          echo "Dashboard generation completed successfully"
+
+      # Step 8: Commit and push changes
+      # This step commits the updated history.json, README.md, and graphs
+      # Only commits if there are actual changes
+      - name: Commit changes
+        run: |
+          # Configure git user for the commit
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Check if there are any changes to commit
+          # If no changes, exit gracefully without committing
+          git diff --quiet && git diff --cached --quiet && echo "No changes to commit" && exit 0
+          
+          # Stage the modified files
+          git add history.json README.md graphs/
+          
+          # Commit with a descriptive message including the date
+          # Include note if recovering from missed runs
+          missed_runs="${{ steps.check_missed_runs.outputs.MISSED_RUNS }}"
+          if [ "$missed_runs" -gt 0 ]; then
+            git commit -m "Update traffic dashboard - $(date -u +%Y-%m-%d) [Recovered $missed_runs missed run(s)]"
+          else
+            git commit -m "Update traffic dashboard - $(date -u +%Y-%m-%d)"
+          fi
+          
+          # Push changes to the repository
+          git push
