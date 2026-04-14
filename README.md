@@ -1,52 +1,11 @@
+See full Reference and Usage Guide at:
+https://soul-traveller.github.io/github-traffic-dashboard/
+
 # 📊 GitHub Traffic Dashboard
 
 This dashboard tracks historical traffic data (clones and views) for GitHub repositories.
 
-**Last Updated:** 2026-04-14T17:15:41.896917Z
-
-# Argyll_Printer_Profiler
-
-### 🗅️ Clones
-
-| Period | Total | Unique |
-|--------|-------|--------|
-| Last 30 Days | 53 | 26 |
-| Last 90 Days | 53 | 26 |
-| Lifetime | 53 | 26 |
-
-### 👀 Views
-
-| Period | Total | Unique |
-|--------|-------|--------|
-| Last 30 Days | 57 | 13 |
-| Last 90 Days | 57 | 13 |
-| Lifetime | 57 | 13 |
-
-### 📈 Graphs
-
-**Daily Traffic (30 Days):**
-
-![Daily 30 Days](graphs/soul-traveller_Argyll_Printer_Profiler_daily_30d.png)
-
-**Weekly Traffic (12 Weeks):**
-
-![Weekly 12 Weeks](graphs/soul-traveller_Argyll_Printer_Profiler_weekly_12m.png)
-
-**Bi-Weekly Traffic (26 Periods):**
-
-![Bi-Weekly 26 Periods](graphs/soul-traveller_Argyll_Printer_Profiler_biweekly_26y.png)
-
-**Cumulative Traffic (Lifetime):**
-
-![Cumulative](graphs/soul-traveller_Argyll_Printer_Profiler_cumulative.png)
-
-**Separate Cumulative Graphs:**
-
-![Cumulative Clones](graphs/soul-traveller_Argyll_Printer_Profiler_cumulative_clones.png)
-
-![Cumulative Views](graphs/soul-traveller_Argyll_Printer_Profiler_cumulative_views.png)
-
----
+**Last Updated:** 2026-04-14T17:40:13.185852Z
 
 # rectarg
 
@@ -89,6 +48,50 @@ This dashboard tracks historical traffic data (clones and views) for GitHub repo
 ![Cumulative Clones](graphs/soul-traveller_rectarg_cumulative_clones.png)
 
 ![Cumulative Views](graphs/soul-traveller_rectarg_cumulative_views.png)
+
+---
+
+# Argyll_Printer_Profiler
+
+### 🗅️ Clones
+
+| Period | Total | Unique |
+|--------|-------|--------|
+| Last 30 Days | 53 | 26 |
+| Last 90 Days | 53 | 26 |
+| Lifetime | 53 | 26 |
+
+### 👀 Views
+
+| Period | Total | Unique |
+|--------|-------|--------|
+| Last 30 Days | 57 | 13 |
+| Last 90 Days | 57 | 13 |
+| Lifetime | 57 | 13 |
+
+### 📈 Graphs
+
+**Daily Traffic (30 Days):**
+
+![Daily 30 Days](graphs/soul-traveller_Argyll_Printer_Profiler_daily_30d.png)
+
+**Weekly Traffic (12 Weeks):**
+
+![Weekly 12 Weeks](graphs/soul-traveller_Argyll_Printer_Profiler_weekly_12m.png)
+
+**Bi-Weekly Traffic (26 Periods):**
+
+![Bi-Weekly 26 Periods](graphs/soul-traveller_Argyll_Printer_Profiler_biweekly_26y.png)
+
+**Cumulative Traffic (Lifetime):**
+
+![Cumulative](graphs/soul-traveller_Argyll_Printer_Profiler_cumulative.png)
+
+**Separate Cumulative Graphs:**
+
+![Cumulative Clones](graphs/soul-traveller_Argyll_Printer_Profiler_cumulative_clones.png)
+
+![Cumulative Views](graphs/soul-traveller_Argyll_Printer_Profiler_cumulative_views.png)
 
 ---
 
