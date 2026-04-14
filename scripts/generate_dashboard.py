@@ -11,6 +11,58 @@ This script:
 Error codes: GD001-008
 """
 
+# ============================================================================
+# CONFIGURATION SECTION - MODIFY THESE PARAMETERS FOR YOUR NEEDS
+# ============================================================================
+
+# File Paths Configuration
+# These paths are relative to the repository root directory
+HISTORY_FILE_PATH = "history.json"           # Path to historical traffic data
+README_FILE_PATH = "README.md"               # Path to README file to update
+GRAPHS_DIRECTORY = "graphs"                  # Directory for storing graph images
+
+# Graph Configuration
+# Graph dimensions and quality settings
+GRAPH_DPI = 100                              # Dots per inch for graph quality
+GRAPH_FIGSIZE_DAILY = (12, 6)                # Dimensions for daily graphs (width, height)
+GRAPH_FIGSIZE_WEEKLY = (14, 6)               # Dimensions for weekly graphs
+GRAPH_FIGSIZE_BIWEEKLY = (16, 6)             # Dimensions for bi-weekly graphs
+GRAPH_FIGSIZE_CUMULATIVE = (14, 6)           # Dimensions for cumulative graphs
+
+# Time Period Configuration
+# Number of days for different time periods
+DAILY_GRAPH_DAYS = 30                        # Days to show in daily graphs
+WEEKLY_GRAPH_WEEKS = 12                     # Weeks to show in weekly graphs (3 months)
+BIWEEKLY_GRAPH_PERIODS = 26                 # Bi-weekly periods to show (1 year)
+
+# Statistics Periods
+# Days for calculating statistics
+STATS_PERIOD_30_DAYS = 30                   # Short-term statistics period
+STATS_PERIOD_90_DAYS = 90                   # Medium-term statistics period
+
+# Graph Style Configuration
+# Color schemes for graphs
+CLONES_COLOR = "#2196F3"                    # Blue for clones
+VIEWS_COLOR = "#4CAF50"                     # Green for views
+GRID_COLOR = "#E0E0E0"                      # Light gray for grid lines
+TEXT_COLOR = "#333333"                      # Dark gray for text
+
+# Repository Display Configuration
+# How repository names are displayed in graphs and README
+# Set to True to show full "owner/repo" name, False to show only repo name
+SHOW_FULL_REPO_NAME = False                  # If False, shows only repository name
+
+# README Generation Configuration
+# Settings for README.md generation
+README_HEADER_LEVEL = 1                      # Markdown header level for repository names (1-6)
+INCLUDE_CUMULATIVE_GRAPHS = True            # Whether to include cumulative graphs
+INCLUDE_SEPARATE_CUMULATIVE = True          # Whether to include separate clones/views cumulative graphs
+
+# ============================================================================
+# END OF CONFIGURATION SECTION
+# The following settings typically do not need modification
+# ============================================================================
+
 # Standard library imports
 import json  # For JSON file operations
 import sys   # For system exit and error handling
@@ -91,7 +143,8 @@ def prepare_graphs_directory() -> None:
     """
     try:
         # Create directory if it doesn't exist, don't error if it does
-        os.makedirs("graphs", exist_ok=True)
+        # Uses GRAPHS_DIRECTORY configuration parameter
+        os.makedirs(GRAPHS_DIRECTORY, exist_ok=True)
     except Exception as e:
         # ERROR_CODE: GD005 - Directory creation error
         print(f"ERROR_CODE: GD005 - Error creating graphs directory: {e}", file=sys.stderr)
@@ -381,7 +434,7 @@ def get_cumulative_data(daily_data: List[Dict[str, Any]]) -> Tuple[List[str], Li
 
 
 def create_graph(dates: List[str], values: List[int], title: str, ylabel: str, 
-                 filename: str, color: str = 'blue') -> None:
+                 filename: str, color: str = 'blue', figsize: Tuple[int, int] = None) -> None:
     """
     Create a single-line graph with the given data.
     
@@ -395,6 +448,7 @@ def create_graph(dates: List[str], values: List[int], title: str, ylabel: str,
         ylabel: Label for the y-axis
         filename: Path where the graph image will be saved
         color: Color for the line (default: 'blue')
+        figsize: Figure size as (width, height) tuple (uses GRAPH_FIGSIZE_CUMULATIVE if None)
         
     Raises:
         SystemExit: If graph creation fails (GD006)
@@ -405,22 +459,26 @@ def create_graph(dates: List[str], values: List[int], title: str, ylabel: str,
             print(f"WARNING: No data for graph: {title}")
             return
         
+        # Use configured figure size if not provided
+        if figsize is None:
+            figsize = GRAPH_FIGSIZE_CUMULATIVE
+        
         # Convert date strings to datetime objects for plotting
         dates_dt = [datetime.strptime(d, '%Y-%m-%d') for d in dates]
         
-        # Create a new figure with specified size
-        plt.figure(figsize=(12, 6))
+        # Create a new figure with specified size from configuration
+        plt.figure(figsize=figsize)
         
         # Plot the data with markers
         plt.plot(dates_dt, values, marker='o', linewidth=2, markersize=4, color=color)
         
-        # Set title and axis labels
-        plt.title(title, fontsize=14, fontweight='bold')
-        plt.xlabel('Date', fontsize=12)
-        plt.ylabel(ylabel, fontsize=12)
+        # Set title and axis labels with configured text color
+        plt.title(title, fontsize=14, fontweight='bold', color=TEXT_COLOR)
+        plt.xlabel('Date', fontsize=12, color=TEXT_COLOR)
+        plt.ylabel(ylabel, fontsize=12, color=TEXT_COLOR)
         
-        # Add grid with transparency
-        plt.grid(True, alpha=0.3)
+        # Add grid with configured color and transparency
+        plt.grid(True, color=GRID_COLOR, alpha=0.3)
         
         # Format x-axis to show dates properly
         ax = plt.gca()
@@ -431,8 +489,8 @@ def create_graph(dates: List[str], values: List[int], title: str, ylabel: str,
         # Adjust layout to prevent label cutoff
         plt.tight_layout()
         
-        # Save the figure with high DPI
-        plt.savefig(filename, dpi=150, bbox_inches='tight')
+        # Save the figure with configured DPI
+        plt.savefig(filename, dpi=GRAPH_DPI, bbox_inches='tight')
         
         # Close the figure to free memory
         plt.close()
@@ -444,7 +502,7 @@ def create_graph(dates: List[str], values: List[int], title: str, ylabel: str,
 
 
 def create_multi_line_graph(dates: List[str], clones: List[int], views: List[int], 
-                            title: str, filename: str) -> None:
+                            title: str, filename: str, figsize: Tuple[int, int] = None) -> None:
     """
     Create a multi-line graph showing both clones and views.
     
@@ -458,6 +516,7 @@ def create_multi_line_graph(dates: List[str], clones: List[int], views: List[int
         views: List of view counts corresponding to each date
         title: Title for the graph
         filename: Path where the graph image will be saved
+        figsize: Figure size as (width, height) tuple (uses GRAPH_FIGSIZE_DAILY if None)
         
     Raises:
         SystemExit: If graph creation fails (GD007)
@@ -468,30 +527,34 @@ def create_multi_line_graph(dates: List[str], clones: List[int], views: List[int
             print(f"WARNING: No data for graph: {title}")
             return
         
+        # Use configured figure size if not provided
+        if figsize is None:
+            figsize = GRAPH_FIGSIZE_DAILY
+        
         # Convert date strings to datetime objects for plotting
         dates_dt = [datetime.strptime(d, '%Y-%m-%d') for d in dates]
         
-        # Create a new figure with specified size
-        plt.figure(figsize=(12, 6))
+        # Create a new figure with specified size from configuration
+        plt.figure(figsize=figsize)
         
-        # Plot clones data with green color and circle markers
+        # Plot clones data with configured color and circle markers
         plt.plot(dates_dt, clones, marker='o', linewidth=2, markersize=4, 
-                 color='#2ecc71', label='Clones')
+                 color=CLONES_COLOR, label='Clones')
         
-        # Plot views data with blue color and square markers
+        # Plot views data with configured color and square markers
         plt.plot(dates_dt, views, marker='s', linewidth=2, markersize=4, 
-                 color='#3498db', label='Views')
+                 color=VIEWS_COLOR, label='Views')
         
-        # Set title and axis labels
-        plt.title(title, fontsize=14, fontweight='bold')
-        plt.xlabel('Date', fontsize=12)
-        plt.ylabel('Count', fontsize=12)
+        # Set title and axis labels with configured text color
+        plt.title(title, fontsize=14, fontweight='bold', color=TEXT_COLOR)
+        plt.xlabel('Date', fontsize=12, color=TEXT_COLOR)
+        plt.ylabel('Count', fontsize=12, color=TEXT_COLOR)
         
         # Add legend in upper left corner
         plt.legend(loc='upper left', fontsize=10)
         
-        # Add grid with transparency
-        plt.grid(True, alpha=0.3)
+        # Add grid with configured color and transparency
+        plt.grid(True, color=GRID_COLOR, alpha=0.3)
         
         # Format x-axis to show dates properly
         ax = plt.gca()
@@ -502,8 +565,8 @@ def create_multi_line_graph(dates: List[str], clones: List[int], views: List[int
         # Adjust layout to prevent label cutoff
         plt.tight_layout()
         
-        # Save the figure with high DPI
-        plt.savefig(filename, dpi=150, bbox_inches='tight')
+        # Save the figure with configured DPI
+        plt.savefig(filename, dpi=GRAPH_DPI, bbox_inches='tight')
         
         # Close the figure to free memory
         plt.close()
@@ -518,13 +581,13 @@ def generate_repository_graphs(repo_name: str, daily_data: List[Dict[str, Any]])
     """
     Generate all required graphs for a single repository.
     
-    This function creates six types of graphs:
-    1. Daily traffic (30 days) - shows daily clones and views
-    2. Weekly traffic (3 months) - shows weekly aggregates
-    3. Bi-weekly traffic (1 year) - shows bi-weekly aggregates
-    4. Cumulative traffic - shows running totals of both metrics
-    5. Cumulative clones only - separate cumulative graph for clones
-    6. Cumulative views only - separate cumulative graph for views
+    This function creates up to six types of graphs based on configuration:
+    1. Daily traffic (configurable days) - shows daily clones and views
+    2. Weekly traffic (configurable weeks) - shows weekly aggregates
+    3. Bi-weekly traffic (configurable periods) - shows bi-weekly aggregates
+    4. Cumulative traffic - shows running totals of both metrics (if INCLUDE_CUMULATIVE_GRAPHS)
+    5. Cumulative clones only - separate cumulative graph for clones (if INCLUDE_SEPARATE_CUMULATIVE)
+    6. Cumulative views only - separate cumulative graph for views (if INCLUDE_SEPARATE_CUMULATIVE)
     
     Args:
         repo_name: Full repository name (e.g., 'owner/repo')
@@ -532,98 +595,98 @@ def generate_repository_graphs(repo_name: str, daily_data: List[Dict[str, Any]])
         
     Returns:
         Dictionary mapping graph type to file path:
-        - 'daily_30d': Path to daily 30-day graph
-        - 'weekly_3m': Path to weekly 3-month graph
-        - 'biweekly_1y': Path to bi-weekly 1-year graph
-        - 'cumulative': Path to cumulative graph
-        - 'cumulative_clones': Path to cumulative clones graph
-        - 'cumulative_views': Path to cumulative views graph
+        - 'daily_30d': Path to daily graph
+        - 'weekly_3m': Path to weekly graph
+        - 'biweekly_1y': Path to bi-weekly graph
+        - 'cumulative': Path to cumulative graph (if enabled)
+        - 'cumulative_clones': Path to cumulative clones graph (if enabled)
+        - 'cumulative_views': Path to cumulative views graph (if enabled)
     """
     # Create a safe filename by replacing '/' with '_'
     safe_repo_name = repo_name.replace('/', '_')
     graphs = {}
     
-    # 1. Generate daily traffic graph (30 days with daily intervals)
-    # This shows the most recent 30 days of traffic data
-    daily_dates, daily_clones, daily_views = get_daily_data(daily_data, 30)
+    # 1. Generate daily traffic graph (uses DAILY_GRAPH_DAYS configuration)
+    daily_dates, daily_clones, daily_views = get_daily_data(daily_data, DAILY_GRAPH_DAYS)
     
     if daily_dates:
-        # Create multi-line graph with clones and views
+        # Create multi-line graph with clones and views using DAILY_GRAPH_DAYS
         create_multi_line_graph(
             daily_dates, daily_clones, daily_views,
-            f'Daily Traffic (30 Days) - {repo_name}',
-            f'graphs/{safe_repo_name}_daily_30d.png'
+            f'Daily Traffic ({DAILY_GRAPH_DAYS} Days) - {repo_name}',
+            f'{GRAPHS_DIRECTORY}/{safe_repo_name}_daily_{DAILY_GRAPH_DAYS}d.png',
+            figsize=GRAPH_FIGSIZE_DAILY
         )
         # Store the graph filename
-        graphs['daily_30d'] = f'graphs/{safe_repo_name}_daily_30d.png'
+        graphs['daily'] = f'{GRAPHS_DIRECTORY}/{safe_repo_name}_daily_{DAILY_GRAPH_DAYS}d.png'
     
-    # 2. Generate weekly traffic graph (3 months with weekly intervals)
-    # This aggregates data into weeks for the last 3 months (12 weeks)
-    weekly_dates, weekly_clones, weekly_views = get_weekly_data(daily_data, 12)
+    # 2. Generate weekly traffic graph (uses WEEKLY_GRAPH_WEEKS configuration)
+    weekly_dates, weekly_clones, weekly_views = get_weekly_data(daily_data, WEEKLY_GRAPH_WEEKS)
     
     if weekly_dates:
-        # Create multi-line graph with clones and views
+        # Create multi-line graph with clones and views using WEEKLY_GRAPH_WEEKS
         create_multi_line_graph(
             weekly_dates, weekly_clones, weekly_views,
-            f'Weekly Traffic (3 Months) - {repo_name}',
-            f'graphs/{safe_repo_name}_weekly_3m.png'
+            f'Weekly Traffic ({WEEKLY_GRAPH_WEEKS} Weeks) - {repo_name}',
+            f'{GRAPHS_DIRECTORY}/{safe_repo_name}_weekly_{WEEKLY_GRAPH_WEEKS}m.png',
+            figsize=GRAPH_FIGSIZE_WEEKLY
         )
         # Store the graph filename
-        graphs['weekly_3m'] = f'graphs/{safe_repo_name}_weekly_3m.png'
+        graphs['weekly'] = f'{GRAPHS_DIRECTORY}/{safe_repo_name}_weekly_{WEEKLY_GRAPH_WEEKS}m.png'
     
-    # 3. Generate bi-weekly traffic graph (1 year with bi-weekly intervals)
-    # This aggregates data into 2-week periods for the last year (26 periods)
-    biweekly_dates, biweekly_clones, biweekly_views = get_biweekly_data(daily_data, 26)
+    # 3. Generate bi-weekly traffic graph (uses BIWEEKLY_GRAPH_PERIODS configuration)
+    biweekly_dates, biweekly_clones, biweekly_views = get_biweekly_data(daily_data, BIWEEKLY_GRAPH_PERIODS)
     
     if biweekly_dates:
-        # Create multi-line graph with clones and views
+        # Create multi-line graph with clones and views using BIWEEKLY_GRAPH_PERIODS
         create_multi_line_graph(
             biweekly_dates, biweekly_clones, biweekly_views,
-            f'Bi-Weekly Traffic (1 Year) - {repo_name}',
-            f'graphs/{safe_repo_name}_biweekly_1y.png'
+            f'Bi-Weekly Traffic ({BIWEEKLY_GRAPH_PERIODS} Periods) - {repo_name}',
+            f'{GRAPHS_DIRECTORY}/{safe_repo_name}_biweekly_{BIWEEKLY_GRAPH_PERIODS}y.png',
+            figsize=GRAPH_FIGSIZE_BIWEEKLY
         )
         # Store the graph filename
-        graphs['biweekly_1y'] = f'graphs/{safe_repo_name}_biweekly_1y.png'
+        graphs['biweekly'] = f'{GRAPHS_DIRECTORY}/{safe_repo_name}_biweekly_{BIWEEKLY_GRAPH_PERIODS}y.png'
     
-    # 4. Generate cumulative (additive) traffic graph
-    # This shows running totals over the entire lifetime
+    # 4. Generate cumulative (additive) traffic graph (if INCLUDE_CUMULATIVE_GRAPHS enabled)
     cumulative_dates, cumulative_clones, cumulative_views = get_cumulative_data(daily_data)
     
-    if cumulative_dates:
+    if cumulative_dates and INCLUDE_CUMULATIVE_GRAPHS:
         # Create multi-line graph with cumulative clones and views
         create_multi_line_graph(
             cumulative_dates, cumulative_clones, cumulative_views,
             f'Cumulative Traffic (Lifetime) - {repo_name}',
-            f'graphs/{safe_repo_name}_cumulative.png'
+            f'{GRAPHS_DIRECTORY}/{safe_repo_name}_cumulative.png',
+            figsize=GRAPH_FIGSIZE_CUMULATIVE
         )
         # Store the graph filename
-        graphs['cumulative'] = f'graphs/{safe_repo_name}_cumulative.png'
+        graphs['cumulative'] = f'{GRAPHS_DIRECTORY}/{safe_repo_name}_cumulative.png'
     
-    # 5. Generate cumulative clones only graph
-    # Separate graph showing only cumulative clones over time
-    if cumulative_dates:
+    # 5. Generate cumulative clones only graph (if INCLUDE_SEPARATE_CUMULATIVE enabled)
+    if cumulative_dates and INCLUDE_SEPARATE_CUMULATIVE:
         create_graph(
             cumulative_dates, cumulative_clones,
             f'Cumulative Clones (Lifetime) - {repo_name}',
             'Total Clones',
-            f'graphs/{safe_repo_name}_cumulative_clones.png',
-            color='#2ecc71'  # Green color for clones
+            f'{GRAPHS_DIRECTORY}/{safe_repo_name}_cumulative_clones.png',
+            color=CLONES_COLOR,
+            figsize=GRAPH_FIGSIZE_CUMULATIVE
         )
         # Store the graph filename
-        graphs['cumulative_clones'] = f'graphs/{safe_repo_name}_cumulative_clones.png'
+        graphs['cumulative_clones'] = f'{GRAPHS_DIRECTORY}/{safe_repo_name}_cumulative_clones.png'
     
-    # 6. Generate cumulative views only graph
-    # Separate graph showing only cumulative views over time
-    if cumulative_dates:
+    # 6. Generate cumulative views only graph (if INCLUDE_SEPARATE_CUMULATIVE enabled)
+    if cumulative_dates and INCLUDE_SEPARATE_CUMULATIVE:
         create_graph(
             cumulative_dates, cumulative_views,
             f'Cumulative Views (Lifetime) - {repo_name}',
             'Total Views',
-            f'graphs/{safe_repo_name}_cumulative_views.png',
-            color='#3498db'  # Blue color for views
+            f'{GRAPHS_DIRECTORY}/{safe_repo_name}_cumulative_views.png',
+            color=VIEWS_COLOR,
+            figsize=GRAPH_FIGSIZE_CUMULATIVE
         )
         # Store the graph filename
-        graphs['cumulative_views'] = f'graphs/{safe_repo_name}_cumulative_views.png'
+        graphs['cumulative_views'] = f'{GRAPHS_DIRECTORY}/{safe_repo_name}_cumulative_views.png'
     
     # Return dictionary of all generated graphs
     return graphs
@@ -637,8 +700,8 @@ def generate_readme(history_data: Dict[str, Any]) -> None:
     - Dashboard title and description
     - Last updated timestamp
     - Per-repository sections with:
-      - Clone statistics (30 days, 90 days, lifetime)
-      - View statistics (30 days, 90 days, lifetime)
+      - Clone statistics in table format (configurable periods)
+      - View statistics in table format (configurable periods)
       - All generated graphs embedded as images
     
     Args:
@@ -664,52 +727,44 @@ def generate_readme(history_data: Dict[str, Any]) -> None:
         daily_data = repo_data.get('daily_data', [])
         metadata = repo_data.get('metadata', {})
         
-        # Add repository section header
-        md += f"## {repo_name}\n\n"
+        # Determine display name based on SHOW_FULL_REPO_NAME configuration
+        if SHOW_FULL_REPO_NAME:
+            display_name = repo_name
+        else:
+            # Extract only repository name (after the last '/')
+            display_name = repo_name.split('/')[-1]
         
-        # Calculate statistics for different time periods
-        # 30 days (1 month)
-        stats_30d = calculate_period_stats(daily_data, 30)
-        # 90 days (3 months)
-        stats_90d = calculate_period_stats(daily_data, 90)
+        # Add repository section header using configured header level
+        header_prefix = '#' * README_HEADER_LEVEL
+        md += f"{header_prefix} {display_name}\n\n"
+        
+        # Calculate statistics for different time periods using configuration
+        # Short-term period (configurable, default 30 days)
+        stats_short = calculate_period_stats(daily_data, STATS_PERIOD_30_DAYS)
+        # Medium-term period (configurable, default 90 days)
+        stats_medium = calculate_period_stats(daily_data, STATS_PERIOD_90_DAYS)
         # Lifetime (all available data)
         stats_lifetime = calculate_lifetime_stats(daily_data)
         
         # Add Clones section with emoji
         md += "### \U0001f5c5\ufe0f Clones\n\n"
         
-        # Last 30 Days statistics
-        md += "**Last 30 Days:**\n"
-        md += f"- Total: **{stats_30d['clones_total']}**\n"
-        md += f"- Unique: **{stats_30d['clones_unique']}**\n\n"
-        
-        # Last 90 Days (3 Months) statistics
-        md += "**Last 90 Days (3 Months):**\n"
-        md += f"- Total: **{stats_90d['clones_total']}**\n"
-        md += f"- Unique: **{stats_90d['clones_unique']}**\n\n"
-        
-        # Lifetime statistics
-        md += "**Lifetime:**\n"
-        md += f"- Total: **{stats_lifetime['clones_total']}**\n"
-        md += f"- Unique: **{stats_lifetime['clones_unique']}**\n\n"
+        # Create professional table for clones statistics
+        md += "| Period | Total | Unique |\n"
+        md += "|--------|-------|--------|\n"
+        md += f"| Last {STATS_PERIOD_30_DAYS} Days | {stats_short['clones_total']} | {stats_short['clones_unique']} |\n"
+        md += f"| Last {STATS_PERIOD_90_DAYS} Days | {stats_medium['clones_total']} | {stats_medium['clones_unique']} |\n"
+        md += f"| Lifetime | {stats_lifetime['clones_total']} | {stats_lifetime['clones_unique']} |\n\n"
         
         # Add Views section with emoji
         md += "### \U0001f440 Views\n\n"
         
-        # Last 30 Days statistics
-        md += "**Last 30 Days:**\n"
-        md += f"- Total: **{stats_30d['views_total']}**\n"
-        md += f"- Unique: **{stats_30d['views_unique']}**\n\n"
-        
-        # Last 90 Days (3 Months) statistics
-        md += "**Last 90 Days (3 Months):**\n"
-        md += f"- Total: **{stats_90d['views_total']}**\n"
-        md += f"- Unique: **{stats_90d['views_unique']}**\n\n"
-        
-        # Lifetime statistics
-        md += "**Lifetime:**\n"
-        md += f"- Total: **{stats_lifetime['views_total']}**\n"
-        md += f"- Unique: **{stats_lifetime['views_unique']}**\n\n"
+        # Create professional table for views statistics
+        md += "| Period | Total | Unique |\n"
+        md += "|--------|-------|--------|\n"
+        md += f"| Last {STATS_PERIOD_30_DAYS} Days | {stats_short['views_total']} | {stats_short['views_unique']} |\n"
+        md += f"| Last {STATS_PERIOD_90_DAYS} Days | {stats_medium['views_total']} | {stats_medium['views_unique']} |\n"
+        md += f"| Lifetime | {stats_lifetime['views_total']} | {stats_lifetime['views_unique']} |\n\n"
         
         # Generate all graphs for this repository
         print(f"Generating graphs for {repo_name}...")
@@ -719,27 +774,27 @@ def generate_readme(history_data: Dict[str, Any]) -> None:
         md += "### \U0001f4c8 Graphs\n\n"
         
         # Embed Daily Traffic graph if available
-        if 'daily_30d' in graphs:
-            md += f"**Daily Traffic (30 Days):**\n\n"
-            md += f"![Daily 30 Days]({graphs['daily_30d']})\n\n"
+        if 'daily' in graphs:
+            md += f"**Daily Traffic ({DAILY_GRAPH_DAYS} Days):**\n\n"
+            md += f"![Daily {DAILY_GRAPH_DAYS} Days]({graphs['daily']})\n\n"
         
         # Embed Weekly Traffic graph if available
-        if 'weekly_3m' in graphs:
-            md += f"**Weekly Traffic (3 Months):**\n\n"
-            md += f"![Weekly 3 Months]({graphs['weekly_3m']})\n\n"
+        if 'weekly' in graphs:
+            md += f"**Weekly Traffic ({WEEKLY_GRAPH_WEEKS} Weeks):**\n\n"
+            md += f"![Weekly {WEEKLY_GRAPH_WEEKS} Weeks]({graphs['weekly']})\n\n"
         
         # Embed Bi-Weekly Traffic graph if available
-        if 'biweekly_1y' in graphs:
-            md += f"**Bi-Weekly Traffic (1 Year):**\n\n"
-            md += f"![Bi-Weekly 1 Year]({graphs['biweekly_1y']})\n\n"
+        if 'biweekly' in graphs:
+            md += f"**Bi-Weekly Traffic ({BIWEEKLY_GRAPH_PERIODS} Periods):**\n\n"
+            md += f"![Bi-Weekly {BIWEEKLY_GRAPH_PERIODS} Periods]({graphs['biweekly']})\n\n"
         
-        # Embed Cumulative Traffic graph if available
-        if 'cumulative' in graphs:
+        # Embed Cumulative Traffic graph if available and enabled
+        if 'cumulative' in graphs and INCLUDE_CUMULATIVE_GRAPHS:
             md += f"**Cumulative Traffic (Lifetime):**\n\n"
             md += f"![Cumulative]({graphs['cumulative']})\n\n"
         
-        # Embed separate cumulative graphs if available
-        if 'cumulative_clones' in graphs and 'cumulative_views' in graphs:
+        # Embed separate cumulative graphs if available and enabled
+        if 'cumulative_clones' in graphs and 'cumulative_views' in graphs and INCLUDE_SEPARATE_CUMULATIVE:
             md += "**Separate Cumulative Graphs:**\n\n"
             md += f"![Cumulative Clones]({graphs['cumulative_clones']})\n\n"
             md += f"![Cumulative Views]({graphs['cumulative_views']})\n\n"
@@ -750,8 +805,8 @@ def generate_readme(history_data: Dict[str, Any]) -> None:
     # Add footer with automation note
     md += "*This dashboard is automatically updated daily using GitHub Actions.*\n"
     
-    # Save the generated README.md
-    save_file(md, "README.md")
+    # Save the generated README.md using configured path
+    save_file(md, README_FILE_PATH)
 
 
 def main():
@@ -759,11 +814,11 @@ def main():
     Main function to generate the GitHub traffic dashboard.
     
     This function orchestrates the entire dashboard generation process:
-    1. Loads historical data from history.json
+    1. Loads historical data from configured HISTORY_FILE_PATH
     2. Validates the data structure
-    3. Prepares the graphs directory
-    4. Generates all graphs and statistics
-    5. Updates README.md with the new content
+    3. Prepares the graphs directory using GRAPHS_DIRECTORY
+    4. Generates all graphs and statistics using configuration
+    5. Updates README.md using configured README_FILE_PATH
     
     Raises:
         SystemExit: If any step fails (various error codes)
@@ -771,9 +826,9 @@ def main():
     # Print start message
     print("Starting dashboard generation...")
     
-    # Load the history data from history.json
-    print("Loading history.json...")
-    history_data = load_json_file("history.json")
+    # Load the history data from configured HISTORY_FILE_PATH
+    print(f"Loading {HISTORY_FILE_PATH}...")
+    history_data = load_json_file(HISTORY_FILE_PATH)
     
     # Validate that the history data has the required structure
     # ERROR_CODE: GD008 - Missing repositories key
@@ -781,11 +836,11 @@ def main():
         print("ERROR_CODE: GD008 - history.json missing 'repositories' key", file=sys.stderr)
         sys.exit(1)
     
-    # Ensure the graphs directory exists
+    # Ensure the graphs directory exists using GRAPHS_DIRECTORY
     prepare_graphs_directory()
     
     # Generate README.md with all statistics and embedded graphs
-    print("Generating README.md with graphs...")
+    print(f"Generating {README_FILE_PATH} with graphs...")
     generate_readme(history_data)
     
     # Print completion message

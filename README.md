@@ -4,35 +4,23 @@ This dashboard tracks historical traffic data (clones and views) for GitHub repo
 
 **Last Updated:** 2026-04-13T18:52:54.333919Z
 
-## soul-traveller/Argyll_Printer_Profiler
+# Argyll_Printer_Profiler
 
 ### 🗅️ Clones
 
-**Last 30 Days:**
-- Total: **2**
-- Unique: **2**
-
-**Last 90 Days (3 Months):**
-- Total: **2**
-- Unique: **2**
-
-**Lifetime:**
-- Total: **2**
-- Unique: **2**
+| Period | Total | Unique |
+|--------|-------|--------|
+| Last 30 Days | 2 | 2 |
+| Last 90 Days | 2 | 2 |
+| Lifetime | 2 | 2 |
 
 ### 👀 Views
 
-**Last 30 Days:**
-- Total: **31**
-- Unique: **12**
-
-**Last 90 Days (3 Months):**
-- Total: **31**
-- Unique: **12**
-
-**Lifetime:**
-- Total: **31**
-- Unique: **12**
+| Period | Total | Unique |
+|--------|-------|--------|
+| Last 30 Days | 31 | 12 |
+| Last 90 Days | 31 | 12 |
+| Lifetime | 31 | 12 |
 
 ### 📈 Graphs
 
@@ -40,13 +28,13 @@ This dashboard tracks historical traffic data (clones and views) for GitHub repo
 
 ![Daily 30 Days](graphs/soul-traveller_Argyll_Printer_Profiler_daily_30d.png)
 
-**Weekly Traffic (3 Months):**
+**Weekly Traffic (12 Weeks):**
 
-![Weekly 3 Months](graphs/soul-traveller_Argyll_Printer_Profiler_weekly_3m.png)
+![Weekly 12 Weeks](graphs/soul-traveller_Argyll_Printer_Profiler_weekly_12m.png)
 
-**Bi-Weekly Traffic (1 Year):**
+**Bi-Weekly Traffic (26 Periods):**
 
-![Bi-Weekly 1 Year](graphs/soul-traveller_Argyll_Printer_Profiler_biweekly_1y.png)
+![Bi-Weekly 26 Periods](graphs/soul-traveller_Argyll_Printer_Profiler_biweekly_26y.png)
 
 **Cumulative Traffic (Lifetime):**
 
@@ -60,35 +48,23 @@ This dashboard tracks historical traffic data (clones and views) for GitHub repo
 
 ---
 
-## soul-traveller/Toggle_Display_Profile
+# Toggle_Display_Profile
 
 ### 🗅️ Clones
 
-**Last 30 Days:**
-- Total: **98**
-- Unique: **56**
-
-**Last 90 Days (3 Months):**
-- Total: **98**
-- Unique: **56**
-
-**Lifetime:**
-- Total: **98**
-- Unique: **56**
+| Period | Total | Unique |
+|--------|-------|--------|
+| Last 30 Days | 98 | 56 |
+| Last 90 Days | 98 | 56 |
+| Lifetime | 98 | 56 |
 
 ### 👀 Views
 
-**Last 30 Days:**
-- Total: **75**
-- Unique: **7**
-
-**Last 90 Days (3 Months):**
-- Total: **75**
-- Unique: **7**
-
-**Lifetime:**
-- Total: **75**
-- Unique: **7**
+| Period | Total | Unique |
+|--------|-------|--------|
+| Last 30 Days | 75 | 7 |
+| Last 90 Days | 75 | 7 |
+| Lifetime | 75 | 7 |
 
 ### 📈 Graphs
 
@@ -96,13 +72,13 @@ This dashboard tracks historical traffic data (clones and views) for GitHub repo
 
 ![Daily 30 Days](graphs/soul-traveller_Toggle_Display_Profile_daily_30d.png)
 
-**Weekly Traffic (3 Months):**
+**Weekly Traffic (12 Weeks):**
 
-![Weekly 3 Months](graphs/soul-traveller_Toggle_Display_Profile_weekly_3m.png)
+![Weekly 12 Weeks](graphs/soul-traveller_Toggle_Display_Profile_weekly_12m.png)
 
-**Bi-Weekly Traffic (1 Year):**
+**Bi-Weekly Traffic (26 Periods):**
 
-![Bi-Weekly 1 Year](graphs/soul-traveller_Toggle_Display_Profile_biweekly_1y.png)
+![Bi-Weekly 26 Periods](graphs/soul-traveller_Toggle_Display_Profile_biweekly_26y.png)
 
 **Cumulative Traffic (Lifetime):**
 
@@ -116,35 +92,23 @@ This dashboard tracks historical traffic data (clones and views) for GitHub repo
 
 ---
 
-## soul-traveller/rectarg
+# rectarg
 
 ### 🗅️ Clones
 
-**Last 30 Days:**
-- Total: **8**
-- Unique: **8**
-
-**Last 90 Days (3 Months):**
-- Total: **8**
-- Unique: **8**
-
-**Lifetime:**
-- Total: **8**
-- Unique: **8**
+| Period | Total | Unique |
+|--------|-------|--------|
+| Last 30 Days | 8 | 8 |
+| Last 90 Days | 8 | 8 |
+| Lifetime | 8 | 8 |
 
 ### 👀 Views
 
-**Last 30 Days:**
-- Total: **4**
-- Unique: **2**
-
-**Last 90 Days (3 Months):**
-- Total: **4**
-- Unique: **2**
-
-**Lifetime:**
-- Total: **4**
-- Unique: **2**
+| Period | Total | Unique |
+|--------|-------|--------|
+| Last 30 Days | 4 | 2 |
+| Last 90 Days | 4 | 2 |
+| Lifetime | 4 | 2 |
 
 ### 📈 Graphs
 
@@ -152,13 +116,13 @@ This dashboard tracks historical traffic data (clones and views) for GitHub repo
 
 ![Daily 30 Days](graphs/soul-traveller_rectarg_daily_30d.png)
 
-**Weekly Traffic (3 Months):**
+**Weekly Traffic (12 Weeks):**
 
-![Weekly 3 Months](graphs/soul-traveller_rectarg_weekly_3m.png)
+![Weekly 12 Weeks](graphs/soul-traveller_rectarg_weekly_12m.png)
 
-**Bi-Weekly Traffic (1 Year):**
+**Bi-Weekly Traffic (26 Periods):**
 
-![Bi-Weekly 1 Year](graphs/soul-traveller_rectarg_biweekly_1y.png)
+![Bi-Weekly 26 Periods](graphs/soul-traveller_rectarg_biweekly_26y.png)
 
 **Cumulative Traffic (Lifetime):**
 

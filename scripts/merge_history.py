@@ -30,6 +30,44 @@ The script handles:
 Error codes: MH001-007
 """
 
+# ============================================================================
+# CONFIGURATION SECTION - MODIFY THESE PARAMETERS FOR YOUR NEEDS
+# ============================================================================
+
+# File Paths Configuration
+# These are the default paths, but can be overridden via command-line arguments
+DEFAULT_HISTORY_FILE = "history.json"           # Path to existing historical data
+DEFAULT_NEW_DATA_FILE = "traffic_data.json"     # Path to newly fetched data
+DEFAULT_OUTPUT_FILE = "merged_history.json"     # Path for merged output
+
+# Data Handling Configuration
+# Settings for how data is merged and processed
+ZERO_FILL_ENABLED = True                       # Whether to fill missing dates with zeros
+ZERO_FILL_START_OFFSET_DAYS = 365              # Days before earliest data to start zero-filling
+RECALCULATE_TOTALS = True                      # Whether to recalculate totals after merge
+VALIDATE_STRUCTURE = True                      # Whether to validate JSON structure
+
+# Date Configuration
+# Timezone and date format settings
+TIMEZONE = "UTC"                               # Timezone for all date calculations
+DATE_FORMAT = "%Y-%m-%d"                       # Date format for string representation
+DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%SZ"        # DateTime format for timestamps
+
+# Data Retention Configuration
+# Settings for how much historical data to keep
+MAX_HISTORY_DAYS = None                         # Maximum days of history to retain
+# Set to None to keep all data (no limit), or e.g 365 for one year.
+
+# Merge Strategy Configuration
+# Settings for how conflicts are resolved during merge
+NEW_DATA_TAKES_PRECEDENCE = True               # New data overwrites existing data for same date
+KEEP_OLD_METADATA_IF_NEW_MISSING = True       # Keep old metadata if new data doesn't have it
+
+# ============================================================================
+# END OF CONFIGURATION SECTION
+# The following settings typically do not need modification
+# ============================================================================
+
 # Standard library imports
 import json  # For JSON file operations
 import sys   # For system exit and error handling
