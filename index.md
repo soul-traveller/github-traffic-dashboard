@@ -1,5 +1,8 @@
 # GitHub Traffic Dashboard - User Guide
 
+This is a user guide for the GitHub Traffic Dashboard. It provides instructions on how to use the dashboard and its features. This Reference and Usage Guide can be found at:<br>
+https://soul-traveller.github.io/github-traffic-dashboard/
+
 ## Table of Contents
 
 - [Overview](#overview)
