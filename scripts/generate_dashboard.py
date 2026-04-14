@@ -708,8 +708,12 @@ def generate_readme(history_data: Dict[str, Any]) -> None:
         history_data: Dictionary containing the complete history data with
                       metadata and repositories sections
     """
+    # Reference to user guide
+    md = "See full Reference and Usage Guide at:\n"
+    md += "https://soul-traveller.github.io/github-traffic-dashboard/\n\n"
+
     # Start with dashboard title and description
-    md = "# \U0001f4ca GitHub Traffic Dashboard\n\n"
+    md += "# \U0001f4ca GitHub Traffic Dashboard\n\n"
     md += "This dashboard tracks historical traffic data (clones and views) for GitHub repositories.\n\n"
     
     # Add last updated timestamp if available
