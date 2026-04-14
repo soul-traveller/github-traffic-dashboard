@@ -2,37 +2,93 @@
 
 This dashboard tracks historical traffic data (clones and views) for GitHub repositories.
 
-**Last Updated:** 2026-04-13T18:52:54.333919Z
+**Last Updated:** 2026-04-14T04:42:42.094843Z
+
+## soul-traveller/rectarg
+
+### 🗅️ Clones
+
+**Last 30 Days:**
+- Total: **9**
+- Unique: **9**
+
+**Last 90 Days (3 Months):**
+- Total: **9**
+- Unique: **9**
+
+**Lifetime:**
+- Total: **9**
+- Unique: **9**
+
+### 👀 Views
+
+**Last 30 Days:**
+- Total: **5**
+- Unique: **3**
+
+**Last 90 Days (3 Months):**
+- Total: **5**
+- Unique: **3**
+
+**Lifetime:**
+- Total: **5**
+- Unique: **3**
+
+### 📈 Graphs
+
+**Daily Traffic (30 Days):**
+
+![Daily 30 Days](graphs/soul-traveller_rectarg_daily_30d.png)
+
+**Weekly Traffic (3 Months):**
+
+![Weekly 3 Months](graphs/soul-traveller_rectarg_weekly_3m.png)
+
+**Bi-Weekly Traffic (1 Year):**
+
+![Bi-Weekly 1 Year](graphs/soul-traveller_rectarg_biweekly_1y.png)
+
+**Cumulative Traffic (Lifetime):**
+
+![Cumulative](graphs/soul-traveller_rectarg_cumulative.png)
+
+**Separate Cumulative Graphs:**
+
+![Cumulative Clones](graphs/soul-traveller_rectarg_cumulative_clones.png)
+
+![Cumulative Views](graphs/soul-traveller_rectarg_cumulative_views.png)
+
+---
 
 ## soul-traveller/Argyll_Printer_Profiler
 
 ### 🗅️ Clones
 
 **Last 30 Days:**
-- Total: **2**
-- Unique: **2**
+- Total: **52**
+- Unique: **25**
 
 **Last 90 Days (3 Months):**
-- Total: **2**
-- Unique: **2**
+- Total: **52**
+- Unique: **25**
 
 **Lifetime:**
-- Total: **2**
-- Unique: **2**
+- Total: **52**
+- Unique: **25**
 
 ### 👀 Views
 
 **Last 30 Days:**
-- Total: **31**
-- Unique: **12**
+- Total: **57**
+- Unique: **13**
 
 **Last 90 Days (3 Months):**
-- Total: **31**
-- Unique: **12**
+- Total: **57**
+- Unique: **13**
 
 **Lifetime:**
-- Total: **31**
-- Unique: **12**
+- Total: **57**
+- Unique: **13**
 
 ### 📈 Graphs
 
@@ -65,30 +121,30 @@ This dashboard tracks historical traffic data (clones and views) for GitHub repo
 ### 🗅️ Clones
 
 **Last 30 Days:**
-- Total: **98**
-- Unique: **56**
+- Total: **100**
+- Unique: **58**
 
 **Last 90 Days (3 Months):**
-- Total: **98**
-- Unique: **56**
+- Total: **100**
+- Unique: **58**
 
 **Lifetime:**
-- Total: **98**
-- Unique: **56**
+- Total: **100**
+- Unique: **58**
 
 ### 👀 Views
 
 **Last 30 Days:**
-- Total: **75**
-- Unique: **7**
+- Total: **84**
+- Unique: **8**
 
 **Last 90 Days (3 Months):**
-- Total: **75**
-- Unique: **7**
+- Total: **84**
+- Unique: **8**
 
 **Lifetime:**
-- Total: **75**
-- Unique: **7**
+- Total: **84**
+- Unique: **8**
 
 ### 📈 Graphs
 
@@ -113,62 +169,6 @@ This dashboard tracks historical traffic data (clones and views) for GitHub repo
 ![Cumulative Clones](graphs/soul-traveller_Toggle_Display_Profile_cumulative_clones.png)
 
 ![Cumulative Views](graphs/soul-traveller_Toggle_Display_Profile_cumulative_views.png)
-
----
-
-## soul-traveller/rectarg
-
-### 🗅️ Clones
-
-**Last 30 Days:**
-- Total: **8**
-- Unique: **8**
-
-**Last 90 Days (3 Months):**
-- Total: **8**
-- Unique: **8**
-
-**Lifetime:**
-- Total: **8**
-- Unique: **8**
-
-### 👀 Views
-
-**Last 30 Days:**
-- Total: **4**
-- Unique: **2**
-
-**Last 90 Days (3 Months):**
-- Total: **4**
-- Unique: **2**
-
-**Lifetime:**
-- Total: **4**
-- Unique: **2**
-
-### 📈 Graphs
-
-**Daily Traffic (30 Days):**
-
-![Daily 30 Days](graphs/soul-traveller_rectarg_daily_30d.png)
-
-**Weekly Traffic (3 Months):**
-
-![Weekly 3 Months](graphs/soul-traveller_rectarg_weekly_3m.png)
-
-**Bi-Weekly Traffic (1 Year):**
-
-![Bi-Weekly 1 Year](graphs/soul-traveller_rectarg_biweekly_1y.png)
-
-**Cumulative Traffic (Lifetime):**
-
-![Cumulative](graphs/soul-traveller_rectarg_cumulative.png)
-
-**Separate Cumulative Graphs:**
-
-![Cumulative Clones](graphs/soul-traveller_rectarg_cumulative_clones.png)
-
-![Cumulative Views](graphs/soul-traveller_rectarg_cumulative_views.png)
 
 ---
 
