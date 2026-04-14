@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "generated_at": "2026-04-14T17:00:37Z",
-    "last_updated": "2026-04-14T17:00:39.001702Z",
+    "generated_at": "2026-04-13T18:41:38.805420Z",
+    "last_updated": "2026-04-13T18:52:54.333919Z",
     "repositories": [
       "soul-traveller/Argyll_Printer_Profiler",
       "soul-traveller/Toggle_Display_Profile",
@@ -11,6 +11,13 @@
   "repositories": {
     "soul-traveller/Argyll_Printer_Profiler": {
       "daily_data": [
+        {
+          "date": "2025-04-13",
+          "clones_total": 0,
+          "clones_unique": 0,
+          "views_total": 0,
+          "views_unique": 0
+        },
         {
           "date": "2025-04-14",
           "clones_total": 0,
@@ -2554,20 +2561,13 @@
         },
         {
           "date": "2026-04-12",
-          "clones_total": 50,
-          "clones_unique": 23,
-          "views_total": 26,
-          "views_unique": 1
-        },
-        {
-          "date": "2026-04-13",
-          "clones_total": 1,
-          "clones_unique": 1,
+          "clones_total": 0,
+          "clones_unique": 0,
           "views_total": 0,
           "views_unique": 0
         },
         {
-          "date": "2026-04-14",
+          "date": "2026-04-13",
           "clones_total": 0,
           "clones_unique": 0,
           "views_total": 0,
@@ -2577,25 +2577,32 @@
       "referrers": [
         {
           "referrer": "soul-traveller.github.io",
-          "count": 13,
-          "uniques": 2
+          "count": 15,
+          "uniques": 5
         },
         {
           "referrer": "github.com",
-          "count": 12,
+          "count": 5,
           "uniques": 1
         }
       ],
       "metadata": {
-        "last_fetched": "2026-04-14T17:00:38Z",
-        "clones_total": 53,
-        "clones_unique_total": 26,
-        "views_total": 57,
-        "views_unique_total": 13
+        "last_fetched": "2026-04-13T04:51:03Z",
+        "clones_total": 2,
+        "clones_unique_total": 2,
+        "views_total": 31,
+        "views_unique_total": 12
       }
     },
     "soul-traveller/Toggle_Display_Profile": {
       "daily_data": [
+        {
+          "date": "2025-04-13",
+          "clones_total": 0,
+          "clones_unique": 0,
+          "views_total": 0,
+          "views_unique": 0
+        },
         {
           "date": "2025-04-14",
           "clones_total": 0,
@@ -5139,20 +5146,13 @@
         },
         {
           "date": "2026-04-12",
-          "clones_total": 2,
-          "clones_unique": 2,
-          "views_total": 9,
-          "views_unique": 1
-        },
-        {
-          "date": "2026-04-13",
           "clones_total": 0,
           "clones_unique": 0,
           "views_total": 0,
           "views_unique": 0
         },
         {
-          "date": "2026-04-14",
+          "date": "2026-04-13",
           "clones_total": 0,
           "clones_unique": 0,
           "views_total": 0,
@@ -5161,26 +5161,33 @@
       ],
       "referrers": [
         {
-          "referrer": "github.com",
-          "count": 19,
-          "uniques": 2
+          "referrer": "soul-traveller.github.io",
+          "count": 22,
+          "uniques": 1
         },
         {
-          "referrer": "soul-traveller.github.io",
-          "count": 19,
-          "uniques": 1
+          "referrer": "github.com",
+          "count": 11,
+          "uniques": 2
         }
       ],
       "metadata": {
-        "last_fetched": "2026-04-14T17:00:38Z",
-        "clones_total": 100,
-        "clones_unique_total": 58,
-        "views_total": 84,
-        "views_unique_total": 8
+        "last_fetched": "2026-04-13T04:51:03Z",
+        "clones_total": 98,
+        "clones_unique_total": 56,
+        "views_total": 75,
+        "views_unique_total": 7
       }
     },
     "soul-traveller/rectarg": {
       "daily_data": [
+        {
+          "date": "2025-04-13",
+          "clones_total": 0,
+          "clones_unique": 0,
+          "views_total": 0,
+          "views_unique": 0
+        },
         {
           "date": "2025-04-14",
           "clones_total": 0,
@@ -7724,20 +7731,13 @@
         },
         {
           "date": "2026-04-12",
-          "clones_total": 1,
-          "clones_unique": 1,
-          "views_total": 1,
-          "views_unique": 1
-        },
-        {
-          "date": "2026-04-13",
           "clones_total": 0,
           "clones_unique": 0,
           "views_total": 0,
           "views_unique": 0
         },
         {
-          "date": "2026-04-14",
+          "date": "2026-04-13",
           "clones_total": 0,
           "clones_unique": 0,
           "views_total": 0,
@@ -7747,16 +7747,16 @@
       "referrers": [
         {
           "referrer": "github.com",
-          "count": 4,
+          "count": 3,
           "uniques": 1
         }
       ],
       "metadata": {
-        "last_fetched": "2026-04-14T17:00:38Z",
-        "clones_total": 9,
-        "clones_unique_total": 9,
-        "views_total": 5,
-        "views_unique_total": 3
+        "last_fetched": "2026-04-13T04:51:04Z",
+        "clones_total": 8,
+        "clones_unique_total": 8,
+        "views_total": 4,
+        "views_unique_total": 2
       }
     }
   }
