@@ -54,7 +54,10 @@ The **GitHub Traffic Dashboard** is a production-ready solution for automaticall
 
 - **Automatic Data Collection**: Runs daily via GitHub Actions to fetch traffic data from GitHub API
 - **Professional Graphs**: Generates 6 types of graphs for each repository (daily, weekly, bi-weekly, cumulative)
-- **Detailed Statistics**: Calculates statistics for 30 days, 90 days, and lifetime
+- **Detailed Statistics**: Calculates statistics for configurable short-term, medium-term, and lifetime periods
+- **Referrer Analysis**: Tracks top referrer sources and unique referrer counts
+- **Visitor Engagement**: Analyzes repeat visitors vs new visitors
+- **Clickable Navigation**: Auto-generated table of contents for quick repository access
 - **Robust Error Handling**: Comprehensive error codes and clear error messages
 - **Server Downtime Recovery**: Automatically recovers up to 14 days of missed data
 - **Calendar Edge Case Handling**: Correctly handles year transitions, leap years, and month boundaries
@@ -65,8 +68,11 @@ The **GitHub Traffic Dashboard** is a production-ready solution for automaticall
 1. **Fetches Data**: Daily at 2 AM UTC, the workflow fetches traffic data (clones, views, referrers) from GitHub API
 2. **Merges Data**: New data is merged with historical data, with zero-filling for missing dates
 3. **Generates Graphs**: Creates professional graphs showing traffic trends over different time periods
-4. **Calculates Statistics**: Computes totals and unique counts for 30 days, 90 days, and lifetime
-5. **Updates Dashboard**: Automatically updates README.md with statistics and embedded graph images
+4. **Calculates Statistics**: Computes totals and unique counts for configurable short-term, medium-term, and lifetime periods
+5. **Analyzes Referrers**: Tracks top referrer sources and unique referrer counts
+6. **Measures Engagement**: Calculates repeat visitors vs new visitors
+7. **Creates Navigation**: Auto-generates clickable table of contents for quick access
+8. **Updates Dashboard**: Automatically updates README.md with statistics, tables, and embedded graph images
 
 ### Key Benefits
 
@@ -83,6 +89,8 @@ The **GitHub Traffic Dashboard** is a production-ready solution for automaticall
 
 Get started in 3 simple steps:
 
+**Using Command Line:**
+
 1. **Clone the repository**
    ```bash
    git clone https://github.com/soul-traveller/github-traffic-dashboard.git
@@ -91,8 +99,27 @@ Get started in 3 simple steps:
 
 2. **Configure your repositories**
    - Edit `.github/workflows/main.yml`
-   - Add your repositories in the `repos` array (lines 156-160)
+   - Add your repositories in the `repos` array (lines 151-158)
    - Example: `"your-username/your-repo"`
+
+3. **Set up GitHub secret**
+   - Go to repository Settings > Secrets and variables > Actions
+   - Create a new secret named `TRAFFIC_ACTION_TOKEN`
+   - Generate a Personal Access Token with `repo` scope and paste it
+
+**Using GitHub Desktop:**
+
+1. **Clone the repository**
+   - Open GitHub Desktop
+   - Click "File" > "Clone Repository"
+   - URL: `https://github.com/soul-traveller/github-traffic-dashboard.git`
+   - Local path: Choose a folder
+   - Click "Clone"
+
+2. **Configure your repositories**
+   - Open the cloned repository in your text editor
+   - Navigate to `.github/workflows/main.yml`
+   - Edit line 151-158 to add your repositories
 
 3. **Set up GitHub secret**
    - Go to repository Settings > Secrets and variables > Actions
@@ -118,6 +145,8 @@ Before using the GitHub Traffic Dashboard, ensure you have:
 
 #### Option 1: Clone and Use (Recommended)
 
+**Using Command Line:**
+
 1. Clone the repository:
    ```bash
    git clone https://github.com/soul-traveller/github-traffic-dashboard.git
@@ -136,9 +165,33 @@ Before using the GitHub Traffic Dashboard, ensure you have:
    git push
    ```
 
+**Using GitHub Desktop:**
+
+1. Clone the repository:
+   - Open GitHub Desktop
+   - Click "File" > "Clone Repository"
+   - URL: `https://github.com/soul-traveller/github-traffic-dashboard.git`
+   - Local path: Choose a folder
+   - Click "Clone"
+
+2. Configure your repositories (see [Configuration](#configuration))
+
+3. Set up GitHub secret (see [Quick Start](#quick-start))
+
+4. Push to your GitHub repository:
+   - In GitHub Desktop, go to "Repository" > "Repository Settings"
+   - Under "Remote", change the URL to: `https://github.com/your-username/your-repo.git`
+   - Click "Save"
+   - In the main window, you'll see your changes
+   - Enter commit message: "Initial setup"
+   - Click "Commit to main"
+   - Click "Push origin" to push to GitHub
+
 5. Enable GitHub Actions in repository settings
 
 #### Option 2: Fork and Customize
+
+**Using Command Line:**
 
 1. Fork the repository on GitHub
 2. Clone your fork:
@@ -148,6 +201,22 @@ Before using the GitHub Traffic Dashboard, ensure you have:
    ```
 
 3. Follow steps 2-5 from Option 1
+
+**Using GitHub Desktop:**
+
+1. Fork the repository on GitHub
+   - Go to https://github.com/soul-traveller/github-traffic-dashboard
+   - Click "Fork" button in the top-right
+   - Choose your account as the destination
+
+2. Clone your fork:
+   - Open GitHub Desktop
+   - Click "File" > "Clone Repository"
+   - URL: `https://github.com/your-username/github-traffic-dashboard.git`
+   - Local path: Choose a folder
+   - Click "Clone"
+
+3. Follow steps 2-5 from Option 1 (using GitHub Desktop alternatives)
 
 ### Configuration
 
@@ -228,6 +297,15 @@ This is useful for:
 - Testing configuration changes
 - Immediate updates after adding new repositories
 - Troubleshooting issues
+- Updating stored repository data within the 14-day API retention window
+
+**Important Notes:**
+- GitHub API retains traffic data for the last 14 days only
+- Manual runs will fetch the latest 14 days of data from the API
+- The merge process ensures no historical data is duplicated
+- New API data takes precedence over existing data for the same dates
+- This allows you to correct wrong data by manually running the workflow
+- All data within the 14-day window will be updated to the latest values
 
 ### Understanding the Output
 
@@ -236,50 +314,133 @@ This is useful for:
 Your README.md will contain:
 
 ```
+# GitHub Traffic Dashboard
+
+## Table of Contents
+
+- [Repository 1](#repository-1)
+- [Repository 2](#repository-2)
+...
+
 # Repository Name
 
-### 🗅️ Clones
+### Clones
+
+*Repository clone statistics showing total and unique clones over different time periods.*
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | X | Y |
-| Last 90 Days | X | Y |
+| Last [short-term period] Days | X | Y |
+| Last [medium-term period] Days | X | Y |
 | Lifetime | X | Y |
 
-### 👀 Views
+### Views
+
+*Repository view statistics showing total and unique views over different time periods.*
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | X | Y |
-| Last 90 Days | X | Y |
+| Last [short-term period] Days | X | Y |
+| Last [medium-term period] Days | X | Y |
 | Lifetime | X | Y |
 
-### 📈 Graphs
+### Referrers
 
-![Daily Traffic](graphs/repo_daily_30d.png)
-![Weekly Traffic](graphs/repo_weekly_3m.png)
-![Bi-Weekly Traffic](graphs/repo_biweekly_1y.png)
-![Cumulative Traffic](graphs/repo_cumulative.png)
+*Top referrer sources driving traffic to this repository.*
+
+**Total Unique Referrers:** N
+
+| Referrer | Total Views | Unique Visitors |
+|----------|-------------|----------------|
+| referrer1.com | X | Y |
+| referrer2.com | X | Y |
+...
+
+### Repeat vs New Visitors
+
+*Analysis of visitor engagement showing repeat visitors vs new unique visitors.*
+
+| Period | Total Views | Unique Visitors | Repeat Visitors | Repeat % |
+|--------|-------------|-----------------|-----------------|----------|
+| Last [short-term period] Days | X | Y | Z | P% |
+| Last [medium-term period] Days | X | Y | Z | P% |
+| Lifetime | X | Y | Z | P% |
+
+### Traffic Graphs
+
+*Visual representations of traffic trends over different time periods.*
+
+#### Daily Traffic (30 Days)
+
+*Shows daily clones and views trends for the last 30 days (configurable via DAILY_GRAPH_DAYS). Useful for identifying short-term patterns and recent activity spikes.*
+
+![Daily 30 Days](graphs/repo_daily_30d.png)
+
+#### Weekly Traffic (12 Weeks)
+
+*Shows weekly aggregated clones and views for the last 12 weeks (~3 months). Useful for identifying medium-term trends and seasonal patterns.*
+
+![Weekly 12 Weeks](graphs/repo_weekly_12m.png)
+
+#### Bi-Weekly Traffic (26 Periods)
+
+*Shows bi-weekly aggregated clones and views for the last 26 periods (~1 year). Useful for identifying long-term trends and yearly patterns.*
+
+![Bi-Weekly 26 Periods](graphs/repo_biweekly_26y.png)
+
+#### Cumulative Traffic (Lifetime)
+
+*Shows running totals of both clones and views over the entire lifetime of tracking. Useful for seeing overall growth and total adoption.*
+
+![Cumulative](graphs/repo_cumulative.png)
+
+#### Separate Cumulative Graphs
+
+*Individual cumulative graphs for clones and views, allowing for easier comparison between the two metrics.*
+
+**Cumulative Clones:**
+
+![Cumulative Clones](graphs/repo_cumulative_clones.png)
+
+**Cumulative Views:**
+
+![Cumulative Views](graphs/repo_cumulative_views.png)
 ```
 
 **Note:** Statistics are displayed in professional table format for easy comparison and readability.
 
 #### Graph Types
 
-1. **Daily Traffic (30 Days)**: Shows daily clones and views for the last 30 days
-2. **Weekly Traffic (3 Months)**: Shows weekly aggregates for 12 weeks
-3. **Bi-Weekly Traffic (1 Year)**: Shows bi-weekly aggregates for 26 periods
-4. **Cumulative Traffic**: Shows running totals of both clones and views
-5. **Cumulative Clones**: Separate cumulative graph for clones only
-6. **Cumulative Views**: Separate cumulative graph for views only
+1. **Daily Traffic (30 Days)**: Shows daily clones and views trends for the last 30 days (configurable via DAILY_GRAPH_DAYS). Useful for identifying short-term patterns and recent activity spikes.
+2. **Weekly Traffic (12 Weeks)**: Shows weekly aggregated clones and views for the last 12 weeks (~3 months, configurable via WEEKLY_GRAPH_WEEKS). Useful for identifying medium-term trends and seasonal patterns.
+3. **Bi-Weekly Traffic (26 Periods)**: Shows bi-weekly aggregated clones and views for the last 26 periods (~1 year, configurable via BIWEEKLY_GRAPH_PERIODS). Useful for identifying long-term trends and yearly patterns.
+4. **Cumulative Traffic**: Shows running totals of both clones and views over the entire lifetime of tracking. Useful for seeing overall growth and total adoption.
+5. **Cumulative Clones**: Separate cumulative graph for clones only, allowing for focused analysis of clone adoption.
+6. **Cumulative Views**: Separate cumulative graph for views only, allowing for focused analysis of view trends.
 
 #### Statistics Explained
 
+**Clone and View Statistics:**
 - **Total**: Sum of all clones/views in the period
 - **Unique**: Count of unique users who cloned/viewed
-- **Last 30 days**: Short-term trends
-- **Last 90 days**: Medium-term trends
+- **Short-term period**: Configurable via STATS_PERIOD_SHORT_TERM (default: 30 days)
+- **Medium-term period**: Configurable via STATS_PERIOD_MEDIUM_TERM (default: 90 days)
 - **Lifetime**: All-time totals
+
+**Referrer Statistics:**
+- **Total Unique Referrers**: Count of distinct referrer sources (websites, search engines, etc.)
+- **Referrer**: The source URL or domain that referred visitors to your repository
+- **Total Views**: Total number of views from this referrer
+- **Unique Visitors**: Number of unique visitors from this referrer
+
+**Repeat vs New Visitors:**
+- **Total Views**: Total number of page views in the period
+- **Unique Visitors**: Number of unique visitors (new users)
+- **Repeat Visitors**: Total views minus unique visitors
+- **Repeat Percentage**: Percentage of views from repeat visitors
+- Available for short-term, medium-term, and lifetime periods (all configurable)
+
+**Note:** GitHub API does not provide geographical location data for visitors. Location-based statistics are not available.
 
 ---
 
@@ -348,11 +509,20 @@ When cloning for your own use, you can safely rename the repository. Here's how:
 
 #### Step 2: Update Git Remote
 
+**Using Command Line:**
+
 ```bash
 cd github-traffic-dashboard
 git remote set-url origin https://github.com/your-username/your-new-repo-name.git
 git push -u origin main
 ```
+
+**Using GitHub Desktop:**
+
+1. In GitHub Desktop, go to "Repository" > "Repository Settings"
+2. Under "Remote", change the URL to: `https://github.com/your-username/your-new-repo-name.git`
+3. Click "Save"
+4. Click "Push origin" to update the remote URL
 
 #### Step 3: No Code Changes Required!
 
@@ -405,18 +575,20 @@ If you want to customize behavior, you can edit the configuration sections:
 - Colors
 - Time periods
 - Display options
+- README generation settings
 
-**In `scripts/merge_history.py` (lines 33-69):**
-- Zero-filling settings
-- Data retention limits
-- Merge strategy options
+**In `scripts/merge_history.py` (lines 33-57):**
+- File paths (default paths for input/output files)
+- Note: Data handling behaviors are hardcoded (zero-filling, merging, recalculating totals, data retention)
 
 **In `.github/workflows/main.yml` (lines 7-53):**
 - Workflow schedule
 - API settings
-- Timezone
+- Repository list
 
 #### Example: Complete Setup for New User
+
+**Using Command Line:**
 
 ```bash
 # 1. Clone the repository
@@ -424,7 +596,7 @@ git clone https://github.com/soul-traveller/github-traffic-dashboard.git my-traf
 cd my-traffic-dashboard
 
 # 2. Edit workflow with your repositories
-# Edit .github/workflows/main.yml, line 147-160:
+# Edit .github/workflows/main.yml, line 151-158:
 repos=(
   "john-doe/awesome-project"
   "john-doe/cool-library"
@@ -448,6 +620,65 @@ git push -u origin main
 # 8. Manually trigger workflow to test
 # (Go to Actions tab > GitHub Traffic Dashboard > Run workflow)
 ```
+
+**Using GitHub Desktop:**
+
+1. **Clone the repository:**
+   - Open GitHub Desktop
+   - Click "File" > "Clone Repository"
+   - URL: `https://github.com/soul-traveller/github-traffic-dashboard.git`
+   - Local path: Choose a folder (e.g., `my-traffic-dashboard`)
+   - Click "Clone"
+
+2. **Edit workflow with your repositories:**
+   - Open the cloned repository in your text editor
+   - Navigate to `.github/workflows/main.yml`
+   - Edit line 151-158 to add your repositories:
+   ```yaml
+   repos=(
+     "john-doe/awesome-project"
+     "john-doe/cool-library"
+     "john-doe/useful-tool"
+   )
+   ```
+
+3. **Create new repository on GitHub:**
+   - Go to GitHub.com
+   - Click "+" > "New repository"
+   - Name: `my-traffic-dashboard`
+   - Make it public or private as needed
+   - Click "Create repository"
+
+4. **Update repository remote:**
+   - In GitHub Desktop, go to "Repository" > "Repository Settings"
+   - Under "Remote", change the URL to: `https://github.com/john-doe/my-traffic-dashboard.git`
+   - Click "Save"
+
+5. **Commit and push:**
+   - In GitHub Desktop, you'll see your changes in the left panel
+   - Enter commit message: "Setup for john-doe repositories"
+   - Click "Commit to main"
+   - Click "Push origin" to push to GitHub
+
+6. **Set up TRAFFIC_ACTION_TOKEN secret:**
+   - Go to your new repository on GitHub
+   - Click "Settings" > "Secrets and variables" > "Actions"
+   - Click "New repository secret"
+   - Name: `TRAFFIC_ACTION_TOKEN`
+   - Value: Your GitHub personal access token (with 'repo' scope)
+   - Click "Add secret"
+
+7. **Enable GitHub Actions:**
+   - In repository settings, go to "Actions" > "General"
+   - Under "Actions permissions", select "Allow all actions and reusable workflows"
+   - Click "Save"
+
+8. **Manually trigger workflow to test:**
+   - Go to "Actions" tab in your repository
+   - Select "GitHub Traffic Dashboard" workflow
+   - Click "Run workflow" button
+   - Select branch (usually `main`)
+   - Click "Run workflow"
 
 ---
 
@@ -486,29 +717,58 @@ repos=(
 - Repository name must match exactly (case-sensitive)
 - You can track repositories owned by others (if public)
 
-#### Workflow Schedule (Line 37)
+#### Workflow Schedule (Line 33)
 
 ```yaml
 schedule:
   - cron: "0 2 * * *"   # every day at 2 AM UTC
 ```
 
+**Schedule Options - All Work Without Data Loss**
+
+The GitHub Traffic API provides only the last 14 days of traffic data, but `merge_history.py` preserves all historical data in `history.json`. Therefore:
+
+- **Daily runs (recommended):** Dashboard updates daily, see changes day by day
+- **Weekly runs:** Dashboard updates weekly, all data preserved
+- **Bi-weekly runs:** Dashboard updates bi-weekly, all data preserved
+
+**How It Works:**
+
+The `merge_history.py` script:
+1. Keeps all existing data in `history.json`
+2. Adds new data from the API (last 14 days)
+3. Updates overlapping dates with fresh API data
+4. Never deletes old historical data
+
+**Example with Weekly Runs:**
+- Day 1: Run, get days 1-14 from API, save to history.json
+- Day 8: Run, get days 8-21 from API, merge with history.json (days 8-14 already saved, days 15-21 added)
+- Day 15: Run, get days 15-28 from API, merge with history.json (days 15-21 already saved, days 22-28 added)
+
+**No data is lost** - all historical data is preserved in `history.json` forever.
+
 **Common Schedules:**
-- `"0 2 * * *"` - Daily at 2 AM UTC (default)
-- `"0 */6 * * *"` - Every 6 hours
-- `"0 0 * * 0"` - Weekly on Sunday at midnight UTC
-- `"0 12 * * 1"` - Weekly on Monday at noon UTC
+- `"0 2 * * *"` - Daily at 2 AM UTC (default, recommended for frequent updates)
+- `"0 */6 * * *"` - Every 6 hours (more frequent, wastes API quota)
+- `"0 0 * * 0"` - Weekly on Sunday at midnight UTC (works fine, less frequent updates)
+- `"0 12 * * 1"` - Weekly on Monday at noon UTC (works fine, less frequent updates)
+
+**Trade-offs:**
+- **Daily runs:** More frequent dashboard updates, see daily changes
+- **Weekly runs:** Less frequent dashboard updates, but all data preserved
+- **Bi-weekly runs:** Even less frequent updates, but all data preserved
 
 **Format:** `minute hour day month day-of-week`
 
-#### API Configuration (Lines 50-53)
+#### API Configuration (Lines 46-48)
 
 ```yaml
 env:
   GITHUB_API_BASE_URL: "https://api.github.com"
   GITHUB_API_VERSION: "2022-11-28"
-  TIMEZONE: "UTC"
 ```
+
+**Note:** All date calculations use UTC timezone for consistency.
 
 **Note:** These rarely need to be changed.
 
@@ -516,7 +776,7 @@ env:
 
 Both Python scripts have configuration sections at the top with clear guidance.
 
-#### generate_dashboard.py (Lines 14-64)
+#### generate_dashboard.py (Lines 15-64)
 
 ```python
 # ============================================================================
@@ -541,8 +801,8 @@ WEEKLY_GRAPH_WEEKS = 12                     # Weeks to show in weekly graphs (3 
 BIWEEKLY_GRAPH_PERIODS = 26                 # Bi-weekly periods to show (1 year)
 
 # Statistics Periods
-STATS_PERIOD_30_DAYS = 30                   # Short-term statistics period
-STATS_PERIOD_90_DAYS = 90                   # Medium-term statistics period
+STATS_PERIOD_SHORT_TERM = 30               # Short-term statistics period (default: 30 days)
+STATS_PERIOD_MEDIUM_TERM = 90               # Medium-term statistics period (default: 90 days)
 
 # Graph Style Configuration
 CLONES_COLOR = "#2196F3"                    # Blue for clones
@@ -561,7 +821,7 @@ INCLUDE_SEPARATE_CUMULATIVE = True          # Whether to include separate clones
 
 **All 21 configuration parameters are actively used and affect the dashboard behavior.**
 
-#### merge_history.py (Lines 33-69)
+#### merge_history.py (Lines 34-57)
 
 ```python
 # ============================================================================
@@ -572,28 +832,19 @@ INCLUDE_SEPARATE_CUMULATIVE = True          # Whether to include separate clones
 DEFAULT_HISTORY_FILE = "history.json"           # Path to existing historical data
 DEFAULT_NEW_DATA_FILE = "traffic_data.json"     # Path to newly fetched data
 DEFAULT_OUTPUT_FILE = "merged_history.json"     # Path for merged output
-
-# Data Handling Configuration
-ZERO_FILL_ENABLED = True                       # Whether to fill missing dates with zeros
-ZERO_FILL_START_OFFSET_DAYS = 365              # Days before earliest data to start zero-filling
-RECALCULATE_TOTALS = True                      # Whether to recalculate totals after merge
-VALIDATE_STRUCTURE = True                      # Whether to validate JSON structure
-
-# Date Configuration
-TIMEZONE = "UTC"                               # Timezone for all date calculations
-DATE_FORMAT = "%Y-%m-%d"                       # Date format for string representation
-DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%SZ"        # DateTime format for timestamps
-
-# Data Retention Configuration
-MAX_HISTORY_DAYS = 365                         # Maximum days of history to retain
-# Set to None to keep all data (no limit)
-
-# Merge Strategy Configuration
-NEW_DATA_TAKES_PRECEDENCE = True               # New data overwrites existing data for same date
-KEEP_OLD_METADATA_IF_NEW_MISSING = True       # Keep old metadata if new data doesn't have it
 ```
 
-**All merge_history.py configuration parameters are actively used and affect data merging behavior.**
+**Note:** The following behaviors are hardcoded and always active in merge_history.py:
+- Zero-filling: Always enabled, fills missing dates with zeros for 365 days
+- Data merging: New data always overwrites existing data for the same date
+- Metadata: Uses new metadata if available, otherwise keeps existing metadata
+- Totals: Always recalculated from merged data
+- Data retention: All historical data is retained indefinitely
+- Timezone: All operations use UTC
+- Date format: All dates use YYYY-MM-DD format
+- DateTime format: All timestamps use ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ)
+
+**Only 3 configuration parameters are available in merge_history.py (all file paths).**
 
 ### Graph Customization
 
@@ -650,9 +901,9 @@ The dashboard automatically collects data every day:
 
 For each repository, 6 types of graphs are created:
 
-1. **Daily Traffic (30 Days)**: Daily intervals showing short-term trends
-2. **Weekly Traffic (3 Months)**: Weekly aggregates showing medium-term trends
-3. **Bi-Weekly Traffic (1 Year)**: Bi-weekly aggregates showing long-term trends
+1. **Daily Traffic (30 Days)**: Daily intervals showing short-term trends (configurable via DAILY_GRAPH_DAYS)
+2. **Weekly Traffic (3 Months)**: Weekly aggregates showing medium-term trends (configurable via WEEKLY_GRAPH_WEEKS)
+3. **Bi-Weekly Traffic (1 Year)**: Bi-weekly aggregates showing long-term trends (configurable via BIWEEKLY_GRAPH_PERIODS)
 4. **Cumulative Traffic**: Running totals of both clones and views
 5. **Cumulative Clones**: Separate cumulative graph for clones
 6. **Cumulative Views**: Separate cumulative graph for views
@@ -665,15 +916,17 @@ All graphs are:
 
 ### Statistics Calculation
 
-Statistics are calculated for three time periods:
+Statistics are calculated for three configurable periods:
 
-**30 Days:**
+**Clone and View Statistics:**
+
+**Short-term Period (configurable via STATS_PERIOD_SHORT_TERM, default: 30 days):**
 - Total clones
 - Unique clones
 - Total views
 - Unique views
 
-**90 Days:**
+**Medium-term Period (configurable via STATS_PERIOD_MEDIUM_TERM, default: 90 days):**
 - Total clones
 - Unique clones
 - Total views
@@ -685,7 +938,35 @@ Statistics are calculated for three time periods:
 - Total views
 - Unique views
 
-All statistics are displayed in README.md with clear formatting.
+**Referrer Statistics:**
+- Total unique referrers (lifetime)
+- Top 10 referrers by total views
+- Total views per referrer
+- Unique visitors per referrer
+
+**Repeat vs New Visitors:**
+
+**Short-term Period (configurable via STATS_PERIOD_SHORT_TERM, default: 30 days):**
+- Total views vs unique visitors
+- Repeat visitors calculation (total - unique)
+- Repeat visitor percentage
+
+**Medium-term Period (configurable via STATS_PERIOD_MEDIUM_TERM, default: 90 days):**
+- Total views vs unique visitors
+- Repeat visitors calculation (total - unique)
+- Repeat visitor percentage
+
+**Lifetime:**
+- Total views vs unique visitors
+- Repeat visitors calculation (total - unique)
+- Repeat visitor percentage
+- Available for short-term, medium-term, and lifetime periods (all configurable)
+
+All statistics are displayed in README.md with:
+- Professional table format
+- Clear descriptions
+- Clickable navigation index
+- Graph titles and explanations
 
 ### Server Downtime Handling
 
@@ -914,6 +1195,51 @@ The `history.json` file uses a standard structured format:
 - **NumPy**: Numerical operations
 - **GitHub API**: Traffic data source
 
+### Key Functions in generate_dashboard.py
+
+**New Statistics Functions (lines 695-788):**
+
+- `calculate_referrer_stats()` (line 695): Calculates referrer statistics including total unique referrers, referrers sorted by count, total views, and unique visitors from referrers.
+
+- `calculate_repeat_vs_new_stats()` (line 738): Calculates repeat visitors vs new visitors statistics for different time periods (short-term via STATS_PERIOD_SHORT_TERM, medium-term via STATS_PERIOD_MEDIUM_TERM, lifetime). Shows engagement level and returning user behavior.
+
+**README Generation Functions (lines 791-979):**
+
+- `generate_readme()` (line 791): Generates the complete README.md with:
+  - Clickable table of contents (auto-generated based on configured repositories)
+  - Clone and view statistics in table format
+  - Referrer statistics table
+  - Repeat vs new visitors table
+  - Traffic graphs with descriptive titles and explanations
+  - Graph descriptions explaining what each graph shows
+
+**Data Processing Functions (lines 145-692):**
+
+- `calculate_period_stats()` (line 145): Calculates statistics for a specified time period
+- `calculate_lifetime_stats()` (line 169): Calculates lifetime statistics from all available data
+- `get_daily_data()` (line 189): Extracts daily data for specified number of days
+- `get_weekly_data()` (line 213): Aggregates daily data into weekly periods
+- `get_biweekly_data()` (line 243): Aggregates daily data into bi-weekly periods
+- `get_cumulative_data()` (line 273): Calculates cumulative (running) totals
+- `create_graph()` (line 303): Creates a single-line graph
+- `create_multi_line_graph()` (line 347): Creates multi-line graphs for clones and views
+- `generate_repository_graphs()` (line 601): Generates all graphs for a repository
+
+### Key Functions in merge_history.py
+
+**Data Merging Functions (lines 178-331):**
+
+- `merge_daily_data()` (line 178): Merges daily data from existing and new sources. New data takes precedence for overlapping dates. This ensures no duplicate data and allows manual runs to correct wrong data within the 14-day API retention window.
+
+- `merge_repositories()` (line 264): Merges repository data from existing and new sources. Handles daily data, referrers, and metadata. Referrers from new data (latest API fetch) take precedence, allowing manual updates within the 14-day window.
+
+**Important Note on Data Merging:**
+- The merge process ensures no historical data is duplicated
+- New API data takes precedence over existing data for the same dates
+- This allows manual workflow runs to update stored repository data to latest values
+- Wrong data can be corrected by manually running the workflow
+- All data within the 14-day API retention window will be updated to the latest values
+
 ### Dependencies
 
 Python dependencies (installed automatically by workflow):
@@ -940,6 +1266,8 @@ python -m pip install matplotlib pandas numpy
 
 4. **Historical Data**: Only data from when you start tracking is available. No historical data before first run.
 
+5. **Geographical Location Data**: GitHub Traffic API does NOT provide geographical location data for visitors. This is a limitation of the GitHub API itself, not this dashboard. The referrer data only shows the source URL/domain (e.g., "github.com", "google.com") but not the physical location of visitors. Location-based statistics are not available through the GitHub API.
+
 ---
 
 ## License and Credits
@@ -958,10 +1286,12 @@ The GitHub Traffic Dashboard is a complete, production-ready solution that:
 
 - Automatically collects and tracks repository traffic data
 - Generates comprehensive graphs and statistics
+- Provides referrer analysis and visitor engagement metrics
 - Handles server downtime and calendar edge cases robustly
 - Provides clear error reporting and troubleshooting information
 - Includes comprehensive documentation for maintenance and operation
+- Offers clickable navigation and professional table formatting
 
-The solution requires minimal manual intervention and provides continuous, reliable tracking of GitHub repository traffic statistics.
+The solution requires minimal manual intervention and provides continuous, reliable tracking of GitHub repository traffic statistics. All historical data is retained indefinitely for comprehensive analysis.
 
 **Ready to use?** Follow the [Quick Start](#quick-start) guide to get started in minutes!

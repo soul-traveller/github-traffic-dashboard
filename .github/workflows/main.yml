@@ -45,8 +45,7 @@ env:
   # GitHub API Configuration
   GITHUB_API_BASE_URL: "https://api.github.com"
   GITHUB_API_VERSION: "2022-11-28"
-  # Timezone for all date calculations (always UTC for consistency)
-  TIMEZONE: "UTC"
+  # Note: All date calculations use UTC timezone for consistency
 
 jobs:
   # Main job: Fetch traffic data, merge, generate dashboard, commit changes

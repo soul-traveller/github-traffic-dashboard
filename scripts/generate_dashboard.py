@@ -37,8 +37,8 @@ BIWEEKLY_GRAPH_PERIODS = 26                 # Bi-weekly periods to show (1 year)
 
 # Statistics Periods
 # Days for calculating statistics
-STATS_PERIOD_30_DAYS = 30                   # Short-term statistics period
-STATS_PERIOD_90_DAYS = 90                   # Medium-term statistics period
+STATS_PERIOD_SHORT_TERM = 30               # Short-term statistics period (default: 30 days)
+STATS_PERIOD_MEDIUM_TERM = 90               # Medium-term statistics period (default: 90 days)
 
 # Graph Style Configuration
 # Color schemes for graphs
@@ -692,16 +692,116 @@ def generate_repository_graphs(repo_name: str, daily_data: List[Dict[str, Any]])
     return graphs
 
 
+def calculate_referrer_stats(referrers_data: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """
+    Calculate referrer statistics from referrers data.
+    
+    This function processes referrer data to provide:
+    - Total unique referrers
+    - Referrers by count (sorted)
+    - Total views from referrers
+    - Total unique visitors from referrers
+    
+    Args:
+        referrers_data: List of referrer entries from GitHub API
+        
+    Returns:
+        Dictionary with referrer statistics including:
+        - total_unique_referrers: Count of unique referrer sources
+        - referrers_by_count: List of referrers sorted by total views
+        - total_referrer_views: Sum of all views from referrers
+        - total_referrer_uniques: Sum of all unique visitors from referrers
+    """
+    if not referrers_data:
+        return {
+            'total_unique_referrers': 0,
+            'referrers_by_count': [],
+            'total_referrer_views': 0,
+            'total_referrer_uniques': 0
+        }
+    
+    # Sort referrers by count (descending)
+    referrers_sorted = sorted(referrers_data, key=lambda x: x.get('count', 0), reverse=True)
+    
+    # Calculate totals
+    total_views = sum(r.get('count', 0) for r in referrers_data)
+    total_uniques = sum(r.get('uniques', 0) for r in referrers_data)
+    
+    return {
+        'total_unique_referrers': len(referrers_data),
+        'referrers_by_count': referrers_sorted,
+        'total_referrer_views': total_views,
+        'total_referrer_uniques': total_uniques
+    }
+
+
+def calculate_repeat_vs_new_stats(daily_data: List[Dict[str, Any]]) -> Dict[str, Dict[str, int]]:
+    """
+    Calculate repeat visitors vs new visitors statistics.
+    
+    This function calculates:
+    - Total views vs unique visitors for different time periods
+    - Repeat visitors = Total views - Unique visitors
+    - Shows engagement level and returning user behavior
+    
+    Args:
+        daily_data: List of daily data entries
+        
+    Returns:
+        Dictionary with statistics for different periods:
+        - short_term: Last STATS_PERIOD_SHORT_TERM days
+        - medium_term: Last STATS_PERIOD_MEDIUM_TERM days
+        - lifetime: All available data
+        Each period contains:
+        - total_views: Total views in period
+        - unique_visitors: Unique visitors in period
+        - repeat_visitors: Repeat visitors (total - unique)
+        - repeat_percentage: Percentage of repeat visitors
+    """
+    # Calculate for different periods
+    stats_short = calculate_period_stats(daily_data, STATS_PERIOD_SHORT_TERM)
+    stats_medium = calculate_period_stats(daily_data, STATS_PERIOD_MEDIUM_TERM)
+    stats_lifetime = calculate_lifetime_stats(daily_data)
+    
+    def calculate_repeat_stats(stats: Dict[str, int]) -> Dict[str, Any]:
+        """Calculate repeat visitor statistics from period stats."""
+        total_views = stats.get('views_total', 0)
+        unique_visitors = stats.get('views_unique', 0)
+        repeat_visitors = total_views - unique_visitors
+        
+        # Calculate percentage (avoid division by zero)
+        repeat_percentage = 0
+        if total_views > 0:
+            repeat_percentage = round((repeat_visitors / total_views) * 100, 1)
+        
+        return {
+            'total_views': total_views,
+            'unique_visitors': unique_visitors,
+            'repeat_visitors': repeat_visitors,
+            'repeat_percentage': repeat_percentage
+        }
+    
+    return {
+        'short_term': calculate_repeat_stats(stats_short),
+        'medium_term': calculate_repeat_stats(stats_medium),
+        'lifetime': calculate_repeat_stats(stats_lifetime)
+    }
+
+
 def generate_readme(history_data: Dict[str, Any]) -> None:
     """
     Generate the README.md file with statistics and embedded graphs.
     
     This function creates a comprehensive README.md that includes:
     - Dashboard title and description
+    - Clickable index for quick navigation
     - Last updated timestamp
     - Per-repository sections with:
       - Clone statistics in table format (configurable periods)
       - View statistics in table format (configurable periods)
+      - Referrer statistics (total unique referrers, top referrers)
+      - Repeat vs New visitor statistics
+      - All generated graphs with descriptive titles and explanations
       - All generated graphs embedded as images
     
     Args:
@@ -725,11 +825,27 @@ def generate_readme(history_data: Dict[str, Any]) -> None:
     # Get all repositories from the history data
     repositories = history_data.get('repositories', {})
     
+    # Generate clickable index for repositories
+    if repositories:
+        md += "## \U0001f4cb Table of Contents\n\n"
+        md += "Quick navigation to repository statistics:\n\n"
+        for repo_name in sorted(repositories.keys()):
+            # Determine display name
+            if SHOW_FULL_REPO_NAME:
+                display_name = repo_name
+            else:
+                display_name = repo_name.split('/')[-1]
+            # Create anchor link (replace spaces with hyphens, remove special chars)
+            anchor = display_name.lower().replace(' ', '-').replace('_', '-')
+            md += f"- [{display_name}](#{anchor})\n"
+        md += "\n"
+    
     # Process each repository
     for repo_name, repo_data in repositories.items():
         # Extract daily data and metadata for this repository
         daily_data = repo_data.get('daily_data', [])
         metadata = repo_data.get('metadata', {})
+        referrers = repo_data.get('referrers', [])
         
         # Determine display name based on SHOW_FULL_REPO_NAME configuration
         if SHOW_FULL_REPO_NAME:
@@ -738,69 +854,119 @@ def generate_readme(history_data: Dict[str, Any]) -> None:
             # Extract only repository name (after the last '/')
             display_name = repo_name.split('/')[-1]
         
+        # Create anchor for this repository
+        anchor = display_name.lower().replace(' ', '-').replace('_', '-')
+        
         # Add repository section header using configured header level
         header_prefix = '#' * README_HEADER_LEVEL
         md += f"{header_prefix} {display_name}\n\n"
         
         # Calculate statistics for different time periods using configuration
-        # Short-term period (configurable, default 30 days)
-        stats_short = calculate_period_stats(daily_data, STATS_PERIOD_30_DAYS)
-        # Medium-term period (configurable, default 90 days)
-        stats_medium = calculate_period_stats(daily_data, STATS_PERIOD_90_DAYS)
+        # Short-term period (configurable via STATS_PERIOD_SHORT_TERM)
+        stats_short = calculate_period_stats(daily_data, STATS_PERIOD_SHORT_TERM)
+        # Medium-term period (configurable via STATS_PERIOD_MEDIUM_TERM)
+        stats_medium = calculate_period_stats(daily_data, STATS_PERIOD_MEDIUM_TERM)
         # Lifetime (all available data)
         stats_lifetime = calculate_lifetime_stats(daily_data)
         
+        # Calculate referrer statistics
+        referrer_stats = calculate_referrer_stats(referrers)
+        
+        # Calculate repeat vs new visitor statistics
+        repeat_stats = calculate_repeat_vs_new_stats(daily_data)
+        
         # Add Clones section with emoji
         md += "### \U0001f5c5\ufe0f Clones\n\n"
+        md += "*Repository clone statistics showing total and unique clones over different time periods.*\n\n"
         
         # Create professional table for clones statistics
         md += "| Period | Total | Unique |\n"
         md += "|--------|-------|--------|\n"
-        md += f"| Last {STATS_PERIOD_30_DAYS} Days | {stats_short['clones_total']} | {stats_short['clones_unique']} |\n"
-        md += f"| Last {STATS_PERIOD_90_DAYS} Days | {stats_medium['clones_total']} | {stats_medium['clones_unique']} |\n"
+        md += f"| Last {STATS_PERIOD_SHORT_TERM} Days | {stats_short['clones_total']} | {stats_short['clones_unique']} |\n"
+        md += f"| Last {STATS_PERIOD_MEDIUM_TERM} Days | {stats_medium['clones_total']} | {stats_medium['clones_unique']} |\n"
         md += f"| Lifetime | {stats_lifetime['clones_total']} | {stats_lifetime['clones_unique']} |\n\n"
-        
+
         # Add Views section with emoji
         md += "### \U0001f440 Views\n\n"
-        
+        md += "*Repository view statistics showing total and unique views over different time periods.*\n\n"
+
         # Create professional table for views statistics
         md += "| Period | Total | Unique |\n"
         md += "|--------|-------|--------|\n"
-        md += f"| Last {STATS_PERIOD_30_DAYS} Days | {stats_short['views_total']} | {stats_short['views_unique']} |\n"
-        md += f"| Last {STATS_PERIOD_90_DAYS} Days | {stats_medium['views_total']} | {stats_medium['views_unique']} |\n"
+        md += f"| Last {STATS_PERIOD_SHORT_TERM} Days | {stats_short['views_total']} | {stats_short['views_unique']} |\n"
+        md += f"| Last {STATS_PERIOD_MEDIUM_TERM} Days | {stats_medium['views_total']} | {stats_medium['views_unique']} |\n"
         md += f"| Lifetime | {stats_lifetime['views_total']} | {stats_lifetime['views_unique']} |\n\n"
+        
+        # Add Referrers section with emoji
+        md += "### \U0001f4de Referrers\n\n"
+        md += "*Top referrer sources driving traffic to this repository.*\n\n"
+        
+        # Create table for referrer statistics
+        md += f"**Total Unique Referrers:** {referrer_stats['total_unique_referrers']}\n\n"
+        
+        if referrer_stats['referrers_by_count']:
+            md += "| Referrer | Total Views | Unique Visitors |\n"
+            md += "|----------|-------------|----------------|\n"
+            for ref in referrer_stats['referrers_by_count'][:10]:  # Show top 10
+                referrer_name = ref.get('referrer', 'Unknown')
+                count = ref.get('count', 0)
+                uniques = ref.get('uniques', 0)
+                md += f"| {referrer_name} | {count} | {uniques} |\n"
+            md += "\n"
+        else:
+            md += "*No referrer data available.*\n\n"
+        
+        # Add Repeat vs New Visitors section with emoji
+        md += "### \U0001f465 Repeat vs New Visitors\n\n"
+        md += "*Analysis of visitor engagement showing repeat visitors vs new unique visitors.*\n\n"
+        md += "*Note: GitHub API does not provide geographical location data for visitors.*\n\n"
+        
+        # Create table for repeat vs new visitor statistics
+        md += "| Period | Total Views | Unique Visitors | Repeat Visitors | Repeat % |\n"
+        md += "|--------|-------------|-----------------|-----------------|----------|\n"
+        md += f"| Last {STATS_PERIOD_SHORT_TERM} Days | {repeat_stats['short_term']['total_views']} | {repeat_stats['short_term']['unique_visitors']} | {repeat_stats['short_term']['repeat_visitors']} | {repeat_stats['short_term']['repeat_percentage']}% |\n"
+        md += f"| Last {STATS_PERIOD_MEDIUM_TERM} Days | {repeat_stats['medium_term']['total_views']} | {repeat_stats['medium_term']['unique_visitors']} | {repeat_stats['medium_term']['repeat_visitors']} | {repeat_stats['medium_term']['repeat_percentage']}% |\n"
+        md += f"| Lifetime | {repeat_stats['lifetime']['total_views']} | {repeat_stats['lifetime']['unique_visitors']} | {repeat_stats['lifetime']['repeat_visitors']} | {repeat_stats['lifetime']['repeat_percentage']}% |\n\n"
         
         # Generate all graphs for this repository
         print(f"Generating graphs for {repo_name}...")
         graphs = generate_repository_graphs(repo_name, daily_data)
         
         # Add Graphs section with emoji
-        md += "### \U0001f4c8 Graphs\n\n"
+        md += "### \U0001f4c8 Traffic Graphs\n\n"
+        md += "*Visual representations of traffic trends over different time periods.*\n\n"
         
         # Embed Daily Traffic graph if available
         if 'daily' in graphs:
-            md += f"**Daily Traffic ({DAILY_GRAPH_DAYS} Days):**\n\n"
+            md += f"#### Daily Traffic ({DAILY_GRAPH_DAYS} Days)\n\n"
+            md += f"*Shows daily clones and views trends for the last {DAILY_GRAPH_DAYS} days. Useful for identifying short-term patterns and recent activity spikes.*\n\n"
             md += f"![Daily {DAILY_GRAPH_DAYS} Days]({graphs['daily']})\n\n"
         
         # Embed Weekly Traffic graph if available
         if 'weekly' in graphs:
-            md += f"**Weekly Traffic ({WEEKLY_GRAPH_WEEKS} Weeks):**\n\n"
+            md += f"#### Weekly Traffic ({WEEKLY_GRAPH_WEEKS} Weeks)\n\n"
+            md += f"*Shows weekly aggregated clones and views for the last {WEEKLY_GRAPH_WEEKS} weeks (~3 months). Useful for identifying medium-term trends and seasonal patterns.*\n\n"
             md += f"![Weekly {WEEKLY_GRAPH_WEEKS} Weeks]({graphs['weekly']})\n\n"
         
         # Embed Bi-Weekly Traffic graph if available
         if 'biweekly' in graphs:
-            md += f"**Bi-Weekly Traffic ({BIWEEKLY_GRAPH_PERIODS} Periods):**\n\n"
+            md += f"#### Bi-Weekly Traffic ({BIWEEKLY_GRAPH_PERIODS} Periods)\n\n"
+            md += f"*Shows bi-weekly aggregated clones and views for the last {BIWEEKLY_GRAPH_PERIODS} periods (~1 year). Useful for identifying long-term trends and yearly patterns.*\n\n"
             md += f"![Bi-Weekly {BIWEEKLY_GRAPH_PERIODS} Periods]({graphs['biweekly']})\n\n"
         
         # Embed Cumulative Traffic graph if available and enabled
         if 'cumulative' in graphs and INCLUDE_CUMULATIVE_GRAPHS:
-            md += f"**Cumulative Traffic (Lifetime):**\n\n"
+            md += "#### Cumulative Traffic (Lifetime)\n\n"
+            md += "*Shows running totals of both clones and views over the entire lifetime of tracking. Useful for seeing overall growth and total adoption.*\n\n"
             md += f"![Cumulative]({graphs['cumulative']})\n\n"
         
         # Embed separate cumulative graphs if available and enabled
         if 'cumulative_clones' in graphs and 'cumulative_views' in graphs and INCLUDE_SEPARATE_CUMULATIVE:
-            md += "**Separate Cumulative Graphs:**\n\n"
+            md += "#### Separate Cumulative Graphs\n\n"
+            md += "*Individual cumulative graphs for clones and views, allowing for easier comparison between the two metrics.*\n\n"
+            md += f"**Cumulative Clones:**\n\n"
             md += f"![Cumulative Clones]({graphs['cumulative_clones']})\n\n"
+            md += f"**Cumulative Views:**\n\n"
             md += f"![Cumulative Views]({graphs['cumulative_views']})\n\n"
         
         # Add horizontal separator between repositories

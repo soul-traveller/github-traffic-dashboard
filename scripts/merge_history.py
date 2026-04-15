@@ -40,32 +40,20 @@ DEFAULT_HISTORY_FILE = "history.json"           # Path to existing historical da
 DEFAULT_NEW_DATA_FILE = "traffic_data.json"     # Path to newly fetched data
 DEFAULT_OUTPUT_FILE = "merged_history.json"     # Path for merged output
 
-# Data Handling Configuration
-# Settings for how data is merged and processed
-ZERO_FILL_ENABLED = True                       # Whether to fill missing dates with zeros
-ZERO_FILL_START_OFFSET_DAYS = 365              # Days before earliest data to start zero-filling
-RECALCULATE_TOTALS = True                      # Whether to recalculate totals after merge
-VALIDATE_STRUCTURE = True                      # Whether to validate JSON structure
-
-# Date Configuration
-# Timezone and date format settings
-TIMEZONE = "UTC"                               # Timezone for all date calculations
-DATE_FORMAT = "%Y-%m-%d"                       # Date format for string representation
-DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%SZ"        # DateTime format for timestamps
-
-# Data Retention Configuration
-# Settings for how much historical data to keep
-MAX_HISTORY_DAYS = None                         # Maximum days of history to retain
-# Set to None to keep all data (no limit), or e.g 365 for one year.
-
-# Merge Strategy Configuration
-# Settings for how conflicts are resolved during merge
-NEW_DATA_TAKES_PRECEDENCE = True               # New data overwrites existing data for same date
-KEEP_OLD_METADATA_IF_NEW_MISSING = True       # Keep old metadata if new data doesn't have it
-
 # ============================================================================
 # END OF CONFIGURATION SECTION
 # The following settings typically do not need modification
+# ============================================================================
+
+# Note: The following behaviors are hardcoded and always active:
+# - Zero-filling: Always enabled, fills missing dates with zeros for 365 days
+# - Data merging: New data always overwrites existing data for the same date
+# - Metadata: Uses new metadata if available, otherwise keeps existing metadata
+# - Totals: Always recalculated from merged data
+# - Data retention: All historical data is retained indefinitely
+# - Timezone: All operations use UTC
+# - Date format: All dates use YYYY-MM-DD format
+# - DateTime format: All timestamps use ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ)
 # ============================================================================
 
 # Standard library imports
