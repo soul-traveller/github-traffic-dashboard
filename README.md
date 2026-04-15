@@ -5,95 +5,7 @@ https://soul-traveller.github.io/github-traffic-dashboard/
 
 This dashboard tracks historical traffic data (clones and views) for GitHub repositories.
 
-**Last Updated:** 2026-04-14T17:45:39.385116Z
-
-# average_ti3s_rgbgeom
-
-### 🗅️ Clones
-
-| Period | Total | Unique |
-|--------|-------|--------|
-| Last 30 Days | 4 | 4 |
-| Last 90 Days | 4 | 4 |
-| Lifetime | 4 | 4 |
-
-### 👀 Views
-
-| Period | Total | Unique |
-|--------|-------|--------|
-| Last 30 Days | 0 | 0 |
-| Last 90 Days | 0 | 0 |
-| Lifetime | 0 | 0 |
-
-### 📈 Graphs
-
-**Daily Traffic (30 Days):**
-
-![Daily 30 Days](graphs/soul-traveller_average_ti3s_rgbgeom_daily_30d.png)
-
-**Weekly Traffic (12 Weeks):**
-
-![Weekly 12 Weeks](graphs/soul-traveller_average_ti3s_rgbgeom_weekly_12m.png)
-
-**Bi-Weekly Traffic (26 Periods):**
-
-![Bi-Weekly 26 Periods](graphs/soul-traveller_average_ti3s_rgbgeom_biweekly_26y.png)
-
-**Cumulative Traffic (Lifetime):**
-
-![Cumulative](graphs/soul-traveller_average_ti3s_rgbgeom_cumulative.png)
-
-**Separate Cumulative Graphs:**
-
-![Cumulative Clones](graphs/soul-traveller_average_ti3s_rgbgeom_cumulative_clones.png)
-
-![Cumulative Views](graphs/soul-traveller_average_ti3s_rgbgeom_cumulative_views.png)
-
----
-
-# github-traffic-dashboard
-
-### 🗅️ Clones
-
-| Period | Total | Unique |
-|--------|-------|--------|
-| Last 30 Days | 414 | 198 |
-| Last 90 Days | 414 | 198 |
-| Lifetime | 414 | 198 |
-
-### 👀 Views
-
-| Period | Total | Unique |
-|--------|-------|--------|
-| Last 30 Days | 231 | 6 |
-| Last 90 Days | 231 | 6 |
-| Lifetime | 231 | 6 |
-
-### 📈 Graphs
-
-**Daily Traffic (30 Days):**
-
-![Daily 30 Days](graphs/soul-traveller_github-traffic-dashboard_daily_30d.png)
-
-**Weekly Traffic (12 Weeks):**
-
-![Weekly 12 Weeks](graphs/soul-traveller_github-traffic-dashboard_weekly_12m.png)
-
-**Bi-Weekly Traffic (26 Periods):**
-
-![Bi-Weekly 26 Periods](graphs/soul-traveller_github-traffic-dashboard_biweekly_26y.png)
-
-**Cumulative Traffic (Lifetime):**
-
-![Cumulative](graphs/soul-traveller_github-traffic-dashboard_cumulative.png)
-
-**Separate Cumulative Graphs:**
-
-![Cumulative Clones](graphs/soul-traveller_github-traffic-dashboard_cumulative_clones.png)
-
-![Cumulative Views](graphs/soul-traveller_github-traffic-dashboard_cumulative_views.png)
-
----
+**Last Updated:** 2026-04-15T04:38:45.710484Z
 
 # Argyll_Printer_Profiler
 
@@ -136,50 +48,6 @@ This dashboard tracks historical traffic data (clones and views) for GitHub repo
 ![Cumulative Clones](graphs/soul-traveller_Argyll_Printer_Profiler_cumulative_clones.png)
 
 ![Cumulative Views](graphs/soul-traveller_Argyll_Printer_Profiler_cumulative_views.png)
-
----
-
-# read_image_patch_colors
-
-### 🗅️ Clones
-
-| Period | Total | Unique |
-|--------|-------|--------|
-| Last 30 Days | 7 | 7 |
-| Last 90 Days | 7 | 7 |
-| Lifetime | 7 | 7 |
-
-### 👀 Views
-
-| Period | Total | Unique |
-|--------|-------|--------|
-| Last 30 Days | 0 | 0 |
-| Last 90 Days | 0 | 0 |
-| Lifetime | 0 | 0 |
-
-### 📈 Graphs
-
-**Daily Traffic (30 Days):**
-
-![Daily 30 Days](graphs/soul-traveller_read_image_patch_colors_daily_30d.png)
-
-**Weekly Traffic (12 Weeks):**
-
-![Weekly 12 Weeks](graphs/soul-traveller_read_image_patch_colors_weekly_12m.png)
-
-**Bi-Weekly Traffic (26 Periods):**
-
-![Bi-Weekly 26 Periods](graphs/soul-traveller_read_image_patch_colors_biweekly_26y.png)
-
-**Cumulative Traffic (Lifetime):**
-
-![Cumulative](graphs/soul-traveller_read_image_patch_colors_cumulative.png)
-
-**Separate Cumulative Graphs:**
-
-![Cumulative Clones](graphs/soul-traveller_read_image_patch_colors_cumulative_clones.png)
-
-![Cumulative Views](graphs/soul-traveller_read_image_patch_colors_cumulative_views.png)
 
 ---
 
@@ -268,6 +136,138 @@ This dashboard tracks historical traffic data (clones and views) for GitHub repo
 ![Cumulative Clones](graphs/soul-traveller_Toggle_Display_Profile_cumulative_clones.png)
 
 ![Cumulative Views](graphs/soul-traveller_Toggle_Display_Profile_cumulative_views.png)
+
+---
+
+# github-traffic-dashboard
+
+### 🗅️ Clones
+
+| Period | Total | Unique |
+|--------|-------|--------|
+| Last 30 Days | 414 | 198 |
+| Last 90 Days | 414 | 198 |
+| Lifetime | 414 | 198 |
+
+### 👀 Views
+
+| Period | Total | Unique |
+|--------|-------|--------|
+| Last 30 Days | 231 | 6 |
+| Last 90 Days | 231 | 6 |
+| Lifetime | 231 | 6 |
+
+### 📈 Graphs
+
+**Daily Traffic (30 Days):**
+
+![Daily 30 Days](graphs/soul-traveller_github-traffic-dashboard_daily_30d.png)
+
+**Weekly Traffic (12 Weeks):**
+
+![Weekly 12 Weeks](graphs/soul-traveller_github-traffic-dashboard_weekly_12m.png)
+
+**Bi-Weekly Traffic (26 Periods):**
+
+![Bi-Weekly 26 Periods](graphs/soul-traveller_github-traffic-dashboard_biweekly_26y.png)
+
+**Cumulative Traffic (Lifetime):**
+
+![Cumulative](graphs/soul-traveller_github-traffic-dashboard_cumulative.png)
+
+**Separate Cumulative Graphs:**
+
+![Cumulative Clones](graphs/soul-traveller_github-traffic-dashboard_cumulative_clones.png)
+
+![Cumulative Views](graphs/soul-traveller_github-traffic-dashboard_cumulative_views.png)
+
+---
+
+# average_ti3s_rgbgeom
+
+### 🗅️ Clones
+
+| Period | Total | Unique |
+|--------|-------|--------|
+| Last 30 Days | 4 | 4 |
+| Last 90 Days | 4 | 4 |
+| Lifetime | 4 | 4 |
+
+### 👀 Views
+
+| Period | Total | Unique |
+|--------|-------|--------|
+| Last 30 Days | 0 | 0 |
+| Last 90 Days | 0 | 0 |
+| Lifetime | 0 | 0 |
+
+### 📈 Graphs
+
+**Daily Traffic (30 Days):**
+
+![Daily 30 Days](graphs/soul-traveller_average_ti3s_rgbgeom_daily_30d.png)
+
+**Weekly Traffic (12 Weeks):**
+
+![Weekly 12 Weeks](graphs/soul-traveller_average_ti3s_rgbgeom_weekly_12m.png)
+
+**Bi-Weekly Traffic (26 Periods):**
+
+![Bi-Weekly 26 Periods](graphs/soul-traveller_average_ti3s_rgbgeom_biweekly_26y.png)
+
+**Cumulative Traffic (Lifetime):**
+
+![Cumulative](graphs/soul-traveller_average_ti3s_rgbgeom_cumulative.png)
+
+**Separate Cumulative Graphs:**
+
+![Cumulative Clones](graphs/soul-traveller_average_ti3s_rgbgeom_cumulative_clones.png)
+
+![Cumulative Views](graphs/soul-traveller_average_ti3s_rgbgeom_cumulative_views.png)
+
+---
+
+# read_image_patch_colors
+
+### 🗅️ Clones
+
+| Period | Total | Unique |
+|--------|-------|--------|
+| Last 30 Days | 7 | 7 |
+| Last 90 Days | 7 | 7 |
+| Lifetime | 7 | 7 |
+
+### 👀 Views
+
+| Period | Total | Unique |
+|--------|-------|--------|
+| Last 30 Days | 0 | 0 |
+| Last 90 Days | 0 | 0 |
+| Lifetime | 0 | 0 |
+
+### 📈 Graphs
+
+**Daily Traffic (30 Days):**
+
+![Daily 30 Days](graphs/soul-traveller_read_image_patch_colors_daily_30d.png)
+
+**Weekly Traffic (12 Weeks):**
+
+![Weekly 12 Weeks](graphs/soul-traveller_read_image_patch_colors_weekly_12m.png)
+
+**Bi-Weekly Traffic (26 Periods):**
+
+![Bi-Weekly 26 Periods](graphs/soul-traveller_read_image_patch_colors_biweekly_26y.png)
+
+**Cumulative Traffic (Lifetime):**
+
+![Cumulative](graphs/soul-traveller_read_image_patch_colors_cumulative.png)
+
+**Separate Cumulative Graphs:**
+
+![Cumulative Clones](graphs/soul-traveller_read_image_patch_colors_cumulative_clones.png)
+
+![Cumulative Views](graphs/soul-traveller_read_image_patch_colors_cumulative_views.png)
 
 ---
 
