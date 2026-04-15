@@ -334,6 +334,16 @@ Your README.md will contain:
 | Last [medium-term period] Days | X | Y |
 | Lifetime | X | Y |
 
+### Repeat vs New Clones
+
+*Analysis of repository adoption showing repeat clones vs new unique clones.*
+
+| Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
+|--------|--------------|----------------|----------------|----------|
+| Last [short-term period] Days | X | Y | Z | P% |
+| Last [medium-term period] Days | X | Y | Z | P% |
+| Lifetime | X | Y | Z | P% |
+
 ### Views
 
 *Repository view statistics showing total and unique views over different time periods.*
@@ -426,6 +436,15 @@ Your README.md will contain:
 - **Short-term period**: Configurable via STATS_PERIOD_SHORT_TERM (default: 30 days)
 - **Medium-term period**: Configurable via STATS_PERIOD_MEDIUM_TERM (default: 90 days)
 - **Lifetime**: All-time totals
+
+**Repeat vs New Clones:**
+- **Total Clones**: Total number of clones in the period
+- **Unique Clones**: Number of unique clones (new users)
+- **Repeat Clones**: Total clones minus unique clones
+- **Repeat Percentage**: Percentage of clones from repeat users
+- Available for short-term, medium-term, and lifetime periods (all configurable)
+
+**Note:** GitHub API does not provide geographical location data for cloners. Location-based statistics are not available.
 
 **Referrer Statistics:**
 - **Total Unique Referrers**: Count of distinct referrer sources (websites, search engines, etc.)
@@ -944,6 +963,24 @@ Statistics are calculated for three configurable periods:
 - Total views per referrer
 - Unique visitors per referrer
 
+**Repeat vs New Clones:**
+
+**Short-term Period (configurable via STATS_PERIOD_SHORT_TERM, default: 30 days):**
+- Total clones vs unique clones
+- Repeat clones calculation (total - unique)
+- Repeat clone percentage
+
+**Medium-term Period (configurable via STATS_PERIOD_MEDIUM_TERM, default: 90 days):**
+- Total clones vs unique clones
+- Repeat clones calculation (total - unique)
+- Repeat clone percentage
+
+**Lifetime:**
+- Total clones vs unique clones
+- Repeat clones calculation (total - unique)
+- Repeat clone percentage
+- Available for short-term, medium-term, and lifetime periods (all configurable)
+
 **Repeat vs New Visitors:**
 
 **Short-term Period (configurable via STATS_PERIOD_SHORT_TERM, default: 30 days):**
@@ -1197,33 +1234,37 @@ The `history.json` file uses a standard structured format:
 
 ### Key Functions in generate_dashboard.py
 
-**New Statistics Functions (lines 695-788):**
+**New Statistics Functions (lines 695-841):**
 
 - `calculate_referrer_stats()` (line 695): Calculates referrer statistics including total unique referrers, referrers sorted by count, total views, and unique visitors from referrers.
 
 - `calculate_repeat_vs_new_stats()` (line 738): Calculates repeat visitors vs new visitors statistics for different time periods (short-term via STATS_PERIOD_SHORT_TERM, medium-term via STATS_PERIOD_MEDIUM_TERM, lifetime). Shows engagement level and returning user behavior.
 
-**README Generation Functions (lines 791-979):**
+- `calculate_repeat_vs_new_clones_stats()` (line 791): Calculates repeat clones vs new clones statistics for different time periods (short-term via STATS_PERIOD_SHORT_TERM, medium-term via STATS_PERIOD_MEDIUM_TERM, lifetime). Shows repository adoption level and returning user behavior.
 
-- `generate_readme()` (line 791): Generates the complete README.md with:
+**README Generation Functions (lines 844-1049):**
+
+- `generate_readme()` (line 844): Generates the complete README.md with:
   - Clickable table of contents (auto-generated based on configured repositories)
-  - Clone and view statistics in table format
+  - Clone statistics in table format
+  - Repeat vs new clones table
+  - View statistics in table format
   - Referrer statistics table
   - Repeat vs new visitors table
   - Traffic graphs with descriptive titles and explanations
   - Graph descriptions explaining what each graph shows
 
-**Data Processing Functions (lines 145-692):**
+**Data Processing Functions (lines 154-692):**
 
-- `calculate_period_stats()` (line 145): Calculates statistics for a specified time period
-- `calculate_lifetime_stats()` (line 169): Calculates lifetime statistics from all available data
-- `get_daily_data()` (line 189): Extracts daily data for specified number of days
-- `get_weekly_data()` (line 213): Aggregates daily data into weekly periods
-- `get_biweekly_data()` (line 243): Aggregates daily data into bi-weekly periods
-- `get_cumulative_data()` (line 273): Calculates cumulative (running) totals
-- `create_graph()` (line 303): Creates a single-line graph
-- `create_multi_line_graph()` (line 347): Creates multi-line graphs for clones and views
-- `generate_repository_graphs()` (line 601): Generates all graphs for a repository
+- `calculate_period_stats()` (line 154): Calculates statistics for a specified time period
+- `calculate_lifetime_stats()` (line 199): Calculates lifetime statistics from all available data
+- `get_daily_data()` (line 239): Extracts daily data for specified number of days
+- `get_weekly_data()` (line 278): Aggregates daily data into weekly periods
+- `get_biweekly_data()` (line 335): Aggregates daily data into bi-weekly periods
+- `get_cumulative_data()` (line 392): Calculates cumulative (running) totals
+- `create_graph()` (line 436): Creates a single-line graph
+- `create_multi_line_graph()` (line 504): Creates multi-line graphs for clones and views
+- `generate_repository_graphs()` (line 580): Generates all graphs for a repository
 
 ### Key Functions in merge_history.py
 

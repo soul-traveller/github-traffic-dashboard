@@ -30,6 +30,18 @@ Quick navigation to repository statistics:
 | Last 90 Days | 55 | 28 |
 | Lifetime | 55 | 28 |
 
+### 📄 Repeat vs New Clones
+
+*Analysis of repository adoption showing repeat clones vs new unique clones.*
+
+*Note: GitHub API does not provide geographical location data for cloners.*
+
+| Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
+|--------|--------------|----------------|----------------|----------|
+| Last 30 Days | 55 | 28 | 27 | 49.1% |
+| Last 90 Days | 55 | 28 | 27 | 49.1% |
+| Lifetime | 55 | 28 | 27 | 49.1% |
+
 ### 👀 Views
 
 *Repository view statistics showing total and unique views over different time periods.*
@@ -117,6 +129,18 @@ Quick navigation to repository statistics:
 | Last 90 Days | 5 | 5 |
 | Lifetime | 5 | 5 |
 
+### 📄 Repeat vs New Clones
+
+*Analysis of repository adoption showing repeat clones vs new unique clones.*
+
+*Note: GitHub API does not provide geographical location data for cloners.*
+
+| Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
+|--------|--------------|----------------|----------------|----------|
+| Last 30 Days | 5 | 5 | 0 | 0.0% |
+| Last 90 Days | 5 | 5 | 0 | 0.0% |
+| Lifetime | 5 | 5 | 0 | 0.0% |
+
 ### 👀 Views
 
 *Repository view statistics showing total and unique views over different time periods.*
@@ -200,6 +224,18 @@ Quick navigation to repository statistics:
 | Last 30 Days | 100 | 58 |
 | Last 90 Days | 100 | 58 |
 | Lifetime | 100 | 58 |
+
+### 📄 Repeat vs New Clones
+
+*Analysis of repository adoption showing repeat clones vs new unique clones.*
+
+*Note: GitHub API does not provide geographical location data for cloners.*
+
+| Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
+|--------|--------------|----------------|----------------|----------|
+| Last 30 Days | 100 | 58 | 42 | 42.0% |
+| Last 90 Days | 100 | 58 | 42 | 42.0% |
+| Lifetime | 100 | 58 | 42 | 42.0% |
 
 ### 👀 Views
 
@@ -288,6 +324,18 @@ Quick navigation to repository statistics:
 | Last 90 Days | 7 | 7 |
 | Lifetime | 7 | 7 |
 
+### 📄 Repeat vs New Clones
+
+*Analysis of repository adoption showing repeat clones vs new unique clones.*
+
+*Note: GitHub API does not provide geographical location data for cloners.*
+
+| Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
+|--------|--------------|----------------|----------------|----------|
+| Last 30 Days | 7 | 7 | 0 | 0.0% |
+| Last 90 Days | 7 | 7 | 0 | 0.0% |
+| Lifetime | 7 | 7 | 0 | 0.0% |
+
 ### 👀 Views
 
 *Repository view statistics showing total and unique views over different time periods.*
@@ -371,6 +419,18 @@ Quick navigation to repository statistics:
 | Last 30 Days | 511 | 244 |
 | Last 90 Days | 511 | 244 |
 | Lifetime | 511 | 244 |
+
+### 📄 Repeat vs New Clones
+
+*Analysis of repository adoption showing repeat clones vs new unique clones.*
+
+*Note: GitHub API does not provide geographical location data for cloners.*
+
+| Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
+|--------|--------------|----------------|----------------|----------|
+| Last 30 Days | 511 | 244 | 267 | 52.3% |
+| Last 90 Days | 511 | 244 | 267 | 52.3% |
+| Lifetime | 511 | 244 | 267 | 52.3% |
 
 ### 👀 Views
 
@@ -457,6 +517,18 @@ Quick navigation to repository statistics:
 | Last 30 Days | 9 | 9 |
 | Last 90 Days | 9 | 9 |
 | Lifetime | 9 | 9 |
+
+### 📄 Repeat vs New Clones
+
+*Analysis of repository adoption showing repeat clones vs new unique clones.*
+
+*Note: GitHub API does not provide geographical location data for cloners.*
+
+| Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
+|--------|--------------|----------------|----------------|----------|
+| Last 30 Days | 9 | 9 | 0 | 0.0% |
+| Last 90 Days | 9 | 9 | 0 | 0.0% |
+| Lifetime | 9 | 9 | 0 | 0.0% |
 
 ### 👀 Views
 

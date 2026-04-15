@@ -788,6 +788,59 @@ def calculate_repeat_vs_new_stats(daily_data: List[Dict[str, Any]]) -> Dict[str,
     }
 
 
+def calculate_repeat_vs_new_clones_stats(daily_data: List[Dict[str, Any]]) -> Dict[str, Dict[str, int]]:
+    """
+    Calculate repeat clones vs new clones statistics.
+
+    This function calculates:
+    - Total clones vs unique clones for different time periods
+    - Repeat clones = Total clones - Unique clones
+    - Shows repository adoption level and returning user behavior
+
+    Args:
+        daily_data: List of daily data entries
+
+    Returns:
+        Dictionary with statistics for different periods:
+        - short_term: Last STATS_PERIOD_SHORT_TERM days
+        - medium_term: Last STATS_PERIOD_MEDIUM_TERM days
+        - lifetime: All available data
+        Each period contains:
+        - total_clones: Total clones in period
+        - unique_clones: Unique clones in period
+        - repeat_clones: Repeat clones (total - unique)
+        - repeat_percentage: Percentage of repeat clones
+    """
+    # Calculate for different periods
+    stats_short = calculate_period_stats(daily_data, STATS_PERIOD_SHORT_TERM)
+    stats_medium = calculate_period_stats(daily_data, STATS_PERIOD_MEDIUM_TERM)
+    stats_lifetime = calculate_lifetime_stats(daily_data)
+
+    def calculate_repeat_clones_stats(stats: Dict[str, int]) -> Dict[str, Any]:
+        """Calculate repeat clone statistics from period stats."""
+        total_clones = stats.get('clones_total', 0)
+        unique_clones = stats.get('clones_unique', 0)
+        repeat_clones = total_clones - unique_clones
+
+        # Calculate percentage (avoid division by zero)
+        repeat_percentage = 0
+        if total_clones > 0:
+            repeat_percentage = round((repeat_clones / total_clones) * 100, 1)
+
+        return {
+            'total_clones': total_clones,
+            'unique_clones': unique_clones,
+            'repeat_clones': repeat_clones,
+            'repeat_percentage': repeat_percentage
+        }
+
+    return {
+        'short_term': calculate_repeat_clones_stats(stats_short),
+        'medium_term': calculate_repeat_clones_stats(stats_medium),
+        'lifetime': calculate_repeat_clones_stats(stats_lifetime)
+    }
+
+
 def generate_readme(history_data: Dict[str, Any]) -> None:
     """
     Generate the README.md file with statistics and embedded graphs.
@@ -798,6 +851,7 @@ def generate_readme(history_data: Dict[str, Any]) -> None:
     - Last updated timestamp
     - Per-repository sections with:
       - Clone statistics in table format (configurable periods)
+      - Repeat vs New clone statistics
       - View statistics in table format (configurable periods)
       - Referrer statistics (total unique referrers, top referrers)
       - Repeat vs New visitor statistics
@@ -871,20 +925,35 @@ def generate_readme(history_data: Dict[str, Any]) -> None:
         
         # Calculate referrer statistics
         referrer_stats = calculate_referrer_stats(referrers)
-        
+
         # Calculate repeat vs new visitor statistics
         repeat_stats = calculate_repeat_vs_new_stats(daily_data)
-        
+
+        # Calculate repeat vs new clone statistics
+        repeat_clones_stats = calculate_repeat_vs_new_clones_stats(daily_data)
+
         # Add Clones section with emoji
         md += "### \U0001f5c5\ufe0f Clones\n\n"
         md += "*Repository clone statistics showing total and unique clones over different time periods.*\n\n"
-        
+
         # Create professional table for clones statistics
         md += "| Period | Total | Unique |\n"
         md += "|--------|-------|--------|\n"
         md += f"| Last {STATS_PERIOD_SHORT_TERM} Days | {stats_short['clones_total']} | {stats_short['clones_unique']} |\n"
         md += f"| Last {STATS_PERIOD_MEDIUM_TERM} Days | {stats_medium['clones_total']} | {stats_medium['clones_unique']} |\n"
         md += f"| Lifetime | {stats_lifetime['clones_total']} | {stats_lifetime['clones_unique']} |\n\n"
+
+        # Add Repeat vs New Clones section with emoji
+        md += "### \U0001f4c4 Repeat vs New Clones\n\n"
+        md += "*Analysis of repository adoption showing repeat clones vs new unique clones.*\n\n"
+        md += "*Note: GitHub API does not provide geographical location data for cloners.*\n\n"
+
+        # Create table for repeat vs new clone statistics
+        md += "| Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |\n"
+        md += "|--------|--------------|----------------|----------------|----------|\n"
+        md += f"| Last {STATS_PERIOD_SHORT_TERM} Days | {repeat_clones_stats['short_term']['total_clones']} | {repeat_clones_stats['short_term']['unique_clones']} | {repeat_clones_stats['short_term']['repeat_clones']} | {repeat_clones_stats['short_term']['repeat_percentage']}% |\n"
+        md += f"| Last {STATS_PERIOD_MEDIUM_TERM} Days | {repeat_clones_stats['medium_term']['total_clones']} | {repeat_clones_stats['medium_term']['unique_clones']} | {repeat_clones_stats['medium_term']['repeat_clones']} | {repeat_clones_stats['medium_term']['repeat_percentage']}% |\n"
+        md += f"| Lifetime | {repeat_clones_stats['lifetime']['total_clones']} | {repeat_clones_stats['lifetime']['unique_clones']} | {repeat_clones_stats['lifetime']['repeat_clones']} | {repeat_clones_stats['lifetime']['repeat_percentage']}% |\n\n"
 
         # Add Views section with emoji
         md += "### \U0001f440 Views\n\n"
