@@ -150,6 +150,7 @@ jobs:
           
           repos=(
             "soul-traveller/Argyll_Printer_Profiler"
+            "soul-traveller/Argyll_Printer_Profiler_GUI"
             "soul-traveller/Toggle_Display_Profile"
             "soul-traveller/rectarg"
             "soul-traveller/github-traffic-dashboard"
