@@ -5,7 +5,7 @@ https://soul-traveller.github.io/github-traffic-dashboard/
 
 This dashboard tracks historical traffic data (clones and views) for GitHub repositories.
 
-**Last Updated:** 2026-04-27T05:00:23.744984Z
+**Last Updated:** 2026-04-28T05:23:36.223625Z
 
 ## 📋 Table of Contents
 
@@ -19,7 +19,7 @@ Quick navigation to repository statistics:
 - [read_image_patch_colors](#read-image-patch-colors)
 - [rectarg](#rectarg)
 
-# rectarg
+# github-traffic-dashboard
 
 ### 🗅️ Clones
 
@@ -27,9 +27,9 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 65 | 59 |
-| Last 90 Days | 65 | 59 |
-| Lifetime | 65 | 59 |
+| Last 30 Days | 954 | 440 |
+| Last 90 Days | 954 | 440 |
+| Lifetime | 954 | 440 |
 
 ### 📄 Repeat vs New Clones
 
@@ -39,9 +39,9 @@ Quick navigation to repository statistics:
 
 | Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
 |--------|--------------|----------------|----------------|----------|
-| Last 30 Days | 65 | 59 | 6 | 9.2% |
-| Last 90 Days | 65 | 59 | 6 | 9.2% |
-| Lifetime | 65 | 59 | 6 | 9.2% |
+| Last 30 Days | 954 | 440 | 514 | 53.9% |
+| Last 90 Days | 954 | 440 | 514 | 53.9% |
+| Lifetime | 954 | 440 | 514 | 53.9% |
 
 ### 👀 Views
 
@@ -49,19 +49,20 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 8 | 4 |
-| Last 90 Days | 8 | 4 |
-| Lifetime | 8 | 4 |
+| Last 30 Days | 262 | 16 |
+| Last 90 Days | 262 | 16 |
+| Lifetime | 262 | 16 |
 
 ### 📞 Referrers
 
 *Top referrer sources driving traffic to this repository.*
 
-**Total Unique Referrers:** 1
+**Total Unique Referrers:** 2
 
 | Referrer | Total Views | Unique Visitors |
 |----------|-------------|----------------|
-| github.com | 1 | 1 |
+| github.com | 15 | 3 |
+| soul-traveller.github.io | 6 | 4 |
 
 ### 👥 Repeat vs New Visitors
 
@@ -71,9 +72,9 @@ Quick navigation to repository statistics:
 
 | Period | Total Views | Unique Visitors | Repeat Visitors | Repeat % |
 |--------|-------------|-----------------|-----------------|----------|
-| Last 30 Days | 8 | 4 | 4 | 50.0% |
-| Last 90 Days | 8 | 4 | 4 | 50.0% |
-| Lifetime | 8 | 4 | 4 | 50.0% |
+| Last 30 Days | 262 | 16 | 246 | 93.9% |
+| Last 90 Days | 262 | 16 | 246 | 93.9% |
+| Lifetime | 262 | 16 | 246 | 93.9% |
 
 ### 📈 Traffic Graphs
 
@@ -83,25 +84,25 @@ Quick navigation to repository statistics:
 
 *Shows daily clones and views trends for the last 30 days. Useful for identifying short-term patterns and recent activity spikes.*
 
-![Daily 30 Days](graphs/soul-traveller_rectarg_daily_30d.png)
+![Daily 30 Days](graphs/soul-traveller_github-traffic-dashboard_daily_30d.png)
 
 #### Weekly Traffic (12 Weeks)
 
 *Shows weekly aggregated clones and views for the last 12 weeks (~3 months). Useful for identifying medium-term trends and seasonal patterns.*
 
-![Weekly 12 Weeks](graphs/soul-traveller_rectarg_weekly_12m.png)
+![Weekly 12 Weeks](graphs/soul-traveller_github-traffic-dashboard_weekly_12m.png)
 
 #### Bi-Weekly Traffic (26 Periods)
 
 *Shows bi-weekly aggregated clones and views for the last 26 periods (~1 year). Useful for identifying long-term trends and yearly patterns.*
 
-![Bi-Weekly 26 Periods](graphs/soul-traveller_rectarg_biweekly_26y.png)
+![Bi-Weekly 26 Periods](graphs/soul-traveller_github-traffic-dashboard_biweekly_26y.png)
 
 #### Cumulative Traffic (Lifetime)
 
 *Shows running totals of both clones and views over the entire lifetime of tracking. Useful for seeing overall growth and total adoption.*
 
-![Cumulative](graphs/soul-traveller_rectarg_cumulative.png)
+![Cumulative](graphs/soul-traveller_github-traffic-dashboard_cumulative.png)
 
 #### Separate Cumulative Graphs
 
@@ -109,11 +110,109 @@ Quick navigation to repository statistics:
 
 **Cumulative Clones:**
 
-![Cumulative Clones](graphs/soul-traveller_rectarg_cumulative_clones.png)
+![Cumulative Clones](graphs/soul-traveller_github-traffic-dashboard_cumulative_clones.png)
 
 **Cumulative Views:**
 
-![Cumulative Views](graphs/soul-traveller_rectarg_cumulative_views.png)
+![Cumulative Views](graphs/soul-traveller_github-traffic-dashboard_cumulative_views.png)
+
+---
+
+# Argyll_Printer_Profiler
+
+### 🗅️ Clones
+
+*Repository clone statistics showing total and unique clones over different time periods.*
+
+| Period | Total | Unique |
+|--------|-------|--------|
+| Last 30 Days | 128 | 69 |
+| Last 90 Days | 128 | 69 |
+| Lifetime | 128 | 69 |
+
+### 📄 Repeat vs New Clones
+
+*Analysis of repository adoption showing repeat clones vs new unique clones.*
+
+*Note: GitHub API does not provide geographical location data for cloners.*
+
+| Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
+|--------|--------------|----------------|----------------|----------|
+| Last 30 Days | 128 | 69 | 59 | 46.1% |
+| Last 90 Days | 128 | 69 | 59 | 46.1% |
+| Lifetime | 128 | 69 | 59 | 46.1% |
+
+### 👀 Views
+
+*Repository view statistics showing total and unique views over different time periods.*
+
+| Period | Total | Unique |
+|--------|-------|--------|
+| Last 30 Days | 112 | 20 |
+| Last 90 Days | 112 | 20 |
+| Lifetime | 112 | 20 |
+
+### 📞 Referrers
+
+*Top referrer sources driving traffic to this repository.*
+
+**Total Unique Referrers:** 1
+
+| Referrer | Total Views | Unique Visitors |
+|----------|-------------|----------------|
+| github.com | 22 | 1 |
+
+### 👥 Repeat vs New Visitors
+
+*Analysis of visitor engagement showing repeat visitors vs new unique visitors.*
+
+*Note: GitHub API does not provide geographical location data for visitors.*
+
+| Period | Total Views | Unique Visitors | Repeat Visitors | Repeat % |
+|--------|-------------|-----------------|-----------------|----------|
+| Last 30 Days | 112 | 20 | 92 | 82.1% |
+| Last 90 Days | 112 | 20 | 92 | 82.1% |
+| Lifetime | 112 | 20 | 92 | 82.1% |
+
+### 📈 Traffic Graphs
+
+*Visual representations of traffic trends over different time periods.*
+
+#### Daily Traffic (30 Days)
+
+*Shows daily clones and views trends for the last 30 days. Useful for identifying short-term patterns and recent activity spikes.*
+
+![Daily 30 Days](graphs/soul-traveller_Argyll_Printer_Profiler_daily_30d.png)
+
+#### Weekly Traffic (12 Weeks)
+
+*Shows weekly aggregated clones and views for the last 12 weeks (~3 months). Useful for identifying medium-term trends and seasonal patterns.*
+
+![Weekly 12 Weeks](graphs/soul-traveller_Argyll_Printer_Profiler_weekly_12m.png)
+
+#### Bi-Weekly Traffic (26 Periods)
+
+*Shows bi-weekly aggregated clones and views for the last 26 periods (~1 year). Useful for identifying long-term trends and yearly patterns.*
+
+![Bi-Weekly 26 Periods](graphs/soul-traveller_Argyll_Printer_Profiler_biweekly_26y.png)
+
+#### Cumulative Traffic (Lifetime)
+
+*Shows running totals of both clones and views over the entire lifetime of tracking. Useful for seeing overall growth and total adoption.*
+
+![Cumulative](graphs/soul-traveller_Argyll_Printer_Profiler_cumulative.png)
+
+#### Separate Cumulative Graphs
+
+*Individual cumulative graphs for clones and views, allowing for easier comparison between the two metrics.*
+
+**Cumulative Clones:**
+
+![Cumulative Clones](graphs/soul-traveller_Argyll_Printer_Profiler_cumulative_clones.png)
+
+**Cumulative Views:**
+
+![Cumulative Views](graphs/soul-traveller_Argyll_Printer_Profiler_cumulative_views.png)
 
 ---
 
@@ -125,9 +224,9 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 37 | 37 |
-| Last 90 Days | 37 | 37 |
-| Lifetime | 37 | 37 |
+| Last 30 Days | 38 | 38 |
+| Last 90 Days | 38 | 38 |
+| Lifetime | 38 | 38 |
 
 ### 📄 Repeat vs New Clones
 
@@ -137,9 +236,9 @@ Quick navigation to repository statistics:
 
 | Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
 |--------|--------------|----------------|----------------|----------|
-| Last 30 Days | 37 | 37 | 0 | 0.0% |
-| Last 90 Days | 37 | 37 | 0 | 0.0% |
-| Lifetime | 37 | 37 | 0 | 0.0% |
+| Last 30 Days | 38 | 38 | 0 | 0.0% |
+| Last 90 Days | 38 | 38 | 0 | 0.0% |
+| Lifetime | 38 | 38 | 0 | 0.0% |
 
 ### 👀 Views
 
@@ -223,9 +322,9 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 63 | 37 |
-| Last 90 Days | 63 | 37 |
-| Lifetime | 63 | 37 |
+| Last 30 Days | 96 | 50 |
+| Last 90 Days | 96 | 50 |
+| Lifetime | 96 | 50 |
 
 ### 📄 Repeat vs New Clones
 
@@ -235,9 +334,9 @@ Quick navigation to repository statistics:
 
 | Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
 |--------|--------------|----------------|----------------|----------|
-| Last 30 Days | 63 | 37 | 26 | 41.3% |
-| Last 90 Days | 63 | 37 | 26 | 41.3% |
-| Lifetime | 63 | 37 | 26 | 41.3% |
+| Last 30 Days | 96 | 50 | 46 | 47.9% |
+| Last 90 Days | 96 | 50 | 46 | 47.9% |
+| Lifetime | 96 | 50 | 46 | 47.9% |
 
 ### 👀 Views
 
@@ -313,204 +412,6 @@ Quick navigation to repository statistics:
 
 ---
 
-# Toggle_Display_Profile
-
-### 🗅️ Clones
-
-*Repository clone statistics showing total and unique clones over different time periods.*
-
-| Period | Total | Unique |
-|--------|-------|--------|
-| Last 30 Days | 108 | 63 |
-| Last 90 Days | 108 | 63 |
-| Lifetime | 108 | 63 |
-
-### 📄 Repeat vs New Clones
-
-*Analysis of repository adoption showing repeat clones vs new unique clones.*
-
-*Note: GitHub API does not provide geographical location data for cloners.*
-
-| Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
-|--------|--------------|----------------|----------------|----------|
-| Last 30 Days | 108 | 63 | 45 | 41.7% |
-| Last 90 Days | 108 | 63 | 45 | 41.7% |
-| Lifetime | 108 | 63 | 45 | 41.7% |
-
-### 👀 Views
-
-*Repository view statistics showing total and unique views over different time periods.*
-
-| Period | Total | Unique |
-|--------|-------|--------|
-| Last 30 Days | 84 | 8 |
-| Last 90 Days | 84 | 8 |
-| Lifetime | 84 | 8 |
-
-### 📞 Referrers
-
-*Top referrer sources driving traffic to this repository.*
-
-**Total Unique Referrers:** 2
-
-| Referrer | Total Views | Unique Visitors |
-|----------|-------------|----------------|
-| github.com | 8 | 1 |
-| soul-traveller.github.io | 1 | 1 |
-
-### 👥 Repeat vs New Visitors
-
-*Analysis of visitor engagement showing repeat visitors vs new unique visitors.*
-
-*Note: GitHub API does not provide geographical location data for visitors.*
-
-| Period | Total Views | Unique Visitors | Repeat Visitors | Repeat % |
-|--------|-------------|-----------------|-----------------|----------|
-| Last 30 Days | 84 | 8 | 76 | 90.5% |
-| Last 90 Days | 84 | 8 | 76 | 90.5% |
-| Lifetime | 84 | 8 | 76 | 90.5% |
-
-### 📈 Traffic Graphs
-
-*Visual representations of traffic trends over different time periods.*
-
-#### Daily Traffic (30 Days)
-
-*Shows daily clones and views trends for the last 30 days. Useful for identifying short-term patterns and recent activity spikes.*
-
-![Daily 30 Days](graphs/soul-traveller_Toggle_Display_Profile_daily_30d.png)
-
-#### Weekly Traffic (12 Weeks)
-
-*Shows weekly aggregated clones and views for the last 12 weeks (~3 months). Useful for identifying medium-term trends and seasonal patterns.*
-
-![Weekly 12 Weeks](graphs/soul-traveller_Toggle_Display_Profile_weekly_12m.png)
-
-#### Bi-Weekly Traffic (26 Periods)
-
-*Shows bi-weekly aggregated clones and views for the last 26 periods (~1 year). Useful for identifying long-term trends and yearly patterns.*
-
-![Bi-Weekly 26 Periods](graphs/soul-traveller_Toggle_Display_Profile_biweekly_26y.png)
-
-#### Cumulative Traffic (Lifetime)
-
-*Shows running totals of both clones and views over the entire lifetime of tracking. Useful for seeing overall growth and total adoption.*
-
-![Cumulative](graphs/soul-traveller_Toggle_Display_Profile_cumulative.png)
-
-#### Separate Cumulative Graphs
-
-*Individual cumulative graphs for clones and views, allowing for easier comparison between the two metrics.*
-
-**Cumulative Clones:**
-
-![Cumulative Clones](graphs/soul-traveller_Toggle_Display_Profile_cumulative_clones.png)
-
-**Cumulative Views:**
-
-![Cumulative Views](graphs/soul-traveller_Toggle_Display_Profile_cumulative_views.png)
-
----
-
-# github-traffic-dashboard
-
-### 🗅️ Clones
-
-*Repository clone statistics showing total and unique clones over different time periods.*
-
-| Period | Total | Unique |
-|--------|-------|--------|
-| Last 30 Days | 859 | 392 |
-| Last 90 Days | 859 | 392 |
-| Lifetime | 859 | 392 |
-
-### 📄 Repeat vs New Clones
-
-*Analysis of repository adoption showing repeat clones vs new unique clones.*
-
-*Note: GitHub API does not provide geographical location data for cloners.*
-
-| Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
-|--------|--------------|----------------|----------------|----------|
-| Last 30 Days | 859 | 392 | 467 | 54.4% |
-| Last 90 Days | 859 | 392 | 467 | 54.4% |
-| Lifetime | 859 | 392 | 467 | 54.4% |
-
-### 👀 Views
-
-*Repository view statistics showing total and unique views over different time periods.*
-
-| Period | Total | Unique |
-|--------|-------|--------|
-| Last 30 Days | 262 | 16 |
-| Last 90 Days | 262 | 16 |
-| Lifetime | 262 | 16 |
-
-### 📞 Referrers
-
-*Top referrer sources driving traffic to this repository.*
-
-**Total Unique Referrers:** 2
-
-| Referrer | Total Views | Unique Visitors |
-|----------|-------------|----------------|
-| github.com | 45 | 4 |
-| soul-traveller.github.io | 6 | 4 |
-
-### 👥 Repeat vs New Visitors
-
-*Analysis of visitor engagement showing repeat visitors vs new unique visitors.*
-
-*Note: GitHub API does not provide geographical location data for visitors.*
-
-| Period | Total Views | Unique Visitors | Repeat Visitors | Repeat % |
-|--------|-------------|-----------------|-----------------|----------|
-| Last 30 Days | 262 | 16 | 246 | 93.9% |
-| Last 90 Days | 262 | 16 | 246 | 93.9% |
-| Lifetime | 262 | 16 | 246 | 93.9% |
-
-### 📈 Traffic Graphs
-
-*Visual representations of traffic trends over different time periods.*
-
-#### Daily Traffic (30 Days)
-
-*Shows daily clones and views trends for the last 30 days. Useful for identifying short-term patterns and recent activity spikes.*
-
-![Daily 30 Days](graphs/soul-traveller_github-traffic-dashboard_daily_30d.png)
-
-#### Weekly Traffic (12 Weeks)
-
-*Shows weekly aggregated clones and views for the last 12 weeks (~3 months). Useful for identifying medium-term trends and seasonal patterns.*
-
-![Weekly 12 Weeks](graphs/soul-traveller_github-traffic-dashboard_weekly_12m.png)
-
-#### Bi-Weekly Traffic (26 Periods)
-
-*Shows bi-weekly aggregated clones and views for the last 26 periods (~1 year). Useful for identifying long-term trends and yearly patterns.*
-
-![Bi-Weekly 26 Periods](graphs/soul-traveller_github-traffic-dashboard_biweekly_26y.png)
-
-#### Cumulative Traffic (Lifetime)
-
-*Shows running totals of both clones and views over the entire lifetime of tracking. Useful for seeing overall growth and total adoption.*
-
-![Cumulative](graphs/soul-traveller_github-traffic-dashboard_cumulative.png)
-
-#### Separate Cumulative Graphs
-
-*Individual cumulative graphs for clones and views, allowing for easier comparison between the two metrics.*
-
-**Cumulative Clones:**
-
-![Cumulative Clones](graphs/soul-traveller_github-traffic-dashboard_cumulative_clones.png)
-
-**Cumulative Views:**
-
-![Cumulative Views](graphs/soul-traveller_github-traffic-dashboard_cumulative_views.png)
-
----
-
 # average_ti3s_rgbgeom
 
 ### 🗅️ Clones
@@ -519,9 +420,9 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 11 | 11 |
-| Last 90 Days | 11 | 11 |
-| Lifetime | 11 | 11 |
+| Last 30 Days | 12 | 12 |
+| Last 90 Days | 12 | 12 |
+| Lifetime | 12 | 12 |
 
 ### 📄 Repeat vs New Clones
 
@@ -531,9 +432,9 @@ Quick navigation to repository statistics:
 
 | Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
 |--------|--------------|----------------|----------------|----------|
-| Last 30 Days | 11 | 11 | 0 | 0.0% |
-| Last 90 Days | 11 | 11 | 0 | 0.0% |
-| Lifetime | 11 | 11 | 0 | 0.0% |
+| Last 30 Days | 12 | 12 | 0 | 0.0% |
+| Last 90 Days | 12 | 12 | 0 | 0.0% |
+| Lifetime | 12 | 12 | 0 | 0.0% |
 
 ### 👀 Views
 
@@ -607,7 +508,7 @@ Quick navigation to repository statistics:
 
 ---
 
-# Argyll_Printer_Profiler
+# Toggle_Display_Profile
 
 ### 🗅️ Clones
 
@@ -615,9 +516,9 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 123 | 65 |
-| Last 90 Days | 123 | 65 |
-| Lifetime | 123 | 65 |
+| Last 30 Days | 113 | 67 |
+| Last 90 Days | 113 | 67 |
+| Lifetime | 113 | 67 |
 
 ### 📄 Repeat vs New Clones
 
@@ -627,9 +528,9 @@ Quick navigation to repository statistics:
 
 | Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
 |--------|--------------|----------------|----------------|----------|
-| Last 30 Days | 123 | 65 | 58 | 47.2% |
-| Last 90 Days | 123 | 65 | 58 | 47.2% |
-| Lifetime | 123 | 65 | 58 | 47.2% |
+| Last 30 Days | 113 | 67 | 46 | 40.7% |
+| Last 90 Days | 113 | 67 | 46 | 40.7% |
+| Lifetime | 113 | 67 | 46 | 40.7% |
 
 ### 👀 Views
 
@@ -637,20 +538,17 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 112 | 20 |
-| Last 90 Days | 112 | 20 |
-| Lifetime | 112 | 20 |
+| Last 30 Days | 84 | 8 |
+| Last 90 Days | 84 | 8 |
+| Lifetime | 84 | 8 |
 
 ### 📞 Referrers
 
 *Top referrer sources driving traffic to this repository.*
 
-**Total Unique Referrers:** 2
+**Total Unique Referrers:** 0
 
-| Referrer | Total Views | Unique Visitors |
-|----------|-------------|----------------|
-| github.com | 29 | 1 |
-| soul-traveller.github.io | 1 | 1 |
+*No referrer data available.*
 
 ### 👥 Repeat vs New Visitors
 
@@ -660,9 +558,9 @@ Quick navigation to repository statistics:
 
 | Period | Total Views | Unique Visitors | Repeat Visitors | Repeat % |
 |--------|-------------|-----------------|-----------------|----------|
-| Last 30 Days | 112 | 20 | 92 | 82.1% |
-| Last 90 Days | 112 | 20 | 92 | 82.1% |
-| Lifetime | 112 | 20 | 92 | 82.1% |
+| Last 30 Days | 84 | 8 | 76 | 90.5% |
+| Last 90 Days | 84 | 8 | 76 | 90.5% |
+| Lifetime | 84 | 8 | 76 | 90.5% |
 
 ### 📈 Traffic Graphs
 
@@ -672,25 +570,25 @@ Quick navigation to repository statistics:
 
 *Shows daily clones and views trends for the last 30 days. Useful for identifying short-term patterns and recent activity spikes.*
 
-![Daily 30 Days](graphs/soul-traveller_Argyll_Printer_Profiler_daily_30d.png)
+![Daily 30 Days](graphs/soul-traveller_Toggle_Display_Profile_daily_30d.png)
 
 #### Weekly Traffic (12 Weeks)
 
 *Shows weekly aggregated clones and views for the last 12 weeks (~3 months). Useful for identifying medium-term trends and seasonal patterns.*
 
-![Weekly 12 Weeks](graphs/soul-traveller_Argyll_Printer_Profiler_weekly_12m.png)
+![Weekly 12 Weeks](graphs/soul-traveller_Toggle_Display_Profile_weekly_12m.png)
 
 #### Bi-Weekly Traffic (26 Periods)
 
 *Shows bi-weekly aggregated clones and views for the last 26 periods (~1 year). Useful for identifying long-term trends and yearly patterns.*
 
-![Bi-Weekly 26 Periods](graphs/soul-traveller_Argyll_Printer_Profiler_biweekly_26y.png)
+![Bi-Weekly 26 Periods](graphs/soul-traveller_Toggle_Display_Profile_biweekly_26y.png)
 
 #### Cumulative Traffic (Lifetime)
 
 *Shows running totals of both clones and views over the entire lifetime of tracking. Useful for seeing overall growth and total adoption.*
 
-![Cumulative](graphs/soul-traveller_Argyll_Printer_Profiler_cumulative.png)
+![Cumulative](graphs/soul-traveller_Toggle_Display_Profile_cumulative.png)
 
 #### Separate Cumulative Graphs
 
@@ -698,11 +596,107 @@ Quick navigation to repository statistics:
 
 **Cumulative Clones:**
 
-![Cumulative Clones](graphs/soul-traveller_Argyll_Printer_Profiler_cumulative_clones.png)
+![Cumulative Clones](graphs/soul-traveller_Toggle_Display_Profile_cumulative_clones.png)
 
 **Cumulative Views:**
 
-![Cumulative Views](graphs/soul-traveller_Argyll_Printer_Profiler_cumulative_views.png)
+![Cumulative Views](graphs/soul-traveller_Toggle_Display_Profile_cumulative_views.png)
+
+---
+
+# rectarg
+
+### 🗅️ Clones
+
+*Repository clone statistics showing total and unique clones over different time periods.*
+
+| Period | Total | Unique |
+|--------|-------|--------|
+| Last 30 Days | 66 | 60 |
+| Last 90 Days | 66 | 60 |
+| Lifetime | 66 | 60 |
+
+### 📄 Repeat vs New Clones
+
+*Analysis of repository adoption showing repeat clones vs new unique clones.*
+
+*Note: GitHub API does not provide geographical location data for cloners.*
+
+| Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
+|--------|--------------|----------------|----------------|----------|
+| Last 30 Days | 66 | 60 | 6 | 9.1% |
+| Last 90 Days | 66 | 60 | 6 | 9.1% |
+| Lifetime | 66 | 60 | 6 | 9.1% |
+
+### 👀 Views
+
+*Repository view statistics showing total and unique views over different time periods.*
+
+| Period | Total | Unique |
+|--------|-------|--------|
+| Last 30 Days | 8 | 4 |
+| Last 90 Days | 8 | 4 |
+| Lifetime | 8 | 4 |
+
+### 📞 Referrers
+
+*Top referrer sources driving traffic to this repository.*
+
+**Total Unique Referrers:** 0
+
+*No referrer data available.*
+
+### 👥 Repeat vs New Visitors
+
+*Analysis of visitor engagement showing repeat visitors vs new unique visitors.*
+
+*Note: GitHub API does not provide geographical location data for visitors.*
+
+| Period | Total Views | Unique Visitors | Repeat Visitors | Repeat % |
+|--------|-------------|-----------------|-----------------|----------|
+| Last 30 Days | 8 | 4 | 4 | 50.0% |
+| Last 90 Days | 8 | 4 | 4 | 50.0% |
+| Lifetime | 8 | 4 | 4 | 50.0% |
+
+### 📈 Traffic Graphs
+
+*Visual representations of traffic trends over different time periods.*
+
+#### Daily Traffic (30 Days)
+
+*Shows daily clones and views trends for the last 30 days. Useful for identifying short-term patterns and recent activity spikes.*
+
+![Daily 30 Days](graphs/soul-traveller_rectarg_daily_30d.png)
+
+#### Weekly Traffic (12 Weeks)
+
+*Shows weekly aggregated clones and views for the last 12 weeks (~3 months). Useful for identifying medium-term trends and seasonal patterns.*
+
+![Weekly 12 Weeks](graphs/soul-traveller_rectarg_weekly_12m.png)
+
+#### Bi-Weekly Traffic (26 Periods)
+
+*Shows bi-weekly aggregated clones and views for the last 26 periods (~1 year). Useful for identifying long-term trends and yearly patterns.*
+
+![Bi-Weekly 26 Periods](graphs/soul-traveller_rectarg_biweekly_26y.png)
+
+#### Cumulative Traffic (Lifetime)
+
+*Shows running totals of both clones and views over the entire lifetime of tracking. Useful for seeing overall growth and total adoption.*
+
+![Cumulative](graphs/soul-traveller_rectarg_cumulative.png)
+
+#### Separate Cumulative Graphs
+
+*Individual cumulative graphs for clones and views, allowing for easier comparison between the two metrics.*
+
+**Cumulative Clones:**
+
+![Cumulative Clones](graphs/soul-traveller_rectarg_cumulative_clones.png)
+
+**Cumulative Views:**
+
+![Cumulative Views](graphs/soul-traveller_rectarg_cumulative_views.png)
 
 ---
 
