@@ -5,7 +5,7 @@ https://soul-traveller.github.io/github-traffic-dashboard/
 
 This dashboard tracks historical traffic data (clones and views) for GitHub repositories.
 
-**Last Updated:** 2026-05-29T06:04:30.916082Z
+**Last Updated:** 2026-05-30T05:41:01.340371Z
 
 ## 📋 How Metrics Are Calculated
 
@@ -483,7 +483,7 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 554 | 255 |
+| Last 30 Days | 552 | 253 |
 | Last 90 Days | 1551 | 718 |
 | Lifetime | 1551 | 718 |
 
@@ -495,7 +495,7 @@ Quick navigation to repository statistics:
 
 | Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
 |--------|--------------|----------------|----------------|----------|
-| Last 30 Days | 554 | 255 | 299 | 54.0% |
+| Last 30 Days | 552 | 253 | 299 | 54.2% |
 | Last 90 Days | 1551 | 718 | 833 | 53.7% |
 | Lifetime | 1551 | 718 | 833 | 53.7% |
 
@@ -505,7 +505,7 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 24 | 4 |
+| Last 30 Days | 23 | 3 |
 | Last 90 Days | 287 | 21 |
 | Lifetime | 287 | 21 |
 
@@ -525,7 +525,7 @@ Quick navigation to repository statistics:
 
 | Period | Total Views | Unique Visitors | Repeat Visitors | Repeat % |
 |--------|-------------|-----------------|-----------------|----------|
-| Last 30 Days | 24 | 4 | 20 | 83.3% |
+| Last 30 Days | 23 | 3 | 20 | 87.0% |
 | Last 90 Days | 287 | 21 | 266 | 92.7% |
 | Lifetime | 287 | 21 | 266 | 92.7% |
 
