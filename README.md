@@ -5,7 +5,7 @@ https://soul-traveller.github.io/github-traffic-dashboard/
 
 This dashboard tracks historical traffic data (clones and views) for GitHub repositories.
 
-**Last Updated:** 2026-06-09T06:00:52.562515Z
+**Last Updated:** 2026-06-10T06:14:12.099977Z
 
 ## 📋 How Metrics Are Calculated
 
@@ -291,8 +291,8 @@ Quick navigation to repository statistics:
 | Period | Total | Unique |
 |--------|-------|--------|
 | Last 30 Days | 16 | 16 |
-| Last 90 Days | 138 | 89 |
-| Lifetime | 138 | 89 |
+| Last 90 Days | 139 | 90 |
+| Lifetime | 139 | 90 |
 
 ### 📄 Repeat vs New Clones
 
@@ -303,8 +303,8 @@ Quick navigation to repository statistics:
 | Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
 |--------|--------------|----------------|----------------|----------|
 | Last 30 Days | 16 | 16 | 0 | 0.0% |
-| Last 90 Days | 138 | 89 | 49 | 35.5% |
-| Lifetime | 138 | 89 | 49 | 35.5% |
+| Last 90 Days | 139 | 90 | 49 | 35.3% |
+| Lifetime | 139 | 90 | 49 | 35.3% |
 
 ### 👀 Views
 
@@ -484,9 +484,9 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 359 | 192 |
-| Last 90 Days | 1679 | 783 |
-| Lifetime | 1679 | 783 |
+| Last 30 Days | 376 | 200 |
+| Last 90 Days | 1700 | 794 |
+| Lifetime | 1700 | 794 |
 
 ### 📄 Repeat vs New Clones
 
@@ -496,9 +496,9 @@ Quick navigation to repository statistics:
 
 | Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
 |--------|--------------|----------------|----------------|----------|
-| Last 30 Days | 359 | 192 | 167 | 46.5% |
-| Last 90 Days | 1679 | 783 | 896 | 53.4% |
-| Lifetime | 1679 | 783 | 896 | 53.4% |
+| Last 30 Days | 376 | 200 | 176 | 46.8% |
+| Last 90 Days | 1700 | 794 | 906 | 53.3% |
+| Lifetime | 1700 | 794 | 906 | 53.3% |
 
 ### 👀 Views
 
@@ -612,11 +612,9 @@ Quick navigation to repository statistics:
 
 *Top referrer sources driving traffic to this repository.*
 
-**Total Unique Referrers:** 1
+**Total Unique Referrers:** 0
 
-| Referrer | Total Views | Unique Visitors |
-|----------|-------------|----------------|
-| github.com | 2 | 1 |
+*No referrer data available.*
 
 ### 👥 Repeat vs New Visitors
 
