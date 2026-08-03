@@ -5,7 +5,7 @@ https://soul-traveller.github.io/github-traffic-dashboard/
 
 This dashboard tracks historical traffic data (clones and views) for GitHub repositories.
 
-**Last Updated:** 2026-08-02T05:16:50.052366Z
+**Last Updated:** 2026-08-03T05:31:39.474404Z
 
 ## 📋 How Metrics Are Calculated
 
@@ -116,8 +116,8 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 18 | 13 |
-| Last 90 Days | 72 | 52 |
+| Last 30 Days | 15 | 10 |
+| Last 90 Days | 70 | 50 |
 | Lifetime | 225 | 80 |
 
 ### 📞 Referrers
@@ -140,8 +140,8 @@ Quick navigation to repository statistics:
 
 | Period | Total Views | Unique Visitors | Repeat Visitors | Repeat % |
 |--------|-------------|-----------------|-----------------|----------|
-| Last 30 Days | 18 | 13 | 5 | 27.8% |
-| Last 90 Days | 72 | 52 | 20 | 27.8% |
+| Last 30 Days | 15 | 10 | 5 | 33.3% |
+| Last 90 Days | 70 | 50 | 20 | 28.6% |
 | Lifetime | 225 | 80 | 145 | 64.4% |
 
 ### 📈 Traffic Graphs
@@ -195,7 +195,7 @@ Quick navigation to repository statistics:
 | Period | Total | Unique |
 |--------|-------|--------|
 | Last 30 Days | 5 | 5 |
-| Last 90 Days | 44 | 33 |
+| Last 90 Days | 43 | 32 |
 | Lifetime | 142 | 85 |
 
 ### 📄 Repeat vs New Clones
@@ -207,7 +207,7 @@ Quick navigation to repository statistics:
 | Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
 |--------|--------------|----------------|----------------|----------|
 | Last 30 Days | 5 | 5 | 0 | 0.0% |
-| Last 90 Days | 44 | 33 | 11 | 25.0% |
+| Last 90 Days | 43 | 32 | 11 | 25.6% |
 | Lifetime | 142 | 85 | 57 | 40.1% |
 
 ### 👀 Views
@@ -291,7 +291,7 @@ Quick navigation to repository statistics:
 | Period | Total | Unique |
 |--------|-------|--------|
 | Last 30 Days | 23 | 10 |
-| Last 90 Days | 56 | 40 |
+| Last 90 Days | 55 | 39 |
 | Lifetime | 175 | 110 |
 
 ### 📄 Repeat vs New Clones
@@ -303,7 +303,7 @@ Quick navigation to repository statistics:
 | Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
 |--------|--------------|----------------|----------------|----------|
 | Last 30 Days | 23 | 10 | 13 | 56.5% |
-| Last 90 Days | 56 | 40 | 16 | 28.6% |
+| Last 90 Days | 55 | 39 | 16 | 29.1% |
 | Lifetime | 175 | 110 | 65 | 37.1% |
 
 ### 👀 Views
@@ -386,7 +386,7 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 14 | 9 |
+| Last 30 Days | 13 | 8 |
 | Last 90 Days | 38 | 32 |
 | Lifetime | 107 | 94 |
 
@@ -398,7 +398,7 @@ Quick navigation to repository statistics:
 
 | Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
 |--------|--------------|----------------|----------------|----------|
-| Last 30 Days | 14 | 9 | 5 | 35.7% |
+| Last 30 Days | 13 | 8 | 5 | 38.5% |
 | Last 90 Days | 38 | 32 | 6 | 15.8% |
 | Lifetime | 107 | 94 | 13 | 12.1% |
 
@@ -408,7 +408,7 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 17 | 5 |
+| Last 30 Days | 15 | 4 |
 | Last 90 Days | 22 | 10 |
 | Lifetime | 30 | 14 |
 
@@ -428,7 +428,7 @@ Quick navigation to repository statistics:
 
 | Period | Total Views | Unique Visitors | Repeat Visitors | Repeat % |
 |--------|-------------|-----------------|-----------------|----------|
-| Last 30 Days | 17 | 5 | 12 | 70.6% |
+| Last 30 Days | 15 | 4 | 11 | 73.3% |
 | Last 90 Days | 22 | 10 | 12 | 54.5% |
 | Lifetime | 30 | 14 | 16 | 53.3% |
 
@@ -482,8 +482,8 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 209 | 115 |
-| Last 90 Days | 1156 | 554 |
+| Last 30 Days | 196 | 107 |
+| Last 90 Days | 1133 | 544 |
 | Lifetime | 2331 | 1081 |
 
 ### 📄 Repeat vs New Clones
@@ -494,8 +494,8 @@ Quick navigation to repository statistics:
 
 | Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
 |--------|--------------|----------------|----------------|----------|
-| Last 30 Days | 209 | 115 | 94 | 45.0% |
-| Last 90 Days | 1156 | 554 | 602 | 52.1% |
+| Last 30 Days | 196 | 107 | 89 | 45.4% |
+| Last 90 Days | 1133 | 544 | 589 | 52.0% |
 | Lifetime | 2331 | 1081 | 1250 | 53.6% |
 
 ### 👀 Views
