@@ -5,7 +5,7 @@ https://soul-traveller.github.io/github-traffic-dashboard/
 
 This dashboard tracks historical traffic data (clones and views) for GitHub repositories.
 
-**Last Updated:** 2026-08-20T02:48:23.850497Z
+**Last Updated:** 2026-08-21T02:54:12.306578Z
 
 ## 📋 How Metrics Are Calculated
 
@@ -117,7 +117,7 @@ Quick navigation to repository statistics:
 | Period | Total | Unique |
 |--------|-------|--------|
 | Last 30 Days | 20 | 9 |
-| Last 90 Days | 61 | 41 |
+| Last 90 Days | 59 | 40 |
 | Lifetime | 236 | 85 |
 
 ### 📞 Referrers
@@ -139,7 +139,7 @@ Quick navigation to repository statistics:
 | Period | Total Views | Unique Visitors | Repeat Visitors | Repeat % |
 |--------|-------------|-----------------|-----------------|----------|
 | Last 30 Days | 20 | 9 | 11 | 55.0% |
-| Last 90 Days | 61 | 41 | 20 | 32.8% |
+| Last 90 Days | 59 | 40 | 19 | 32.2% |
 | Lifetime | 236 | 85 | 151 | 64.0% |
 
 ### 📈 Traffic Graphs
@@ -193,7 +193,7 @@ Quick navigation to repository statistics:
 | Period | Total | Unique |
 |--------|-------|--------|
 | Last 30 Days | 3 | 3 |
-| Last 90 Days | 35 | 24 |
+| Last 90 Days | 33 | 22 |
 | Lifetime | 143 | 86 |
 
 ### 📄 Repeat vs New Clones
@@ -205,7 +205,7 @@ Quick navigation to repository statistics:
 | Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
 |--------|--------------|----------------|----------------|----------|
 | Last 30 Days | 3 | 3 | 0 | 0.0% |
-| Last 90 Days | 35 | 24 | 11 | 31.4% |
+| Last 90 Days | 33 | 22 | 11 | 33.3% |
 | Lifetime | 143 | 86 | 57 | 39.9% |
 
 ### 👀 Views
@@ -215,7 +215,7 @@ Quick navigation to repository statistics:
 | Period | Total | Unique |
 |--------|-------|--------|
 | Last 30 Days | 1 | 1 |
-| Last 90 Days | 2 | 2 |
+| Last 90 Days | 1 | 1 |
 | Lifetime | 27 | 6 |
 
 ### 📞 Referrers
@@ -237,7 +237,7 @@ Quick navigation to repository statistics:
 | Period | Total Views | Unique Visitors | Repeat Visitors | Repeat % |
 |--------|-------------|-----------------|-----------------|----------|
 | Last 30 Days | 1 | 1 | 0 | 0.0% |
-| Last 90 Days | 2 | 2 | 0 | 0.0% |
+| Last 90 Days | 1 | 1 | 0 | 0.0% |
 | Lifetime | 27 | 6 | 21 | 77.8% |
 
 ### 📈 Traffic Graphs
@@ -291,7 +291,7 @@ Quick navigation to repository statistics:
 | Period | Total | Unique |
 |--------|-------|--------|
 | Last 30 Days | 4 | 4 |
-| Last 90 Days | 45 | 29 |
+| Last 90 Days | 43 | 27 |
 | Lifetime | 177 | 112 |
 
 ### 📄 Repeat vs New Clones
@@ -303,7 +303,7 @@ Quick navigation to repository statistics:
 | Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
 |--------|--------------|----------------|----------------|----------|
 | Last 30 Days | 4 | 4 | 0 | 0.0% |
-| Last 90 Days | 45 | 29 | 16 | 35.6% |
+| Last 90 Days | 43 | 27 | 16 | 37.2% |
 | Lifetime | 177 | 112 | 65 | 36.7% |
 
 ### 👀 Views
@@ -386,9 +386,9 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 14 | 8 |
-| Last 90 Days | 33 | 26 |
-| Lifetime | 111 | 97 |
+| Last 30 Days | 15 | 9 |
+| Last 90 Days | 34 | 27 |
+| Lifetime | 112 | 98 |
 
 ### 📄 Repeat vs New Clones
 
@@ -398,9 +398,9 @@ Quick navigation to repository statistics:
 
 | Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
 |--------|--------------|----------------|----------------|----------|
-| Last 30 Days | 14 | 8 | 6 | 42.9% |
-| Last 90 Days | 33 | 26 | 7 | 21.2% |
-| Lifetime | 111 | 97 | 14 | 12.6% |
+| Last 30 Days | 15 | 9 | 6 | 40.0% |
+| Last 90 Days | 34 | 27 | 7 | 20.6% |
+| Lifetime | 112 | 98 | 14 | 12.5% |
 
 ### 👀 Views
 
@@ -408,9 +408,9 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 6 | 4 |
-| Last 90 Days | 27 | 13 |
-| Lifetime | 36 | 18 |
+| Last 30 Days | 7 | 5 |
+| Last 90 Days | 28 | 14 |
+| Lifetime | 37 | 19 |
 
 ### 📞 Referrers
 
@@ -431,9 +431,9 @@ Quick navigation to repository statistics:
 
 | Period | Total Views | Unique Visitors | Repeat Visitors | Repeat % |
 |--------|-------------|-----------------|-----------------|----------|
-| Last 30 Days | 6 | 4 | 2 | 33.3% |
-| Last 90 Days | 27 | 13 | 14 | 51.9% |
-| Lifetime | 36 | 18 | 18 | 50.0% |
+| Last 30 Days | 7 | 5 | 2 | 28.6% |
+| Last 90 Days | 28 | 14 | 14 | 50.0% |
+| Lifetime | 37 | 19 | 18 | 48.6% |
 
 ### 📈 Traffic Graphs
 
@@ -485,9 +485,9 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 321 | 257 |
-| Last 90 Days | 1126 | 630 |
-| Lifetime | 2595 | 1304 |
+| Last 30 Days | 322 | 257 |
+| Last 90 Days | 1119 | 625 |
+| Lifetime | 2599 | 1306 |
 
 ### 📄 Repeat vs New Clones
 
@@ -497,9 +497,9 @@ Quick navigation to repository statistics:
 
 | Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
 |--------|--------------|----------------|----------------|----------|
-| Last 30 Days | 321 | 257 | 64 | 19.9% |
-| Last 90 Days | 1126 | 630 | 496 | 44.0% |
-| Lifetime | 2595 | 1304 | 1291 | 49.7% |
+| Last 30 Days | 322 | 257 | 65 | 20.2% |
+| Last 90 Days | 1119 | 625 | 494 | 44.1% |
+| Lifetime | 2599 | 1306 | 1293 | 49.7% |
 
 ### 👀 Views
 
