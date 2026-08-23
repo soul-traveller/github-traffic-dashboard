@@ -5,7 +5,7 @@ https://soul-traveller.github.io/github-traffic-dashboard/
 
 This dashboard tracks historical traffic data (clones and views) for GitHub repositories.
 
-**Last Updated:** 2026-08-22T02:45:30.727037Z
+**Last Updated:** 2026-08-23T02:53:42.096921Z
 
 ## 📋 How Metrics Are Calculated
 
@@ -94,7 +94,7 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 4 | 4 |
+| Last 30 Days | 3 | 3 |
 | Last 90 Days | 40 | 23 |
 | Lifetime | 245 | 131 |
 
@@ -106,7 +106,7 @@ Quick navigation to repository statistics:
 
 | Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
 |--------|--------------|----------------|----------------|----------|
-| Last 30 Days | 4 | 4 | 0 | 0.0% |
+| Last 30 Days | 3 | 3 | 0 | 0.0% |
 | Last 90 Days | 40 | 23 | 17 | 42.5% |
 | Lifetime | 245 | 131 | 114 | 46.5% |
 
@@ -116,9 +116,9 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 18 | 7 |
-| Last 90 Days | 59 | 40 |
-| Lifetime | 236 | 85 |
+| Last 30 Days | 12 | 6 |
+| Last 90 Days | 60 | 41 |
+| Lifetime | 237 | 86 |
 
 ### 📞 Referrers
 
@@ -138,9 +138,9 @@ Quick navigation to repository statistics:
 
 | Period | Total Views | Unique Visitors | Repeat Visitors | Repeat % |
 |--------|-------------|-----------------|-----------------|----------|
-| Last 30 Days | 18 | 7 | 11 | 61.1% |
-| Last 90 Days | 59 | 40 | 19 | 32.2% |
-| Lifetime | 236 | 85 | 151 | 64.0% |
+| Last 30 Days | 12 | 6 | 6 | 50.0% |
+| Last 90 Days | 60 | 41 | 19 | 31.7% |
+| Lifetime | 237 | 86 | 151 | 63.7% |
 
 ### 📈 Traffic Graphs
 
@@ -408,9 +408,9 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 7 | 5 |
-| Last 90 Days | 28 | 14 |
-| Lifetime | 37 | 19 |
+| Last 30 Days | 15 | 6 |
+| Last 90 Days | 36 | 15 |
+| Lifetime | 45 | 20 |
 
 ### 📞 Referrers
 
@@ -420,8 +420,8 @@ Quick navigation to repository statistics:
 
 | Referrer | Total Views | Unique Visitors |
 |----------|-------------|----------------|
+| soul-traveller.github.io | 9 | 2 |
 | github.com | 5 | 2 |
-| soul-traveller.github.io | 1 | 1 |
 
 ### 👥 Repeat vs New Visitors
 
@@ -431,9 +431,9 @@ Quick navigation to repository statistics:
 
 | Period | Total Views | Unique Visitors | Repeat Visitors | Repeat % |
 |--------|-------------|-----------------|-----------------|----------|
-| Last 30 Days | 7 | 5 | 2 | 28.6% |
-| Last 90 Days | 28 | 14 | 14 | 50.0% |
-| Lifetime | 37 | 19 | 18 | 48.6% |
+| Last 30 Days | 15 | 6 | 9 | 60.0% |
+| Last 90 Days | 36 | 15 | 21 | 58.3% |
+| Lifetime | 45 | 20 | 25 | 55.6% |
 
 ### 📈 Traffic Graphs
 
@@ -485,9 +485,9 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 311 | 251 |
-| Last 90 Days | 1112 | 622 |
-| Lifetime | 2601 | 1307 |
+| Last 30 Days | 314 | 252 |
+| Last 90 Days | 1103 | 616 |
+| Lifetime | 2607 | 1310 |
 
 ### 📄 Repeat vs New Clones
 
@@ -497,9 +497,9 @@ Quick navigation to repository statistics:
 
 | Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
 |--------|--------------|----------------|----------------|----------|
-| Last 30 Days | 311 | 251 | 60 | 19.3% |
-| Last 90 Days | 1112 | 622 | 490 | 44.1% |
-| Lifetime | 2601 | 1307 | 1294 | 49.8% |
+| Last 30 Days | 314 | 252 | 62 | 19.7% |
+| Last 90 Days | 1103 | 616 | 487 | 44.2% |
+| Lifetime | 2607 | 1310 | 1297 | 49.8% |
 
 ### 👀 Views
 
@@ -583,8 +583,8 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 5 | 5 |
-| Last 90 Days | 21 | 20 |
+| Last 30 Days | 4 | 4 |
+| Last 90 Days | 20 | 19 |
 | Lifetime | 41 | 40 |
 
 ### 📄 Repeat vs New Clones
@@ -595,8 +595,8 @@ Quick navigation to repository statistics:
 
 | Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
 |--------|--------------|----------------|----------------|----------|
-| Last 30 Days | 5 | 5 | 0 | 0.0% |
-| Last 90 Days | 21 | 20 | 1 | 4.8% |
+| Last 30 Days | 4 | 4 | 0 | 0.0% |
+| Last 90 Days | 20 | 19 | 1 | 5.0% |
 | Lifetime | 41 | 40 | 1 | 2.4% |
 
 ### 👀 Views
