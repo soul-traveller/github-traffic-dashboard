@@ -5,7 +5,7 @@ https://soul-traveller.github.io/github-traffic-dashboard/
 
 This dashboard tracks historical traffic data (clones and views) for GitHub repositories.
 
-**Last Updated:** 2026-08-27T12:08:31.995964Z
+**Last Updated:** 2026-08-28T13:31:48.561507Z
 
 ## 📋 How Metrics Are Calculated
 
@@ -116,19 +116,20 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 12 | 6 |
-| Last 90 Days | 51 | 37 |
-| Lifetime | 237 | 86 |
+| Last 30 Days | 13 | 7 |
+| Last 90 Days | 52 | 38 |
+| Lifetime | 238 | 87 |
 
 ### 📞 Referrers
 
 *Top referrer sources driving traffic to this repository.*
 
-**Total Unique Referrers:** 1
+**Total Unique Referrers:** 2
 
 | Referrer | Total Views | Unique Visitors |
 |----------|-------------|----------------|
 | soul-traveller.github.io | 2 | 1 |
+| github.com | 1 | 1 |
 
 ### 👥 Repeat vs New Visitors
 
@@ -138,9 +139,9 @@ Quick navigation to repository statistics:
 
 | Period | Total Views | Unique Visitors | Repeat Visitors | Repeat % |
 |--------|-------------|-----------------|-----------------|----------|
-| Last 30 Days | 12 | 6 | 6 | 50.0% |
-| Last 90 Days | 51 | 37 | 14 | 27.5% |
-| Lifetime | 237 | 86 | 151 | 63.7% |
+| Last 30 Days | 13 | 7 | 6 | 46.2% |
+| Last 90 Days | 52 | 38 | 14 | 26.9% |
+| Lifetime | 238 | 87 | 151 | 63.4% |
 
 ### 📈 Traffic Graphs
 
@@ -222,11 +223,9 @@ Quick navigation to repository statistics:
 
 *Top referrer sources driving traffic to this repository.*
 
-**Total Unique Referrers:** 1
+**Total Unique Referrers:** 0
 
-| Referrer | Total Views | Unique Visitors |
-|----------|-------------|----------------|
-| github.com | 1 | 1 |
+*No referrer data available.*
 
 ### 👥 Repeat vs New Visitors
 
@@ -387,7 +386,7 @@ Quick navigation to repository statistics:
 | Period | Total | Unique |
 |--------|-------|--------|
 | Last 30 Days | 6 | 5 |
-| Last 90 Days | 34 | 27 |
+| Last 90 Days | 32 | 25 |
 | Lifetime | 112 | 98 |
 
 ### 📄 Repeat vs New Clones
@@ -399,7 +398,7 @@ Quick navigation to repository statistics:
 | Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
 |--------|--------------|----------------|----------------|----------|
 | Last 30 Days | 6 | 5 | 1 | 16.7% |
-| Last 90 Days | 34 | 27 | 7 | 20.6% |
+| Last 90 Days | 32 | 25 | 7 | 21.9% |
 | Lifetime | 112 | 98 | 14 | 12.5% |
 
 ### 👀 Views
@@ -421,7 +420,7 @@ Quick navigation to repository statistics:
 | Referrer | Total Views | Unique Visitors |
 |----------|-------------|----------------|
 | soul-traveller.github.io | 8 | 1 |
-| github.com | 2 | 1 |
+| github.com | 1 | 1 |
 
 ### 👥 Repeat vs New Visitors
 
@@ -485,9 +484,9 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 318 | 252 |
-| Last 90 Days | 1080 | 604 |
-| Lifetime | 2631 | 1322 |
+| Last 30 Days | 317 | 251 |
+| Last 90 Days | 1078 | 602 |
+| Lifetime | 2633 | 1323 |
 
 ### 📄 Repeat vs New Clones
 
@@ -497,9 +496,9 @@ Quick navigation to repository statistics:
 
 | Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
 |--------|--------------|----------------|----------------|----------|
-| Last 30 Days | 318 | 252 | 66 | 20.8% |
-| Last 90 Days | 1080 | 604 | 476 | 44.1% |
-| Lifetime | 2631 | 1322 | 1309 | 49.8% |
+| Last 30 Days | 317 | 251 | 66 | 20.8% |
+| Last 90 Days | 1078 | 602 | 476 | 44.2% |
+| Lifetime | 2633 | 1323 | 1310 | 49.8% |
 
 ### 👀 Views
 
@@ -515,11 +514,9 @@ Quick navigation to repository statistics:
 
 *Top referrer sources driving traffic to this repository.*
 
-**Total Unique Referrers:** 1
+**Total Unique Referrers:** 0
 
-| Referrer | Total Views | Unique Visitors |
-|----------|-------------|----------------|
-| github.com | 1 | 1 |
+*No referrer data available.*
 
 ### 👥 Repeat vs New Visitors
 
@@ -613,11 +610,9 @@ Quick navigation to repository statistics:
 
 *Top referrer sources driving traffic to this repository.*
 
-**Total Unique Referrers:** 1
+**Total Unique Referrers:** 0
 
-| Referrer | Total Views | Unique Visitors |
-|----------|-------------|----------------|
-| github.com | 1 | 1 |
+*No referrer data available.*
 
 ### 👥 Repeat vs New Visitors
 
