@@ -5,7 +5,7 @@ https://soul-traveller.github.io/github-traffic-dashboard/
 
 This dashboard tracks historical traffic data (clones and views) for GitHub repositories.
 
-**Last Updated:** 2026-11-25T10:40:40.839183Z
+**Last Updated:** 2026-11-26T10:11:37.375940Z
 
 ## 📋 How Metrics Are Calculated
 
@@ -94,9 +94,9 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 13 | 12 |
-| Last 90 Days | 33 | 32 |
-| Lifetime | 279 | 164 |
+| Last 30 Days | 15 | 14 |
+| Last 90 Days | 35 | 34 |
+| Lifetime | 281 | 166 |
 
 ### 📄 Repeat vs New Clones
 
@@ -106,9 +106,9 @@ Quick navigation to repository statistics:
 
 | Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
 |--------|--------------|----------------|----------------|----------|
-| Last 30 Days | 13 | 12 | 1 | 7.7% |
-| Last 90 Days | 33 | 32 | 1 | 3.0% |
-| Lifetime | 279 | 164 | 115 | 41.2% |
+| Last 30 Days | 15 | 14 | 1 | 6.7% |
+| Last 90 Days | 35 | 34 | 1 | 2.9% |
+| Lifetime | 281 | 166 | 115 | 40.9% |
 
 ### 👀 Views
 
@@ -117,7 +117,7 @@ Quick navigation to repository statistics:
 | Period | Total | Unique |
 |--------|-------|--------|
 | Last 30 Days | 24 | 15 |
-| Last 90 Days | 98 | 36 |
+| Last 90 Days | 97 | 35 |
 | Lifetime | 335 | 122 |
 
 ### 📞 Referrers
@@ -140,7 +140,7 @@ Quick navigation to repository statistics:
 | Period | Total Views | Unique Visitors | Repeat Visitors | Repeat % |
 |--------|-------------|-----------------|-----------------|----------|
 | Last 30 Days | 24 | 15 | 9 | 37.5% |
-| Last 90 Days | 98 | 36 | 62 | 63.3% |
+| Last 90 Days | 97 | 35 | 62 | 63.9% |
 | Lifetime | 335 | 122 | 213 | 63.6% |
 
 ### 📈 Traffic Graphs
@@ -193,9 +193,9 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 12 | 10 |
-| Last 90 Days | 36 | 33 |
-| Lifetime | 180 | 120 |
+| Last 30 Days | 13 | 11 |
+| Last 90 Days | 37 | 34 |
+| Lifetime | 181 | 121 |
 
 ### 📄 Repeat vs New Clones
 
@@ -205,9 +205,9 @@ Quick navigation to repository statistics:
 
 | Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
 |--------|--------------|----------------|----------------|----------|
-| Last 30 Days | 12 | 10 | 2 | 16.7% |
-| Last 90 Days | 36 | 33 | 3 | 8.3% |
-| Lifetime | 180 | 120 | 60 | 33.3% |
+| Last 30 Days | 13 | 11 | 2 | 15.4% |
+| Last 90 Days | 37 | 34 | 3 | 8.1% |
+| Lifetime | 181 | 121 | 60 | 33.1% |
 
 ### 👀 Views
 
@@ -289,9 +289,9 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 14 | 12 |
-| Last 90 Days | 37 | 35 |
-| Lifetime | 215 | 148 |
+| Last 30 Days | 16 | 14 |
+| Last 90 Days | 39 | 37 |
+| Lifetime | 217 | 150 |
 
 ### 📄 Repeat vs New Clones
 
@@ -301,9 +301,9 @@ Quick navigation to repository statistics:
 
 | Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
 |--------|--------------|----------------|----------------|----------|
-| Last 30 Days | 14 | 12 | 2 | 14.3% |
-| Last 90 Days | 37 | 35 | 2 | 5.4% |
-| Lifetime | 215 | 148 | 67 | 31.2% |
+| Last 30 Days | 16 | 14 | 2 | 12.5% |
+| Last 90 Days | 39 | 37 | 2 | 5.1% |
+| Lifetime | 217 | 150 | 67 | 30.9% |
 
 ### 👀 Views
 
@@ -481,9 +481,9 @@ Quick navigation to repository statistics:
 
 | Period | Total | Unique |
 |--------|-------|--------|
-| Last 30 Days | 265 | 142 |
-| Last 90 Days | 713 | 427 |
-| Lifetime | 3344 | 1749 |
+| Last 30 Days | 272 | 149 |
+| Last 90 Days | 733 | 441 |
+| Lifetime | 3366 | 1764 |
 
 ### 📄 Repeat vs New Clones
 
@@ -493,9 +493,9 @@ Quick navigation to repository statistics:
 
 | Period | Total Clones | Unique Clones | Repeat Clones | Repeat % |
 |--------|--------------|----------------|----------------|----------|
-| Last 30 Days | 265 | 142 | 123 | 46.4% |
-| Last 90 Days | 713 | 427 | 286 | 40.1% |
-| Lifetime | 3344 | 1749 | 1595 | 47.7% |
+| Last 30 Days | 272 | 149 | 123 | 45.2% |
+| Last 90 Days | 733 | 441 | 292 | 39.8% |
+| Lifetime | 3366 | 1764 | 1602 | 47.6% |
 
 ### 👀 Views
 
